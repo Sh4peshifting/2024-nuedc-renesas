@@ -9,3 +9,6 @@ def sign_in(request):
 
 def main(request):
     return render(request, "website/main/main.html")
+
+def log_list(request):
+    return render(request, "website/log_list/log_list.html")

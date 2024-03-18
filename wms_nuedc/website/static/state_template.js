@@ -3,7 +3,7 @@ $(document).ready(function () {
 
     function updateTable() {
         $.ajax({
-            url: '/data',
+            url: '/get_state',
             type: 'POST',
             success: function (receivedData) {
             }
@@ -11,8 +11,8 @@ $(document).ready(function () {
     }
     // setInterval(updateTable, 1000);
 
-    var source = 
-    `<div class="entry">
+    let source =
+        `<div class="entry">
         <div class="row row-cols-1 row-cols-md-3 g-4">
         {{#each cargo}}
         <div class="col">
@@ -33,9 +33,9 @@ $(document).ready(function () {
         {{/each}}
         </div>
     </div>`;
-    
-    var template = Handlebars.compile(source);
-    var context = {
+
+    let template = Handlebars.compile(source);
+    let context = {
         cargo:
             [
                 {
@@ -85,7 +85,7 @@ $(document).ready(function () {
                 },
             ],
     };
-    var html = template(context);
+    let html = template(context);
     $(".cargo-list-box").html(html);
 
     source = 

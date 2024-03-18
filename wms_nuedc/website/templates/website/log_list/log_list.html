@@ -1,0 +1,14 @@
+{% extends "website/base.html" %}
+{% block mainbody %}
+{% load static %}
+<div class="container">
+    <div class="card mb-3">
+        <div class="card-header">
+            <i class="fas fa-table"></i>
+            日志列表
+        </div>
+        <div class="log-list-box"></div>
+    </div>
+</div>
+    <script src="{% static 'log_list.js' %}"></script>
+{% endblock %}

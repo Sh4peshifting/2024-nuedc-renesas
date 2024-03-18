@@ -1,136 +1,179 @@
 {% extends "website/base.html" %}
+{% load static %}
 {% block mainbody %}
-        <div class="container">
-            <div class="row">
-                <div class="col-md-5 col-lg-4 order-md-last">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span>硬件控制</span>
-                    </h4>
-                    <div class="mb-3">
-                        <div class="card  ">
-                            <div class="card-body">
-                                <h5 class="card-title">运输车概况</h5>
-                                <div class="car-state-box"></div>
-                            </div>
-                        </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-5 col-lg-4 order-md-last">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span>硬件控制</span>
+            </h4>
+            <div class="mb-3">
+                <div class="card  ">
+                    <div class="card-body">
+                        <h5 class="card-title">运输车概况</h5>
+                        <div class="car-state-box"></div>
                     </div>
-                    <div class="mb-3">
-                        <div class="card  ">
-                            <div class="card-body">
-                                <h5 class="card-title">灯光</h5>
-                                <div class="btn-group col-12 mx-auto" role="group" aria-label="Basic example">
-                                    <button type="button" id="light_on" class="btn btn-light btn-lg"
-                                        data-bs-toggle="modal" data-bs-target="#modal_msg">打开</button>
-                                    <button type="button" id="light_off" class="btn btn-secondary btn-lg"
-                                        data-bs-toggle="modal" data-bs-target="#modal_msg">关闭</button>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="modal fade" id="modal_msg" data-bs-backdrop="static" data-bs-keyboard="false"
-                            tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">提示</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                            aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        是否确认操作？
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary"
-                                            data-bs-dismiss="modal">取消</button>
-                                        <button type="button" id="confirm" class="btn btn-primary"
-                                            data-bs-dismiss="modal">确认</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-                <div class="col-md-7 col-lg-8">
-                    <h4 class="d-flex justify-content-between align-items-center mb-3">
-                        <span>数据面板</span>
-                    </h4>
-
-                    <div class="card mb-3">
-                        <div class="card-body">
-                            <h5 class="card-title">概况</h5>
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="alert alert-danger" role="alert">
-                                        <b>烟雾警报 <span id="alarm_disp">正常</span></b>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="alert alert-warning" role="alert">
-                                        <b>货架 <span id="cargo_disp">0</span>/9</b>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="alert alert-primary" role="alert">
-                                        <b>温度 <span id="temp_disp">25</span>℃</b>
-                                    </div>
-                                </div>
-                                <div class="col-md-3">
-                                    <div class="alert alert-info" role="alert">
-                                        <b>湿度 <span id="hum_disp">30%</span></b>
-                                    </div>
-                                </div>
-                            </div>
+            </div>
+            <div class="mb-3">
+                <div class="card  ">
+                    <div class="card-body">
+                        <h5 class="card-title">灯光</h5>
+                        <div class="btn-group col-12 mx-auto" role="group" aria-label="Basic example">
+                            <button type="button" id="light_on" class="btn btn-light btn-lg"
+                                    data-bs-toggle="modal" data-bs-target="#modal_msg">打开
+                            </button>
+                            <button type="button" id="light_off" class="btn btn-secondary btn-lg"
+                                    data-bs-toggle="modal" data-bs-target="#modal_msg">关闭
+                            </button>
                         </div>
                     </div>
+                </div>
 
-                    <div class="mb-3">
-                        <div class="card ">
-                            <div class="card-body">
-                                <h5 class="card-title" id='air'>货架概览</h5>
-                                <div class="cargo-list-box"></div>
+                <div class="modal fade" id="modal_msg" data-bs-backdrop="static" data-bs-keyboard="false"
+                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="staticBackdropLabel">提示</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                        aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                是否确认操作？
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                        data-bs-dismiss="modal">取消
+                                </button>
+                                <button type="button" id="confirm" class="btn btn-primary"
+                                        data-bs-dismiss="modal">确认
+                                </button>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+
+            <div class="mb-3">
+                <div class="card  ">
+                    <div class="card-body">
+                        <h5 class="card-title">换货</h5>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">货物ID</span>
+                            <input type="text" class="form-control" placeholder="12345678" aria-label="cargo_id"
+                                   aria-describedby="basic-addon1">
+                        </div>
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon2">货架号</span>
+                            <input type="text" class="form-control" placeholder="1-3-2"
+                                   aria-label="" aria-describedby="button-addon2">
+                            <button class="btn btn-outline-primary" type="button" id="cargo_btn">确认</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>
-<script type="text/javascript" src="../../../static/state_template.js"></script>
+        <div class="col-md-7 col-lg-8">
+            <h4 class="d-flex justify-content-between align-items-center mb-3">
+                <span>数据面板</span>
+            </h4>
+
+            <div class="card mb-3">
+                <div class="card-body">
+                    <h5 class="card-title">概况</h5>
+                    <div class="row">
+                        <div class="col-md-3">
+                            <div class="alert alert-danger" role="alert">
+                                <b>烟雾警报 <span id="alarm_disp">正常</span></b>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="alert alert-warning" role="alert">
+                                <b>货架 <span id="cargo_disp">0</span>/9</b>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="alert alert-primary" role="alert">
+                                <b>温度 <span id="temp_disp">25</span>℃</b>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="alert alert-info" role="alert">
+                                <b>湿度 <span id="hum_disp">30%</span></b>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <div class="card ">
+                    <div class="card-body">
+                        <h5 class="card-title" id='air'>货架概览</h5>
+                        <div class="cargo-list-box"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" src="{% static 'state_template.js' %}"></script>
 <script>
-        $(document).ready(function () {
-            var flag = {
-                'light': 0
-            };
-            $('#light_on').click(function () {
-                flag['light'] = 1;
-            });
-            $('#light_off').click(function () {
-                flag['light'] = 2;
-            });
-
-            $('#confirm').click(function () {
-                if (flag['light'] == 1) {
-                    $.ajax({
-                        url: '/light_on',
-                        type: 'GET',
-                        success: function (receivedData) {
-                            console.log(receivedData);
-                        }
-                    });
-                }
-                else if (flag['light'] == 2) {
-                    $.ajax({
-                        url: '/light_off',
-                        type: 'GET',
-                        success: function (receivedData) {
-                            console.log(receivedData);
-                        }
-                    });
-                }
-
-            });
-            flag['light'] = 0;
+    $(document).ready(function () {
+        var flag = {
+            'light': 0
+        };
+        $('#light_on').click(function () {
+            flag['light'] = 1;
         });
-    </script>
+        $('#light_off').click(function () {
+            flag['light'] = 2;
+        });
+
+        $('#cargo_btn').click(function () {
+            const cargo_id = $('input[aria-label="cargo_id"]').val();
+            const cargo_loc = $('input[aria-label=""]').val();
+            $.ajax({
+                url: '/change_cargo',
+                type: 'POST',
+                data: {
+                    'cargo_id': cargo_id,
+                    'cargo_loc': cargo_loc
+                },
+                success: function (receivedData) {
+                    if (receivedData['status'] == 0) {
+                        alert('换货成功');
+                    } else {
+                        alert('换货失败');
+                    }
+                }
+            });
+        });
+
+        $('#confirm').click(function () {
+            if (flag['light'] == 1) {
+                $.ajax({
+                    url: '/light_on',
+                    type: 'GET',
+                    success: function (receivedData) {
+                        console.log(receivedData);
+                    }
+                });
+            } else if (flag['light'] == 2) {
+                $.ajax({
+                    url: '/light_off',
+                    type: 'GET',
+                    success: function (receivedData) {
+                        console.log(receivedData);
+                    }
+                });
+            }
+
+        });
+        flag['light'] = 0;
+    });
+</script>
 {% endblock %}
 

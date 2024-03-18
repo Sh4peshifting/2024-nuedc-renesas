@@ -1,6 +1,7 @@
 <!doctype html>
 <html lang="zh-CN" data-bs-theme="auto">
-  <head><script src="../../../static/assets/js/color-modes.js"></script>
+{% load static %}
+  <head><script src="{% static 'assets/js/color-modes.js' %}"></script>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,7 +12,7 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
-<link href="../../../static/assets/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="{% static 'assets/dist/css/bootstrap.min.css' %}" rel="stylesheet">
 
     <style>
       .bd-placeholder-img {
@@ -94,7 +95,7 @@
 
     
     <!-- Custom styles for this template -->
-    <link href="../../../static/sign-in.css" rel="stylesheet">
+    <link href="{% static 'sign-in.css' %}" rel="stylesheet">
   </head>
   <body class="d-flex align-items-center py-4 bg-body-tertiary">
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -167,7 +168,7 @@
     <p class="mt-5 mb-3 text-body-secondary">&copy; 2023–2024</p>
   </form>
 </main>
-<script src="../../../static/assets/dist/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}"></script>
 
     </body>
 </html>
