@@ -1,18 +1,13 @@
-
 $(document).ready(function () {
 
     function updateTable() {
         $.ajax({
-            url: '/get_state',
+            url: '/repository/get_repository_info',
             type: 'POST',
             success: function (receivedData) {
-            }
-        });
-    }
-    // setInterval(updateTable, 1000);
 
-    let source =
-        `<div class="entry">
+                let source =
+                    `<div class="entry">
         <div class="row row-cols-1 row-cols-md-3 g-4">
         {{#each cargo}}
         <div class="col">
@@ -34,62 +29,13 @@ $(document).ready(function () {
         </div>
     </div>`;
 
-    let template = Handlebars.compile(source);
-    let context = {
-        cargo:
-            [
-                {
-                    cargo_list_id: "1-1-1",
-                    isEmpty: true,
-                    cargo_id: "无"
-                },
-                {
-                    cargo_list_id: "1-1-2",
-                    isEmpty: true,
-                    cargo_id: "无"
-                },
-                {
-                    cargo_list_id: "1-1-3",
-                    isEmpty: true,
-                    cargo_id: "无"
-                },
-                {
-                    cargo_list_id: "1-2-1",
-                    isEmpty: false,
-                    cargo_id: "无"
-                },
-                {
-                    cargo_list_id: "1-2-2",
-                    isEmpty: false,
-                    cargo_id: "无"
-                },
-                {
-                    cargo_list_id: "1-2-3",
-                    isEmpty: true,
-                    cargo_id: "无"
-                },
-                {
-                    cargo_list_id: "1-3-1",
-                    isEmpty: true,
-                    cargo_id: "无"
-                },
-                {
-                    cargo_list_id: "1-3-2",
-                    isEmpty: false,
-                    cargo_id: "无"
-                },
-                {
-                    cargo_list_id: "1-3-3",
-                    isEmpty: true,
-                    cargo_id: "无"
-                },
-            ],
-    };
-    let html = template(context);
-    $(".cargo-list-box").html(html);
+                let template = Handlebars.compile(source);
+                let context = receivedData;
+                let html = template(context);
+                $(".cargo-list-box").html(html);
 
-    source = 
-    `{{#if isCarEmpty}}
+                source =
+                    `{{#if isCarEmpty}}
     <div class="card border-primary mb-3">
         <div class="card-body text-primary">
             <h5 class="card-title">空闲</h5>
@@ -105,9 +51,16 @@ $(document).ready(function () {
     {{/if}}    
     </div>`;
 
-    template = Handlebars.compile(source);
-    context = { isCarEmpty: false };
-    html = template(context);
-    $(".car-state-box").html(html);
+                template = Handlebars.compile(source);
+                context = {isCarEmpty: false};
+                html = template(context);
+                $(".car-state-box").html(html);
+
+            }
+        });
+    }
+
+    setInterval(updateTable, 1000);
+
 
 });

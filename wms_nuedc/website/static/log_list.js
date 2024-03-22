@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $(function updateTable() {
         $.ajax({
-            url: '/get_log_list', type: 'POST', success: function (receivedData) {
+            url: '/repository/get_log_info', type: 'POST', success: function (receivedData) {
                 const source = `<div class="entry">
         <table class="table">
         <thead>
@@ -28,14 +28,8 @@ $(document).ready(function () {
     </div>`;
 
                 const template = Handlebars.compile(source);
-                const context = {
-                    log_list: [{
-                        id: 1, people: "张三", time: "2021-07-01 12:00:00", operation: "入库", other: "无",
-                    }, {
-                        id: 2, people: "李四", time: "2021-07-01 12:00:00", operation: "出库", other: "无",
-                    },],
-                };
-                const html = template(context);
+
+                const html = template(receivedData);
                 $(".log-list-box").html(html);
             }
         });

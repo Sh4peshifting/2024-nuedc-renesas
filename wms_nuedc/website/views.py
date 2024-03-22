@@ -61,7 +61,7 @@ def reset_repository(request):
             
 
 
-
+@csrf_exempt
 def get_respository_info(request):
     goods=models.goods.objects.all()
     serialized_books = serializers.serialize('json', goods, fields=('place', 'number','isempty'))
@@ -75,7 +75,7 @@ def get_respository_info(request):
         }
         data["cargo"].append(temp)
     return JsonResponse(data, safe=False)
-
+@csrf_exempt
 def get_log_info(request):
     goods=models.log.objects.all()
     data={}

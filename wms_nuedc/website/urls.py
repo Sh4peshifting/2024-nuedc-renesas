@@ -7,6 +7,6 @@ urlpatterns = [
     path("", views.main, name="main"),
     path("log_list/", views.log_list, name="log_list"),
     path('reset/',views.reset_repository),
-    path('repository/ger_repository_info',views.get_respository_info),
-    path('repository/ger_log_info',views.get_log_info),
+    path('repository/get_repository_info',views.get_respository_info),
+    path('repository/get_log_info',views.get_log_info),
 ]
