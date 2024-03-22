@@ -52,7 +52,7 @@ $(document).ready(function () {
     </div>`;
 
                 template = Handlebars.compile(source);
-                context = {isCarEmpty: false};
+                context = receivedData["context"];
                 html = template(context);
                 $(".car-state-box").html(html);
 
