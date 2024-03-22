@@ -57,6 +57,9 @@ def reset_repository(request):
         models.log.objects.create(staff=admin,time=timezone.now(),operation="出库",other="13123")
         models.log.objects.create(staff=admin,time=timezone.now(),operation="出库",other="a123")
         models.log.objects.create(staff=admin,time=timezone.now(),operation="入库",other="aa123")
+    status=models.status.objects.all()
+    if (status.count() == 0):
+        models.status.objects.create(light=False,temperature="23",humidity="12%",car_status=False)
 
             
 
@@ -74,9 +77,30 @@ def get_respository_info(request):
             "cargo_id":item.number,
         }
         data["cargo"].append(temp)
+    status=models.status.objects.first()
+    data["context"]={
+        "isCarEmpty":status.car_status,
+    }
     return JsonResponse(data, safe=False)
 @csrf_exempt
 def get_log_info(request):
+    goods=models.log.objects.all()
+    data={}
+    data["log_list"]=[]
+    for item in goods:
+        temp={
+             "id": item.id, 
+             "people": item.staff.username, 
+             "time": item.time, 
+             "operation": item.operation, 
+             "other": item.other,
+        }
+        data["log_list"].append(temp)
+    return JsonResponse(data, safe=False)
+
+
+@csrf_exempt
+def get_car_info(request):
     goods=models.log.objects.all()
     data={}
     data["log_list"]=[]

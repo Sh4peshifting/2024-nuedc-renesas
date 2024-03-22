@@ -11,8 +11,10 @@ class goods(models.Model):
 
 class status(models.Model):
     light=models.BooleanField(default=False,verbose_name='灯光')
-    temperture=models.CharField(verbose_name='温度',max_length=5)
+    temperature=models.CharField(verbose_name='温度',max_length=5)
     humidity=models.CharField(verbose_name='湿度',max_length=5)
+    car_status=models.BooleanField(default=False,verbose_name='车状态')
+
 
 class log(models.Model):
     id=models.AutoField(primary_key=True)
