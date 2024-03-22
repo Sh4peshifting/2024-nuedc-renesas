@@ -18,15 +18,15 @@ $(document).ready(function () {
         <div class="col">
             <div class="card border-secondary">
                 <div class="card-body">
-                    <h5 class="card-header">{{this.cargo_list_id}}</h5>
-                    <p class="card-text">
+                    <h5 class="card-header mb-2" >{{this.cargo_list_id}}</h5>
+                    <div class="card-text">
                     {{#if isEmpty}}
                     <div>状态：<span class="badge rounded-pill text-bg-primary">空闲</span></div>
                     {{else}}
                     <div>状态：<span class="badge rounded-pill text-bg-warning">有货</span></div>
                     {{/if}}
                     <div>货物ID：<span>{{this.cargo_id}}</div>
-                    </p>
+                    </div>
                 </div>
             </div>
         </div>

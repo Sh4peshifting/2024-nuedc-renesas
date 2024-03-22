@@ -3,7 +3,10 @@ from django.urls import path
 from . import views
 
 urlpatterns = [
-    path("sign_in/", views.sign_in, name="sign_in"),
-    path("main/", views.main, name="main"),
+    path("login/", views.login, name="sign_in"),
+    path("", views.main, name="main"),
     path("log_list/", views.log_list, name="log_list"),
+    path('reset/',views.reset_repository),
+    path('repository/ger_repository_info',views.get_respository_info),
+    path('repository/ger_log_info',views.get_log_info),
 ]
