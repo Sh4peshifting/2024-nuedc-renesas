@@ -9,4 +9,5 @@ urlpatterns = [
     path('reset/',views.reset_repository),
     path('repository/get_repository_info',views.get_respository_info),
     path('repository/get_log_info',views.get_log_info),
+    path('index/',views.index),
 ]

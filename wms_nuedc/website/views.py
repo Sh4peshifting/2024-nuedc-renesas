@@ -114,6 +114,10 @@ def get_car_info(request):
         }
         data["log_list"].append(temp)
     return JsonResponse(data, safe=False)
+
+@csrf_exempt
+def index(request):
+    return JsonResponse({"a":"helo"}, safe=False)
     
 
     
