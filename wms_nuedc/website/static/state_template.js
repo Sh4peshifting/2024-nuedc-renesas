@@ -2,12 +2,9 @@ $(document).ready(function () {
 
     function updateTable() {
         $.ajax({
-            url: '/repository/get_repository_info',
-            type: 'POST',
-            success: function (receivedData) {
+            url: '/repository/get_repository_info', type: 'POST', success: function (receivedData) {
 
-                let source =
-                    `<div class="entry">
+                let source = `<div class="entry">
         <div class="row row-cols-1 row-cols-md-3 g-4">
         {{#each cargo}}
         <div class="col">
@@ -34,8 +31,7 @@ $(document).ready(function () {
                 let html = template(context);
                 $(".cargo-list-box").html(html);
 
-                source =
-                    `{{#if isCarEmpty}}
+                source = `{{#if isCarEmpty}}
     <div class="card border-primary mb-3">
         <div class="card-body text-primary">
             <h5 class="card-title">空闲</h5>
@@ -55,6 +51,12 @@ $(document).ready(function () {
                 context = receivedData["context"];
                 html = template(context);
                 $(".car-state-box").html(html);
+
+                const survey = receivedData["survey"];
+                $('#alarm_disp').text(survey["alarm_status"]);
+                $('#cargo_disp').text(survey["cargo_status"]);
+                $('#temp_disp').text(survey["temp_status"]);
+                $('#hum_disp').text(survey["hum_status"]);
 
             }
         });
