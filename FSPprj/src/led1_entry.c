@@ -11,11 +11,11 @@ void led1_entry(void *pvParameters)
     // R_SCI_UART_Open(&g_uart9_ctrl,&g_uart9_cfg);
     ws2812_Init();
     motor_init();
-    motion_cfg(0,0.1,0.1);
-    DHT11_Data dht11;
-    DHT11_Data_TypeDef dht11_data;
+    motion_cfg(0,0.1f,0.1f);
+//    DHT11_Data dht11;
+//    DHT11_Data_TypeDef dht11_data;
     // motion_step(40000,1);
-    motion_cfg(0.2,0,0);
+    motion_cfg(0.2f,0,0);
     while (1)
     {
         // dht11=read_dht11();

@@ -1,4 +1,5 @@
 #include "interface.h"
+#include "user.h"
 /* interface entry function */
 /* pvParameters contains TaskHandle_t */
 void interface_entry(void *pvParameters)

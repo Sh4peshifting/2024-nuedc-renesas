@@ -12,7 +12,7 @@ uartpack uart8pack={{0},0,0,0};
 uartpack uart5pack={{0},0,0,0};
 uartpack uart4pack={{0},0,0,0};
 
-uint32_t  step_position;
+uint16_t  step_position;
 float speed_forward,target_angle;
 volatile uint8_t onworking=1,run_mode;
 
@@ -54,7 +54,7 @@ void uart9_callback(uart_callback_args_t * p_args)
         }
         case UART_EVENT_TX_COMPLETE:
         {
-            xSemaphoreGiveFromISR(uart9txc,rx);
+            xSemaphoreGiveFromISR(uart9txc,&rx);
             break;
         }
         default:
@@ -79,7 +79,7 @@ void uart8_callback(uart_callback_args_t * p_args)
         }
         case UART_EVENT_TX_COMPLETE:
         {
-            xSemaphoreGiveFromISR(uart7txc,rx);
+            xSemaphoreGiveFromISR(uart7txc,&rx);
             break;
         }
         default:
@@ -94,7 +94,6 @@ void uart45_callback(uart_callback_args_t * p_args)
 {
     switch (p_args->event)
     {
-        BaseType_t rx;
         case UART_EVENT_RX_CHAR:
         {
             if(p_args->channel==4){
@@ -169,7 +168,7 @@ void go_to_line1(float speed)
     while(!isonline()){
         vTaskDelay(2);
     }
-    while(isonline){
+    while(isonline()){
         vTaskDelay(2);
     }
     run_mode=RunIdle;
@@ -184,7 +183,7 @@ void back_to_cross(void)
 
 }
 
-void set_position(uint32_t pos)
+void set_position(uint16_t pos)
 {
     if(pos== step_position) return;
     uint8_t dir = pos > step_position ? 1 : 0;

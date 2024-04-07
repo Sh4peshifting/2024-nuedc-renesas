@@ -8,6 +8,7 @@
 #define MOTOR_C 3
 #define MOTOR_D 4
 
+void motor_init(void);
 void motion_cfg(float vx, float vy,float omega);
 void set_fre(uint32_t fre);
 void motion_step(uint16_t step,uint8_t dir);

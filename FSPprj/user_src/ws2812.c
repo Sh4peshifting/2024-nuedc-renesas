@@ -71,7 +71,7 @@ void ws2812_Send_Data(void)
 // 将三原色单独数据合并为24位数据
 uint32_t ws281x_color(uint8_t red, uint8_t green, uint8_t blue)
 {
-	return green << 16 | red << 8 | blue;
+	return (uint32_t)(green << 16 | red << 8 | blue);
 }
 
 /**
@@ -177,14 +177,14 @@ void ws2812_AllShutOff(void)
 
 void ws2812_all_on(float brightness, uint32_t GRB_color)
 {
-	rgb_color.G = GRB_color >> 16;
-	rgb_color.R = GRB_color >> 8;
-	rgb_color.B = GRB_color;
+	rgb_color.G = (unsigned char)GRB_color >> 16;
+	rgb_color.R = (unsigned char)GRB_color >> 8;
+	rgb_color.B = (unsigned char)GRB_color;
 	
 	__brightnessAdjust(brightness / 100.0f, rgb_color);
 	for (uint16_t j = 0; j < WS2812_LED_NUM; j++)
 	{
-		ws2812_Set_one_LED_Color(j, ((rgb_color.G << 16) | (rgb_color.R << 8) | (rgb_color.B)));
+		ws2812_Set_one_LED_Color(j, (uint32_t)((rgb_color.G << 16) | (rgb_color.R << 8) | (rgb_color.B)));
 	}
 		ws2812_Send_Data();
 }
@@ -330,7 +330,7 @@ void __HSV_2_RGB(HSV_Color HSV, RGB_Color *RGB)
 		}
 		HSV.H *= 6.0f;
 		k = (int)floor(HSV.H);
-		f = HSV.H - k;
+		f = HSV.H - (float)k;
 		aa = HSV.V * (1.0f - HSV.S);
 		bb = HSV.V * (1.0f - HSV.S * f);
 		cc = HSV.V * (1.0f - (HSV.S * (1.0f - f)));

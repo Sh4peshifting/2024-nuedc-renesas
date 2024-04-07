@@ -39,7 +39,7 @@ void run_in()
     go_to_line1(0.2f);
     set_position(1);
 
-    back_to_cross();
+//    back_to_cross();
     
 }
 

@@ -41,6 +41,5 @@ typedef struct{
 }DHT11_Data;
 uint8_t Read_DHT11(DHT11_Data_TypeDef *DHT11_Data);
 DHT11_Data read_dht11(void);
-static uint8_t Read_Byte(void);
 
 #endif
