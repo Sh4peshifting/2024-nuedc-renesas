@@ -1,0 +1,32 @@
+*** Using Compiler 'V6.16', folder: 'C:\Keil_v5\ARM\ARMCLANG\Bin'
+Build target 'Target 1'
+src/led1_entry.c(13): warning: implicit declaration of function 'motor_init' is invalid in C99 [-Wimplicit-function-declaration]
+    motor_init();
+    ^
+src/led1_entry.c(14): warning: implicit conversion loses floating-point precision: 'double' to 'float' [-Wimplicit-float-conversion]
+    motion_cfg(0,0.1,0.1);
+    ~~~~~~~~~~       ^~~
+src/led1_entry.c(14): warning: implicit conversion loses floating-point precision: 'double' to 'float' [-Wimplicit-float-conversion]
+    motion_cfg(0,0.1,0.1);
+    ~~~~~~~~~~   ^~~
+src/led1_entry.c(18): warning: implicit conversion loses floating-point precision: 'double' to 'float' [-Wimplicit-float-conversion]
+    motion_cfg(0.2,0,0);
+    ~~~~~~~~~~ ^~~
+src/led1_entry.c(15): warning: unused variable 'dht11' [-Wunused-variable]
+    DHT11_Data dht11;
+               ^
+src/led1_entry.c(16): warning: unused variable 'dht11_data' [-Wunused-variable]
+    DHT11_Data_TypeDef dht11_data;
+                       ^
+src/led1_entry.c(2): warning: In file included from..../user_src/user.h(7): warning: In file included from..../user_src/dht11.h(44): warning: unused function 'Read_Byte' [-Wunused-function]
+static uint8_t Read_Byte(void);
+               ^
+7 warnings generated.
+compiling led1_entry.c...
+linking...
+.\script\fsp.scat(72): warning: L6329W: Pattern *(.data) only matches removed unused sections.
+Program Size: Code=27620 RO-data=3736 RW-data=1408 ZI-data=12852  
+Finished: 0 information, 1 warning and 0 error messages.
+FromELF: creating hex file...
+".\Objects\FSP_rtosprj.axf" - 0 Error(s), 8 Warning(s).
+Build Time Elapsed:  00:00:04
