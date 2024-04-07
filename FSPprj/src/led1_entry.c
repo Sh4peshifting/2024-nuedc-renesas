@@ -14,7 +14,9 @@ void led1_entry(void *pvParameters)
     motion_cfg(0,0.1f,0.1f);
 //    DHT11_Data dht11;
 //    DHT11_Data_TypeDef dht11_data;
-    // motion_step(40000,1);
+    motion_step(40000,1);
+		vTaskDelay(200);
+	  motion_step(40000,0);
     motion_cfg(0.2f,0,0);
     while (1)
     {

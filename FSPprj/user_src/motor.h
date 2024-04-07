@@ -11,6 +11,6 @@
 void motor_init(void);
 void motion_cfg(float vx, float vy,float omega);
 void set_fre(uint32_t fre);
-void motion_step(uint16_t step,uint8_t dir);
+void motion_step(uint32_t step,uint8_t dir);
 #endif
 

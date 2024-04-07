@@ -106,7 +106,7 @@ void motion_cfg(float vx, float vy,float omega)
     
 }
 
-void motion_step(uint16_t step,uint8_t dir)
+void motion_step(uint32_t step,uint8_t dir)
 {
     step_cnt=step;
     set_fre(5000);

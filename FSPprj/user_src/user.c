@@ -12,7 +12,7 @@ uartpack uart8pack={{0},0,0,0};
 uartpack uart5pack={{0},0,0,0};
 uartpack uart4pack={{0},0,0,0};
 
-uint16_t  step_position;
+uint32_t  step_position;
 float speed_forward,target_angle;
 volatile uint8_t onworking=1,run_mode;
 
@@ -183,7 +183,7 @@ void back_to_cross(void)
 
 }
 
-void set_position(uint16_t pos)
+void set_position(uint32_t pos)
 {
     if(pos== step_position) return;
     uint8_t dir = pos > step_position ? 1 : 0;

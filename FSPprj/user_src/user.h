@@ -37,7 +37,7 @@ extern float speed_forward,target_angle;
 extern volatile uint8_t onworking,run_mode;
 void uprintf(uart_ctrl_t *p_ctrl,char *fmt, ...);
 void go_to_line1(float speed);
-void set_position(uint16_t pos);
+void set_position(uint32_t pos);
 
 
 #endif
