@@ -1,2 +1,8 @@
 Listings/*
 Objects/*
+.vscode/*
+
+*.uvguix.*
+*.api_xml
+*.secure_azone
+rasc_version.txt
