@@ -7,15 +7,20 @@ void led1_entry(void *pvParameters)
 {
     FSP_PARAMETER_NOT_USED(pvParameters);
     /* TODO: add your own code here */
-    g_uart7.p_api->open(g_uart7.p_ctrl,g_uart7.p_cfg);
+    g_uart7.p_api->open(g_uart7.p_ctrl, g_uart7.p_cfg);
     // R_SCI_UART_Open(&g_uart9_ctrl,&g_uart9_cfg);
     ws2812_Init();
     motor_init();
-    motion_cfg(0,0.1,0.1);
-    DHT11_Data dht11;
-    DHT11_Data_TypeDef dht11_data;
-    // motion_step(40000,1);
-    motion_cfg(0.2,0,0);
+    motion_cfg(0, 0.2f, 0);
+    vTaskDelay(3000);
+    motion_cfg(0.2f, 0, 0);
+    vTaskDelay(3000);
+    //    DHT11_Data dht11;
+    //    DHT11_Data_TypeDef dht11_data;
+    motion_step(40000, 1);
+    vTaskDelay(200);
+    motion_step(40000, 0);
+    motion_cfg(0.3f, 0.3f, 0);
     while (1)
     {
         // dht11=read_dht11();
@@ -34,6 +39,5 @@ void led1_entry(void *pvParameters)
         // R_SCI_UART_Write(&g_uart7_ctrl,uart9pack.data,uart9pack.len);
         // xSemaphoreTake(uart7txc,portMAX_DELAY);
         vTaskDelay(1);
-
     }
 }

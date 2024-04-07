@@ -17,7 +17,7 @@ static void change_page(char *page)
 
 static void change_attribute(char *variable, char *attribute, char *value)
 {
-    char tx_data[20] = {0};
+    char tx_data[255] = {0};
     sprintf(tx_data, "%s.%s=%s\xff\xff\xff", variable, attribute, value);
     user_uart_write((uint8_t *)tx_data, strlen(tx_data));
 }
@@ -27,6 +27,28 @@ static void change_visibility(char *variable, char value)
     char tx_data[20] = {0};
     sprintf(tx_data, "vis %s,%d\xff\xff\xff", variable, value);
     user_uart_write((uint8_t *)tx_data, strlen(tx_data));
+}
+
+void screen_beep(uint8_t beep_milisec)
+{
+    char tx_data[20] = {0};
+    sprintf(tx_data, "beep %d\xff\xff\xff", beep_milisec);
+    user_uart_write((uint8_t *)tx_data, strlen(tx_data));
+}
+
+void update_data_list(uint8_t data_type, uint8_t *data_list)
+{
+    switch (data_type)
+    {
+    case SCREEN_UPDATE_SHLF_LIST:
+        change_attribute("shelf_list", "txt", (char *)data_list);
+        break;
+    case SCREEN_UPDATE_LOG_LIST:
+        change_attribute("log_list", "txt", (char *)data_list);
+        break;
+    default:
+        break;
+    }
 }
 
 void update_env_info(env_info_t *env_info)
@@ -91,19 +113,14 @@ void screen_car_busy_disp(uint8_t is_car_busy)
     }
 }
 
-void screen_rx_proc(uint8_t *screen_rx_buf,uint8_t rx_buf_index)
+void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
 {
     uint8_t account[10];
     uint8_t passwd[10];
     uint8_t cargo_id[10];
     uint8_t shelf_id[10];
-    // uint8_t rx_buf_index = 0;
 
-    // while (screen_rx_buf[rx_buf_index] != 0x00)
-    // {
-    //     rx_buf_index++;
-    // }
-    // screen_rx_buf[rx_buf_index] = 0x00;
+    screen_rx_buf[rx_buf_index - 1] = 0x00;
 
     if (screen_rx_buf[0] == SCREEN_RX_HEADER)
     {
@@ -111,35 +128,41 @@ void screen_rx_proc(uint8_t *screen_rx_buf,uint8_t rx_buf_index)
         {
         case SCREEN_RX_CMD_LOGIN:
             sscanf((char *)screen_rx_buf + 2, "%s:%s", account, passwd);
-            uprintf(&g_uart7_ctrl,"login\n");
+            uprintf(&g_uart7_ctrl, "login\n");
             screen_login_page_disp(1);
-            
+
             // login function and use screen_login_page_disp() to display the result
             break;
         case SCREEN_RX_CMD_PUT:
             sscanf((char *)screen_rx_buf + 2, "%s", shelf_id);
-            uprintf(&g_uart7_ctrl,"in\n");
+            uprintf(&g_uart7_ctrl, "in\n");
             // in storage function
-            //read rfid
-            storge_inout("None",shelf_id,1);
+            // read rfid
+            storge_inout((uint8_t *)"None", shelf_id, 1);
 
             break;
         case SCREEN_RX_CMD_GET:
-            sscanf((char *)screen_rx_buf + 2, "%s", shelf_id);//待改
-            uprintf(&g_uart7_ctrl,"out\n");
+            sscanf((char *)screen_rx_buf + 2, "%s", cargo_id); 
+            uprintf(&g_uart7_ctrl, "out\n");
             // out storage function
-            storge_inout(cargo_id,"None",2);
+            storge_inout(cargo_id, (uint8_t *)"None", 2);
 
             break;
         case SCREEN_RX_CMD_SWITCH:
             sscanf((char *)screen_rx_buf + 2, "%s:%s", cargo_id, shelf_id);
-            uprintf(&g_uart7_ctrl,"switch\n");
+            uprintf(&g_uart7_ctrl, "switch\n");
             // switch shelf function
-            storge_inout(cargo_id,shelf_id,3);
+            storge_inout(cargo_id, shelf_id, 3);
 
             break;
+        case SCREEN_RX_CMD_SHELF_LIST:
+            // update shelf list
+            break;
+        case SCREEN_RX_CMD_LOG_LIST:
+            // update log list
+            break;
         default:
-        uprintf(&g_uart7_ctrl,"default\n");
+            uprintf(&g_uart7_ctrl, "default\n");
             break;
         }
     }

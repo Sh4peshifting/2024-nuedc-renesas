@@ -7,7 +7,7 @@ void esp_init(void)
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
     vTaskDelay(1000);
-    while(strstr(uart8pack.data,"WIFI GOT IP")){
+    while(strstr((const char *)uart8pack.data,"WIFI GOT IP")){
         xSemaphoreTake(uart8rxc,0);
     }
     
@@ -35,7 +35,7 @@ void status_upload(void)
     uint8_t light_status;
 
     Read_DHT11(&dht11_data);
-    bsp_io_level_t onfire=fire_detect();
+    fire_status_t onfire=fire_detect();
 
     xSemaphoreTake(on8266,portMAX_DELAY);
 
@@ -46,7 +46,7 @@ void status_upload(void)
 
     //process website cmd
     uart8pack.data[uart8pack.len]=0;
-    sscanf(uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,",&light_status,&worigin,&wtarget,&onworking);
+    sscanf((const char *)uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,",(int *)&light_status,(int *)&worigin,(int *)&wtarget,(int *)&onworking);
     // #define WORK_IN 1
     // #define WORK_OUT 2
     // #define WORK_CH 3
@@ -59,7 +59,7 @@ void status_upload(void)
     }
     xSemaphoreGive(on8266);
 
-    env_info_t env_info={onfire?"报警":"正常",1,dht11_data.temp_int,dht11_data.humi_int};
+    env_info_t env_info={"正常",1,dht11_data.temp_int,dht11_data.humi_int};
     update_env_info(&env_info);
 
 

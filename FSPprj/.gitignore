@@ -5,4 +5,8 @@ Objects/*
 *.uvguix.*
 *.api_xml
 *.secure_azone
+<<<<<<< HEAD
 rasc_version.txt
+=======
+rasc_version.txt
+>>>>>>> f8be28ee8296d68a9c856ac6430285f88535150b

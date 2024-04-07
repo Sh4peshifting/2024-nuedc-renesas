@@ -8,7 +8,7 @@
 #include "motor.h"
 #include "interface_driver.h"
 #include "screen_uart.h"
-
+#include "fire_alarm.h"
 
 #define RunForward 0
 #define RunBackward 1

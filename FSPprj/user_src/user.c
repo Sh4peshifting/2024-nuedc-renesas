@@ -54,7 +54,7 @@ void uart9_callback(uart_callback_args_t * p_args)
         }
         case UART_EVENT_TX_COMPLETE:
         {
-            xSemaphoreGiveFromISR(uart9txc,rx);
+            xSemaphoreGiveFromISR(uart9txc,&rx);
             break;
         }
         default:
@@ -79,7 +79,7 @@ void uart8_callback(uart_callback_args_t * p_args)
         }
         case UART_EVENT_TX_COMPLETE:
         {
-            xSemaphoreGiveFromISR(uart7txc,rx);
+            xSemaphoreGiveFromISR(uart7txc,&rx);
             break;
         }
         default:
@@ -94,7 +94,6 @@ void uart45_callback(uart_callback_args_t * p_args)
 {
     switch (p_args->event)
     {
-        BaseType_t rx;
         case UART_EVENT_RX_CHAR:
         {
             if(p_args->channel==4){
@@ -169,7 +168,7 @@ void go_to_line1(float speed)
     while(!isonline()){
         vTaskDelay(2);
     }
-    while(isonline){
+    while(isonline()){
         vTaskDelay(2);
     }
     run_mode=RunIdle;
