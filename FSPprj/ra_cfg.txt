@@ -117,7 +117,7 @@ FSP Configuration
       P002 R11 - - - - Disabled - - "ADC0: AN002; ADC1: AN102; ICU0: IRQ08" - None - - 
       P003 M5 - - - - Disabled - - "ADC0: AN003" - None - - 
       P004 P11 - - - - Disabled - - "ADC0: AN004; ICU0: IRQ09" - None - - 
-      P005 R10 - - - - Disabled - - "ADC0: AN005; ICU0: IRQ10" - None - - 
+      P005 R10 GPIO m_c1 - None "Output mode (Initial Low)" CMOS - "ADC0: AN005; ICU0: IRQ10" - IO - - 
       P006 N10 - - - - Disabled - - "ADC0: AN006; ICU0: IRQ11" - None - - 
       P007 M6 - - - - Disabled - - "ADC0: AN007" - None - - 
       P008 P10 - - - - Disabled - - "ADC0: AN008; ICU0: IRQ12" - None - - 
@@ -193,7 +193,7 @@ FSP Configuration
       P502 R4 SCI5_RXD5 - Low None "Peripheral mode" CMOS None "ADC1: AN118; AGT2: AGTOA2; GPT_OPS0: GTIW; ICU0: IRQ12; QSPI0: QIO0; SCI5: RXD5; SCI5: SCL5; SCI6: CTS6; USB_FS0: USB_OVRCURB" - IO - - 
       P503 N5 - - - - Disabled - - "ADC1: AN119; AGT2: AGTOB2; GPT_POEG2: GTETRGC; QSPI0: QIO1; SCI5: SCK5; SCI6: CTSRTS6; USB_FS0: USB_EXICEN" - None - - 
       P504 P5 - - - - Disabled - - "ADC1: AN120; AGT3: AGTOA3; BUS_ASYNCH0: ALE; GPT_POEG3: GTETRGD; QSPI0: QIO2; SCI5: CTSRTS5; SCI6: SCK6; USB_FS0: USB_ID" - None - - 
-      P505 P6 GPIO m_c1 Low None "Output mode (Initial Low)" CMOS - "ADC1: AN121; AGT3: AGTOB3; ICU0: IRQ14; QSPI0: QIO3; SCI6: RXD6; SCI6: SCL6" - IO - - 
+      P505 P6 - - - - Disabled - - "ADC1: AN121; AGT3: AGTOB3; ICU0: IRQ14; QSPI0: QIO3; SCI6: RXD6; SCI6: SCL6" - None - - 
       P506 R5 - - - - Disabled - - "ADC1: AN122; ICU0: IRQ15; SCI6: SDA6; SCI6: TXD6" - None - - 
       P507 N6 - - - - Disabled - - "ADC1: AN123; SCI5: SCK5; SCI6: SCK6" - None - - 
       P508 R6 - - - - Disabled - - "ADC1: AN124; SCI5: CTSRTS5" - None - - 

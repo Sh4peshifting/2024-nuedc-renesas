@@ -6,11 +6,11 @@
 /* Common macro for FSP header files. There is also a corresponding FSP_FOOTER macro at the end of this file. */
 FSP_HEADER
 
+#define m_c1 (BSP_IO_PORT_00_PIN_05)
 #define m_a1 (BSP_IO_PORT_00_PIN_14)
 #define step_dir (BSP_IO_PORT_03_PIN_01)
 #define led (BSP_IO_PORT_04_PIN_00)
 #define m_d1 (BSP_IO_PORT_04_PIN_11)
-#define m_c1 (BSP_IO_PORT_05_PIN_05)
 #define m_a2 (BSP_IO_PORT_05_PIN_13)
 #define firepin (BSP_IO_PORT_06_PIN_10)
 #define m_b1 (BSP_IO_PORT_07_PIN_04)

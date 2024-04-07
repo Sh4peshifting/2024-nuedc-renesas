@@ -25,8 +25,8 @@ void motor_cfg(uint8_t motor,float duty)
 {
     if(motor == MOTOR_A){
         if(duty>0){
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_a1,BSP_IO_LEVEL_LOW);
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_a2,BSP_IO_LEVEL_HIGH);   
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_a1,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_a2,BSP_IO_LEVEL_LOW);   
         }
         else if(duty<0){
             duty=-duty;
@@ -35,15 +35,15 @@ void motor_cfg(uint8_t motor,float duty)
         }
         else{
             R_IOPORT_PinWrite(g_ioport.p_ctrl,m_a1,BSP_IO_LEVEL_LOW);
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_a2,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_a2,BSP_IO_LEVEL_LOW);
         }
            
         set_pwm(g_timer5.p_ctrl,GPT_IO_PIN_GTIOCB,duty);
     }
    else if(motor == MOTOR_B){
         if(duty>0){
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_b1,BSP_IO_LEVEL_LOW);
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_b2,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_b1,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_b2,BSP_IO_LEVEL_LOW);
         }
         else if(duty<0){
             duty=-duty;
@@ -52,7 +52,7 @@ void motor_cfg(uint8_t motor,float duty)
         }
         else{
             R_IOPORT_PinWrite(g_ioport.p_ctrl,m_b1,BSP_IO_LEVEL_LOW);
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_b2,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_b2,BSP_IO_LEVEL_LOW);
         }
         set_pwm(g_timer5.p_ctrl,GPT_IO_PIN_GTIOCA,duty);
     }
@@ -63,12 +63,12 @@ void motor_cfg(uint8_t motor,float duty)
         }
         else if(duty<0){
             duty=-duty;
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_c1,BSP_IO_LEVEL_LOW);
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_c2,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_c1,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_c2,BSP_IO_LEVEL_LOW);
         }
         else{
             R_IOPORT_PinWrite(g_ioport.p_ctrl,m_c1,BSP_IO_LEVEL_LOW);
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_c2,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_c2,BSP_IO_LEVEL_LOW);
         }
         set_pwm(g_timer6.p_ctrl,GPT_IO_PIN_GTIOCB,duty);
     }
@@ -79,12 +79,12 @@ void motor_cfg(uint8_t motor,float duty)
         }
         else if(duty<0){
             duty=-duty;
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_d1,BSP_IO_LEVEL_LOW);
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_d2,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_d1,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_d2,BSP_IO_LEVEL_LOW);
         }
         else{
             R_IOPORT_PinWrite(g_ioport.p_ctrl,m_d1,BSP_IO_LEVEL_LOW);
-            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_d2,BSP_IO_LEVEL_HIGH);
+            R_IOPORT_PinWrite(g_ioport.p_ctrl,m_d2,BSP_IO_LEVEL_LOW);
         }
         set_pwm(g_timer6.p_ctrl,GPT_IO_PIN_GTIOCA,duty);
     }
@@ -99,10 +99,10 @@ void motion_cfg(float vx, float vy,float omega)
     duty3=vx+vy-omegaprxpry;
     duty4=vx-vy+omegaprxpry;
     
-    motor_cfg(1,duty1);
-    motor_cfg(2,duty2);
-    motor_cfg(3,duty3);
-    motor_cfg(4,duty4);
+    motor_cfg(MOTOR_C,duty1);
+    motor_cfg(MOTOR_A,duty2);
+    motor_cfg(MOTOR_D,duty3);
+    motor_cfg(MOTOR_B,duty4);
     
 }
 
