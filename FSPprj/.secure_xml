@@ -73,6 +73,8 @@
       <configSetting altId="gpt6.gtioca.p702" configurationId="gpt6.gtioca" isUsedByDriver="true"/>
       <configSetting altId="gpt6.gtiocb.p703" configurationId="gpt6.gtiocb" isUsedByDriver="true"/>
       <configSetting altId="p014.output.low" configurationId="p014"/>
+      <configSetting altId="p112.output.high" configurationId="p112"/>
+      <configSetting altId="p205.output.low" configurationId="p205"/>
       <configSetting altId="p301.output.low" configurationId="p301"/>
       <configSetting altId="p400.output.low" configurationId="p400"/>
       <configSetting altId="p411.output.low" configurationId="p411"/>
