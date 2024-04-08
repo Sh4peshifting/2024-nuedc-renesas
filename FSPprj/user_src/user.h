@@ -9,6 +9,9 @@
 #include "interface_driver.h"
 #include "screen_uart.h"
 #include "fire_alarm.h"
+#include "ic_detect.h"
+
+#define osDelay(milisec) vTaskDelay(milisec)
 
 #define RunForward 0
 #define RunBackward 1

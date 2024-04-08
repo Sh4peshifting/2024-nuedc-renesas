@@ -1,5 +1,6 @@
 #include "led1.h"
 #include "user.h"
+#include <string.h>
 
 /* led1 entry function */
 /* pvParameters contains TaskHandle_t */
@@ -11,16 +12,19 @@ void led1_entry(void *pvParameters)
     // R_SCI_UART_Open(&g_uart9_ctrl,&g_uart9_cfg);
     ws2812_Init();
     motor_init();
-    motion_cfg(0, 0.2f, 0);
-    vTaskDelay(3000);
-    motion_cfg(0.2f, 0, 0);
-    vTaskDelay(3000);
+    ic_detect_init();
+    // motion_cfg(0, 0.2f, 0);
+    // vTaskDelay(3000);
+    // motion_cfg(0.2f, 0, 0);
+    // vTaskDelay(3000);
     //    DHT11_Data dht11;
     //    DHT11_Data_TypeDef dht11_data;
-    motion_step(40000, 1);
-    vTaskDelay(200);
-    motion_step(40000, 0);
-    motion_cfg(0.3f, 0.3f, 0);
+    // motion_step(40000, 1);
+    // vTaskDelay(200);
+    // motion_step(40000, 0);
+    // motion_cfg(0.3f, 0.3f, 0);
+
+    uint8_t card_id[5];
     while (1)
     {
         // dht11=read_dht11();
@@ -38,6 +42,12 @@ void led1_entry(void *pvParameters)
         // xSemaphoreTake(uart9rxc,portMAX_DELAY);
         // R_SCI_UART_Write(&g_uart7_ctrl,uart9pack.data,uart9pack.len);
         // xSemaphoreTake(uart7txc,portMAX_DELAY);
+
+        read_card(card_id, NULL);
+        uprintf(&g_uart7_ctrl, "card id:%02x%02x%02x%02x\n", card_id[0], card_id[1], card_id[2], card_id[3]);
+        memset(card_id, 0, 5);
+        vTaskDelay(300);
+
         vTaskDelay(1);
     }
 }

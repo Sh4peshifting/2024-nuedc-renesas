@@ -56,6 +56,7 @@ void log_list_insert(log_info_t* log_info);
 void list_clear(char* list_name);
 void screen_login_page_disp(uint8_t is_pwd_correct);
 void screen_car_busy_disp(uint8_t is_car_busy);
+void screen_error_msg_disp(uint8_t is_error);
 void screen_rx_proc(uint8_t *screen_rx_buf,uint8_t rx_buf_index);
 
 #endif

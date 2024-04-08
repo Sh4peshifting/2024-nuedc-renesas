@@ -3,10 +3,11 @@
 #include "hal_data.h"
 #include "stdio.h"
 #include "string.h"
+#include "user.h"
 
 #define SPI_CTRL_HANDLER g_spi0_ctrl
 #define SPI_CFG_HANDLER g_spi0_cfg
-#define osDelay(milisec) vTaskDelay(milisec)
+
 #define RC522_CS (BSP_IO_PORT_02_PIN_05)
 #define RC522_RST (BSP_IO_PORT_02_PIN_06)
 

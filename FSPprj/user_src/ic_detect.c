@@ -4,14 +4,14 @@ static void PCD_init(void)
 {
 
 	RS522_RST(1);
-	R_BSP_SoftwareDelay(2, BSP_DELAY_UNITS_MILLISECONDS);
+	vTaskDelay(2);
 	RS522_RST(0);
-	R_BSP_SoftwareDelay(2, BSP_DELAY_UNITS_MILLISECONDS);
+	vTaskDelay(2);
 	RS522_RST(1);
-	R_BSP_SoftwareDelay(2, BSP_DELAY_UNITS_MILLISECONDS);
+	vTaskDelay(2);
 
 	MFRC_WriteReg(MFRC_CommandReg, MFRC_RESETPHASE);
-	R_BSP_SoftwareDelay(2, BSP_DELAY_UNITS_MILLISECONDS);
+	vTaskDelay(2);
 
 	MFRC_WriteReg(MFRC_ModeReg, 0x3D);
 	MFRC_WriteReg(MFRC_TReloadRegL, 30);
@@ -21,7 +21,7 @@ static void PCD_init(void)
 	MFRC_WriteReg(MFRC_TxAutoReg, 0x40);
 
 	PCD_AntennaOff();
-	R_BSP_SoftwareDelay(2, BSP_DELAY_UNITS_MILLISECONDS);
+	vTaskDelay(2);
 	PCD_AntennaOn();
 }
 

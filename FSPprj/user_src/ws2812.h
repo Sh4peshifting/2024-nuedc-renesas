@@ -8,8 +8,8 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include "user.h"
 
-#define osDelay(milisec) vTaskDelay(milisec);
 #define SCI_SPI_HANDLER g_sci_spi3.p_ctrl
 
 #define LIGHT_ON 1

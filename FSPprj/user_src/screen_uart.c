@@ -113,6 +113,19 @@ void screen_car_busy_disp(uint8_t is_car_busy)
     }
 }
 
+void screen_error_msg_disp(uint8_t is_error)
+{
+    if (is_error)
+    {
+        change_page("err_info");
+    }
+    else
+    {
+        change_page("main");
+    }
+
+}
+
 void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
 {
     uint8_t account[10];

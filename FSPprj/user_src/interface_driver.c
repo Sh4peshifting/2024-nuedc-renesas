@@ -59,7 +59,7 @@ void status_upload(void)
     }
     xSemaphoreGive(on8266);
 
-    env_info_t env_info={((onfire==FIRE_DETECTED)?"报警":"正常"),1,dht11_data.temp_int,dht11_data.humi_int};//未解决
+    env_info_t env_info={("正常"),1,dht11_data.temp_int,dht11_data.humi_int};//未解决
     update_env_info(&env_info);
 
 
@@ -84,7 +84,7 @@ void storge_inout(uint8_t *cargo_id,uint8_t *self_id,uint8_t inout)
 
     uart8pack.data[uart8pack.len]=0;
     if(strstr((const char *)uart8pack.data,"success")){
-        //申请功成
+        //申请成功
     }
     else {
         //操作失败 弹窗
