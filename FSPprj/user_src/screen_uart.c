@@ -157,9 +157,11 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             break;
         case SCREEN_RX_CMD_SHELF_LIST:
             // update shelf list
+            get_goods();
             break;
         case SCREEN_RX_CMD_LOG_LIST:
             // update log list
+            get_log();
             break;
         default:
             uprintf(&g_uart7_ctrl, "default\n");

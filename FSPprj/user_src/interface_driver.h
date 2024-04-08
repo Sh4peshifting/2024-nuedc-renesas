@@ -13,4 +13,8 @@ void esp_init(void);
 float read_yaw(void);
 void status_upload(void);
 void storge_inout(uint8_t *cargo_id,uint8_t *self_id,uint8_t inout);
+void get_log(void);
+void get_goods(void);
+
+
 #endif

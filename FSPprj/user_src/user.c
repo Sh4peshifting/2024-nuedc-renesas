@@ -9,8 +9,8 @@
 
 uartpack uart9pack={{0},0,0,0};
 uartpack uart8pack={{0},0,0,0};
-uartpack uart5pack={{0},0,0,0};
-uartpack uart4pack={{0},0,0,0};
+volatile uartpack uart5pack={{0},0,0,0};
+volatile uartpack uart4pack={{0},0,0,0};
 
 uint32_t  step_position;
 float speed_forward,target_angle;
@@ -157,8 +157,8 @@ void turn_to(uint8_t dir)
     if(dir == TurnLeft) target_angle = read_yaw()+90.0f;
     else if(dir == TurnRight) target_angle = read_yaw()-90.0f;
     run_mode=RunAngle;
-    vTaskDelay(3000);
-    
+    vTaskDelay(2000);
+    run_mode=RunIdle;
 }
 
 void go_to_line1(float speed)
@@ -177,10 +177,36 @@ void go_to_line1(float speed)
     return;
 }
 
+void go_to_line(uint8_t line)
+{
+    speed_forward=0.3f;
+    run_mode=RunForward;
+    while(line){
+        while(!isonline()){
+            vTaskDelay(2);
+        }
+        line--;
+        vTaskDelay(100);
+    }
+    run_mode=RunIdle;
+    speed_forward=0;
+    vTaskDelay(300);
+
+}
 
 void back_to_cross(void)
 {
+    speed_forward=-0.3f;
+    run_mode=RunForward;//后退为负速度的前进
 
+    while(k210pack.data[SignIndex]!=SignCross){
+        vTaskDelay(2);
+    }
+    vTaskDelay(300);
+    run_mode=RunIdle;
+    speed_forward=0;
+    vTaskDelay(300);
+    
 }
 
 void set_position(uint32_t pos)

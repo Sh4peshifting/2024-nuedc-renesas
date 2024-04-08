@@ -59,7 +59,7 @@ void status_upload(void)
     }
     xSemaphoreGive(on8266);
 
-    env_info_t env_info={"正常",1,dht11_data.temp_int,dht11_data.humi_int};
+    env_info_t env_info={((onfire==FIRE_DETECTED)?"报警":"正常"),1,dht11_data.temp_int,dht11_data.humi_int};//未解决
     update_env_info(&env_info);
 
 
@@ -97,9 +97,11 @@ void storge_inout(uint8_t *cargo_id,uint8_t *self_id,uint8_t inout)
 void get_log()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
+
     uprintf(&g_uart8_ctrl,"GET /interface/get_log/");
     xSemaphoreTake(esprxc,portMAX_DELAY);
-    
+    esppack.data[esppack.len]=0;
+    update_data_list(SCREEN_UPDATE_LOG_LIST,esppack.data);
 
     xSemaphoreGive(on8266);
 }
@@ -107,8 +109,11 @@ void get_log()
 void get_goods()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
+
     uprintf(&g_uart8_ctrl,"GET /interface/get_goods/");
     xSemaphoreTake(esprxc,portMAX_DELAY);
+    esppack.data[esppack.len]=0;
+    update_data_list(SCREEN_UPDATE_SHLF_LIST,esppack.data);
     
     xSemaphoreGive(on8266);
 }
