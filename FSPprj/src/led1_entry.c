@@ -25,6 +25,7 @@ void led1_entry(void *pvParameters)
     // motion_cfg(0.3f, 0.3f, 0);
 
     uint8_t card_id[5];
+    uint8_t a=0;
     while (1)
     {
         // dht11=read_dht11();
@@ -43,11 +44,13 @@ void led1_entry(void *pvParameters)
         // R_SCI_UART_Write(&g_uart7_ctrl,uart9pack.data,uart9pack.len);
         // xSemaphoreTake(uart7txc,portMAX_DELAY);
 
-        read_card(card_id, NULL);
-        uprintf(&g_uart7_ctrl, "card id:%02x%02x%02x%02x\n", card_id[0], card_id[1], card_id[2], card_id[3]);
-        memset(card_id, 0, 5);
-        vTaskDelay(300);
+        // a=read_card(card_id, NULL);
+        // uprintf(&g_uart7_ctrl, "card id:%02x%02x%02x%02x   %d\n", 
+        //     card_id[0], card_id[1], card_id[2], card_id[3],a);
+        // memset(card_id, 0, 5);
+        vTaskDelay(1000);
 
         vTaskDelay(1);
+        
     }
 }

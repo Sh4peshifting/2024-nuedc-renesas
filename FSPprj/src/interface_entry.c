@@ -10,8 +10,12 @@ void interface_entry(void *pvParameters)
 
     while (1)
     {
-        status_upload();
-        
-        vTaskDelay(800);
+        // status_upload();
+        uprintf(&g_uart8_ctrl,"GET /index/\r\n");
+        xSemaphoreTake(uart8rxc,1000);
+        R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
+        xSemaphoreTake(uart7txc,portMAX_DELAY);
+        vTaskDelay(700);
+
     }
 }

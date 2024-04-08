@@ -79,7 +79,7 @@ void uart8_callback(uart_callback_args_t * p_args)
         }
         case UART_EVENT_TX_COMPLETE:
         {
-            xSemaphoreGiveFromISR(uart7txc,&rx);
+            xSemaphoreGiveFromISR(uart8txc,&rx);
             break;
         }
         default:

@@ -8,8 +8,8 @@
 #define SPI_CTRL_HANDLER g_spi0_ctrl
 #define SPI_CFG_HANDLER g_spi0_cfg
 
-#define RC522_CS (BSP_IO_PORT_02_PIN_05)
-#define RC522_RST (BSP_IO_PORT_02_PIN_06)
+#define RC522_CS (BSP_IO_PORT_01_PIN_12)
+#define RC522_RST (BSP_IO_PORT_02_PIN_05)
 
 /***********************************************************************************
 *								MFRC522驱动程序			        				   *

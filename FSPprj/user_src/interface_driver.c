@@ -6,21 +6,27 @@ uint8_t wtarget,worigin;
 void esp_init(void)
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-    vTaskDelay(1000);
-    while(strstr((const char *)uart8pack.data,"WIFI GOT IP")){
-        xSemaphoreTake(uart8rxc,0);
+    // vTaskDelay(1000);
+    while(!strstr((const char *)uart8pack.data,"WIFI GOT IP")){
+        xSemaphoreTake(uart8rxc,portMAX_DELAY);
+        uprintf(&g_uart7_ctrl,"Connecting.....\n");
     }
     
-    uprintf(&g_uart8_ctrl,"ATE0");
+    uprintf(&g_uart8_ctrl,"ATE0\r\n");
     xSemaphoreTake(uart8rxc,portMAX_DELAY);
-    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"192.168.100.166\",80");
+
+    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"ykctrl.hizrd.top\",80\r\n");
     xSemaphoreTake(uart8rxc,portMAX_DELAY);
-    uprintf(&g_uart8_ctrl,"AT+CIPMODE=1");
+
+    uprintf(&g_uart8_ctrl,"AT+CIPMODE=1\r\n");
     xSemaphoreTake(uart8rxc,portMAX_DELAY);
-    uprintf(&g_uart8_ctrl,"AT+CIPSEND");
+
+    uprintf(&g_uart8_ctrl,"AT+CIPSEND\r\n");
     xSemaphoreTake(uart8rxc,portMAX_DELAY);
 
     xSemaphoreGive(on8266);
+
+    uprintf(&g_uart7_ctrl,"esp init success\n");
 
 }
 
