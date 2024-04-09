@@ -3,26 +3,32 @@
 
 uint8_t wtarget,worigin; 
 
+void wait_8266return(uint16_t timeout)
+{
+    if(xSemaphoreTake(esprxc,timeout)==pdFALSE){
+        uprintf(&g_uart7_ctrl,"wait 8266 return overtime\n");
+    }
+}
 void esp_init(void)
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-    // vTaskDelay(1000);
     while(!strstr((const char *)uart8pack.data,"WIFI GOT IP")){
-        xSemaphoreTake(uart8rxc,portMAX_DELAY);
-        uprintf(&g_uart7_ctrl,"Connecting.....\n");
+        uprintf(&g_uart7_ctrl,"Connecting...\n");
+        wait_8266return(5000);
+
     }
     
     uprintf(&g_uart8_ctrl,"ATE0\r\n");
-    xSemaphoreTake(uart8rxc,portMAX_DELAY);
+    wait_8266return(3000);
 
     uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"ykctrl.hizrd.top\",80\r\n");
-    xSemaphoreTake(uart8rxc,portMAX_DELAY);
+    wait_8266return(3000);
 
     uprintf(&g_uart8_ctrl,"AT+CIPMODE=1\r\n");
-    xSemaphoreTake(uart8rxc,portMAX_DELAY);
+    wait_8266return(3000);
 
     uprintf(&g_uart8_ctrl,"AT+CIPSEND\r\n");
-    xSemaphoreTake(uart8rxc,portMAX_DELAY);
+    wait_8266return(3000);
 
     xSemaphoreGive(on8266);
 
@@ -39,20 +45,21 @@ void status_upload(void)
 {
     DHT11_Data_TypeDef dht11_data;
     uint8_t light_status;
-
+    uint8_t l_worigin,l_wtarget,l_onworking,not_empty_shelf;
     Read_DHT11(&dht11_data);
     fire_status_t onfire=fire_detect();
 
     xSemaphoreTake(on8266,portMAX_DELAY);
 
     xSemaphoreTake(uart8rxc,0);
-    uprintf(&uart_esp_ctrl,"GET /interface/sensor/?humi=%d&temp=%d.%d&fire=%d&working=%d",
+    uprintf(&uart_esp_ctrl,"GET /interface/sensor/?humi=%d&temp=%d.%d&fire=%d&working=%d\r\n",
         dht11_data.humi_int,dht11_data.temp_int,dht11_data.temp_deci,onfire,onworking);
     xSemaphoreTake(uart8rxc,portMAX_DELAY);
 
     //process website cmd
     uart8pack.data[uart8pack.len]=0;
-    sscanf((const char *)uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,",(int *)&light_status,(int *)&worigin,(int *)&wtarget,(int *)&onworking);
+    sscanf((const char *)uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,Vacant:&d,/r/n",
+    (int *)&light_status,(int *)&l_worigin,(int *)&l_wtarget,(int *)&l_onworking,(int *)&not_empty_shelf);
     // #define WORK_IN 1
     // #define WORK_OUT 2
     // #define WORK_CH 3
@@ -63,9 +70,16 @@ void status_upload(void)
         else if(light_status==2) light_ctrl(LIGHT_OFF);
         else ;
     }
+
+    if(l_onworking!=WORK_IDLE){
+        worigin=l_worigin;
+        wtarget=l_wtarget;
+        onworking=l_onworking;
+    }
+
     xSemaphoreGive(on8266);
 
-    env_info_t env_info={("正常"),1,dht11_data.temp_int,dht11_data.humi_int};//未解决
+    env_info_t env_info={("正常"),not_empty_shelf,dht11_data.temp_int,dht11_data.humi_int};//未解决
     update_env_info(&env_info);
 
 

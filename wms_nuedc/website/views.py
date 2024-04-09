@@ -62,7 +62,8 @@ def reset_repository(request):
         models.log.objects.create(staff=admin, time=timezone.now(), operation="入库", other="aa123")
     status = models.status.objects.all()
     if (status.count() == 0):
-        models.status.objects.create(light=False, temperature="23", humidity="12%", car_status=False)
+        models.status.objects.create(fire=False, temperature="23", humidity="12%", car_status=False)
+    
 
 
 @csrf_exempt
@@ -81,6 +82,17 @@ def get_respository_info(request):
     status = models.status.objects.first()
     data["context"] = {
         "isCarEmpty": status.car_status,
+    }
+
+    status.empty_self=models.goods.objects.filter(isempty=True).count()
+    status.save()
+
+    data["status"]={
+        "alarm_status": "正常"if status.fire==False else "警报",
+        "cargo_status": status.empty_self,
+        "temp_status": status.temperature,
+        "hum_status": status.humidity
+
     }
     return JsonResponse(data, safe=False)
 
@@ -126,19 +138,113 @@ def index(request):
 
 @csrf_exempt
 def sensor(request):
-    return
+    #/interface/sensor/?humi=%d&temp=%d.%d&fire=%d&working=%d
+    humidity = request.GET.get("humi")
+    temperature = request.GET.get("temp")
+    fire = request.GET.get("fire")
+    working = request.GET.get("working")
+
+    status = models.status.objects.first()
+    status.humidity = humidity
+    status.temperature = temperature
+    status.fire = fire
+    status.car_status = working
+
+    status.save()
+
+    if(models.cmd8266.objects.all().count()!=0):
+        cmd=models.cmd8266.objects.first().cmd
+    else:
+        cmd="L:0,Origin:0,Target:0,Work:0,"
+    return HttpResponse(cmd, content_type="text/plain")
 
 
 @csrf_exempt
 def cargo(request):
-    return
+    #/interface/cargo/?cargo_id=%s&self_id%s&in=%d
+    #inout: in1 out2 change3
+    #L:%d,Origin:%d,Target:%d,Work:%d,
+    cargo_id = request.GET.get("cargo_id")
+    self_id = request.GET.get("self_id")
+    in_out = request.GET.get("in")
+
+    run_cmd[0]=0x55
+
+    run_cmd=[0x00,0x00,0x00]
+
+    worigin=0
+    wtarger=0
+    if(self_id=="1-1-1"):
+        wtarget=1
+    elif(self_id=="1-1-2"):
+        wtarget=2
+    elif(self_id=="1-1-3"):
+        wtarget=3
+    elif(self_id=="1-2-1"):
+        wtarget=4
+    elif(self_id=="1-2-2"):
+        wtarget=5
+    elif(self_id=="1-2-3"):
+        wtarget=6
+
+    if(in_out=="1"):
+        if(models.goods.objects.filter(place=self_id).first().isempty==False):
+            run_cmd[0]=0x01
+            return HttpResponse(run_cmd, content_type="text/plain")
+        models.goods.objects.filter(place=self_id).update(number=cargo_id,isempty=False)
+        models.log.objects.create(staff=request.user, time=timezone.now(), operation="入库", other=cargo_id)
+
+
+    elif(in_out=="2"):
+        if(models.goods.objects.filter(number=cargo_id).first().isempty==True):
+            run_cmd[0]=0x01
+            return HttpResponse(run_cmd, content_type="text/plain")
+        self_id=models.goods.objects.filter(number=cargo_id).first().place
+        models.goods.objects.filter(place=self_id).update(number="",isempty=True)
+        models.log.objects.create(staff=request.user, time=timezone.now(), operation="出库", other=cargo_id)
+
+    
+
+    elif(in_out=="3"):
+        if(models.goods.objects.filter(place=self_id).first().isempty==False  or models.goods.objects.filter(number=cargo_id).first().isempty==True):
+            run_cmd[0]=0x01
+            return HttpResponse(run_cmd, content_type="text/plain")
+        previous_self_id=models.goods.objects.filter(number=cargo_id).first().place
+        models.goods.objects.filter(place=previous_self_id).update(number="",isempty=True)
+        models.goods.objects.filter(place=self_id).update(number=cargo_id,isempty=False)
+        models.log.objects.create(staff=request.user, time=timezone.now(), operation="转移", other=cargo_id)
+        if(previous_self_id=="1-1-1"):
+            worigin=1
+        elif(previous_self_id=="1-1-2"):
+            worigin=2
+        elif(previous_self_id=="1-1-3"):
+            worigin=3
+        elif(previous_self_id=="1-2-1"):
+            worigin=4
+        elif(previous_self_id=="1-2-2"):
+            worigin=5
+        elif(previous_self_id=="1-2-3"):
+            worigin=6
+        
+    models.cmd8266.objects.create(cmd="L:0"+",Origin:"+str(worigin)+",Target:"+str(wtarget)+",Work:"+str(in_out)+",")
+    return HttpResponse(run_cmd, content_type="text/plain")
 
 
 @csrf_exempt
 def get_log(request):
-    return
+    log=""
+    logs=models.log.objects.all()
+    for item in logs:
+        log+=item.staff.username+" "+item.operation+" "+item.other+" "+str(item.time)+"\n"
+
+    return HttpResponse(log, content_type="text/plain")
 
 
 @csrf_exempt
 def get_goods(request):
-    return
+    goodsllist=""
+    goods=models.goods.objects.filter(isemptiy=False)
+    for item in goods:
+        goodsllist+=item.place+" "+item.number+"\n"
+
+    return HttpResponse(goodsllist, content_type="text/plain")
