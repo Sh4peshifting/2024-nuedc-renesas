@@ -155,7 +155,7 @@ def sensor(request):
     if(models.cmd8266.objects.all().count()!=0):
         cmd=models.cmd8266.objects.first().cmd
     else:
-        cmd="L:0,Origin:0,Target:0,Work:0,"
+        cmd="L:0,Origin:0,Target:0,Work:0,Vacant:"+str(status.empty_self)+","
     return HttpResponse(cmd, content_type="text/plain")
 
 
@@ -235,16 +235,17 @@ def get_log(request):
     log=""
     logs=models.log.objects.all()
     for item in logs:
-        log+=item.staff.username+" "+item.operation+" "+item.other+" "+str(item.time)+"\n"
-
+        log+=item.staff.username+" "+item.operation+" "+item.other+" "+str(item.time)+"\r\n"
+    log="\""+log+"\""
     return HttpResponse(log, content_type="text/plain")
 
 
 @csrf_exempt
 def get_goods(request):
-    goodsllist=""
-    goods=models.goods.objects.filter(isemptiy=False)
+    goods_list=""
+    goods=models.goods.objects.all()
     for item in goods:
-        goodsllist+=item.place+" "+item.number+"\n"
+        goods_list+=item.place+" "+item.number+"\r\n"
 
-    return HttpResponse(goodsllist, content_type="text/plain")
+    goods_list="\""+goods_list+"\""
+    return HttpResponse(goods_list, content_type="text/plain")

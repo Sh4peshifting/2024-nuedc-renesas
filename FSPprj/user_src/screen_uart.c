@@ -58,7 +58,7 @@ void update_env_info(env_info_t *env_info)
     change_attribute("alarm_sta", "txt", tmp_txt);
     sprintf(tmp_txt, "\"%d\"", env_info->not_empty_shelf);
     change_attribute("shelf_sta", "txt", tmp_txt);
-    sprintf(tmp_txt, "\"%d\"", env_info->temperature);
+    sprintf(tmp_txt, "\"%.1f\"", env_info->temperature);
     change_attribute("temp_sta", "txt", tmp_txt);
     sprintf(tmp_txt, "\"%d\"", env_info->humidity);
     change_attribute("hum_sta", "txt", tmp_txt);
@@ -181,5 +181,5 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             break;
         }
     }
-    memset(screen_rx_buf, 0, rx_buf_index);
+    // memset(screen_rx_buf, 0, rx_buf_index);
 }

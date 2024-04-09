@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     function updateTable() {
         $.ajax({
-            url: '/repository/get_repository_info', type: 'POST', success: function (receivedData) {
+            url: '/repository/get_repository_info/', type: 'POST', success: function (receivedData) {
 
                 let source = `<div class="entry">
         <div class="row row-cols-1 row-cols-md-3 g-4">

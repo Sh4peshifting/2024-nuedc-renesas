@@ -2,7 +2,7 @@ $(document).ready(function () {
 
     $(function updateTable() {
         $.ajax({
-            url: '/repository/get_log_info', type: 'POST', success: function (receivedData) {
+            url: '/repository/get_log_info/', type: 'POST', success: function (receivedData) {
                 const source = `<div class="entry">
         <table class="table">
         <thead>

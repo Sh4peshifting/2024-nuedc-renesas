@@ -3,10 +3,14 @@
 
 uint8_t wtarget,worigin; 
 
-void wait_8266return(uint16_t timeout)
+uint8_t wait_8266return(uint16_t timeout)
 {
     if(xSemaphoreTake(esprxc,timeout)==pdFALSE){
         uprintf(&g_uart7_ctrl,"wait 8266 return overtime\n");
+        return 1;
+    }
+    else{
+        return 0;
     }
 }
 void esp_init(void)
@@ -14,14 +18,14 @@ void esp_init(void)
     xSemaphoreTake(on8266,portMAX_DELAY);
     while(!strstr((const char *)uart8pack.data,"WIFI GOT IP")){
         uprintf(&g_uart7_ctrl,"Connecting...\n");
-        wait_8266return(5000);
+        wait_8266return(10000);
 
     }
-    
+
     uprintf(&g_uart8_ctrl,"ATE0\r\n");
     wait_8266return(3000);
 
-    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"ykctrl.hizrd.top\",80\r\n");
+    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"192.168.100.166\",8000\r\n");
     wait_8266return(3000);
 
     uprintf(&g_uart8_ctrl,"AT+CIPMODE=1\r\n");
@@ -50,15 +54,17 @@ void status_upload(void)
     fire_status_t onfire=fire_detect();
 
     xSemaphoreTake(on8266,portMAX_DELAY);
+    vTaskDelay(10);
 
-    xSemaphoreTake(uart8rxc,0);
-    uprintf(&uart_esp_ctrl,"GET /interface/sensor/?humi=%d&temp=%d.%d&fire=%d&working=%d\r\n",
+    uprintf(&uart_esp_ctrl,"GET /interface/sensor/?humi=%d&temp=%d.%d&fire=%d&working=%d\r\n\r\n",
         dht11_data.humi_int,dht11_data.temp_int,dht11_data.temp_deci,onfire,onworking);
-    xSemaphoreTake(uart8rxc,portMAX_DELAY);
+    if(wait_8266return(500)){
+        return;
+    }
 
     //process website cmd
     uart8pack.data[uart8pack.len]=0;
-    sscanf((const char *)uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,Vacant:&d,/r/n",
+    sscanf((const char *)uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,Vacant:%d,\r\n",
     (int *)&light_status,(int *)&l_worigin,(int *)&l_wtarget,(int *)&l_onworking,(int *)&not_empty_shelf);
     // #define WORK_IN 1
     // #define WORK_OUT 2
@@ -79,7 +85,8 @@ void status_upload(void)
 
     xSemaphoreGive(on8266);
 
-    env_info_t env_info={("正常"),not_empty_shelf,dht11_data.temp_int,dht11_data.humi_int};//未解决
+    env_info_t env_info={("55"),not_empty_shelf,dht11_data.temp_int,dht11_data.humi_int};//未解决
+    //env_info_t env_info={"45",5,15,15};
     update_env_info(&env_info);
 
 
@@ -99,7 +106,7 @@ void storge_inout(uint8_t *cargo_id,uint8_t *self_id,uint8_t inout)
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
     xSemaphoreTake(uart8rxc,0);
-    uprintf(&uart_esp_ctrl,"GET /interface/cargo/?cargo_id=%s&self_id%s&in=%d",cargo_id,self_id,inout);
+    uprintf(&uart_esp_ctrl,"GET /interface/cargo/?cargo_id=%s&self_id%s&in=%d\r\n",cargo_id,self_id,inout);
     xSemaphoreTake(uart8rxc,portMAX_DELAY);
 
     uart8pack.data[uart8pack.len]=0;
@@ -108,7 +115,7 @@ void storge_inout(uint8_t *cargo_id,uint8_t *self_id,uint8_t inout)
     }
     else {
         //操作失败 弹窗
-
+        screen_error_msg_disp(1);
     }
 
     xSemaphoreGive(on8266);
@@ -118,10 +125,13 @@ void get_log()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
 
-    uprintf(&g_uart8_ctrl,"GET /interface/get_log/");
-    xSemaphoreTake(esprxc,portMAX_DELAY);
-    esppack.data[esppack.len]=0;
-    update_data_list(SCREEN_UPDATE_LOG_LIST,esppack.data);
+    uprintf(&g_uart8_ctrl,"GET /interface/get_log/\r\n\r\n");
+    if(!wait_8266return(2000)){
+        R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
+        xSemaphoreTake(uart7txc,portMAX_DELAY);
+        esppack.data[esppack.len]=0;
+        update_data_list(SCREEN_UPDATE_LOG_LIST,esppack.data);
+    }
 
     xSemaphoreGive(on8266);
 }
@@ -129,11 +139,14 @@ void get_log()
 void get_goods()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-
-    uprintf(&g_uart8_ctrl,"GET /interface/get_goods/");
-    xSemaphoreTake(esprxc,portMAX_DELAY);
-    esppack.data[esppack.len]=0;
-    update_data_list(SCREEN_UPDATE_SHLF_LIST,esppack.data);
+    vTaskDelay(10);
+    uprintf(&g_uart8_ctrl,"GET /interface/get_goods/\r\n\r\n");
+    if(!wait_8266return(2000)){
+        R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
+        xSemaphoreTake(uart7txc,portMAX_DELAY);
+        esppack.data[esppack.len]=0;
+        update_data_list(SCREEN_UPDATE_SHLF_LIST,esppack.data);
+    }
     
     xSemaphoreGive(on8266);
 }

@@ -27,7 +27,7 @@ typedef struct
 {
     char alarm_sta[8];
     uint8_t not_empty_shelf;
-    uint8_t temperature;
+    float temperature;
     uint8_t humidity;
 } env_info_t;
 
