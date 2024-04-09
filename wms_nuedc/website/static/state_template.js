@@ -52,11 +52,11 @@ $(document).ready(function () {
                 html = template(context);
                 $(".car-state-box").html(html);
 
-                const survey = receivedData["survey"];
-                $('#alarm_disp').text(survey["alarm_status"]);
-                $('#cargo_disp').text(survey["cargo_status"]);
-                $('#temp_disp').text(survey["temp_status"]);
-                $('#hum_disp').text(survey["hum_status"]);
+                const status = receivedData["status"];
+                $('#alarm_disp').text(status["alarm_status"]);
+                $('#cargo_disp').text(status["cargo_status"]);
+                $('#temp_disp').text(status["temp_status"]);
+                $('#hum_disp').text(status["hum_status"]);
 
             }
         });
