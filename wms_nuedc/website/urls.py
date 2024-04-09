@@ -7,13 +7,13 @@ urlpatterns = [
     path("", views.main, name="main"),
     path("log_list/", views.log_list, name="log_list"),
     path('reset/', views.reset_repository),
-    path('repository/get_repository_info', views.get_respository_info),
-    path('repository/get_log_info', views.get_log_info),
+    path('repository/get_repository_info/', views.get_respository_info),
+    path('repository/get_log_info/', views.get_log_info),
     path('index/', views.index),
 
-    path('/interface/sensor/', views.sensor),
-    path('/interface/cargo/', views.cargo),
-    path('/interface/get_log/', views.get_log),
-    path('/interface/get_goods/', views.get_goods),
+    path('interface/sensor/', views.sensor),
+    path('interface/cargo/', views.cargo),
+    path('interface/get_log/', views.get_log),
+    path('interface/get_goods/', views.get_goods),
 
 ]
