@@ -128,8 +128,8 @@ void screen_error_msg_disp(uint8_t is_error)
 
 void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
 {
-    uint8_t account[10];
-    uint8_t passwd[10];
+    uint8_t account[20];
+    uint8_t passwd[20];
     uint8_t cargo_id[10];
     uint8_t shelf_id[10];
 
@@ -140,7 +140,7 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
         switch (screen_rx_buf[1])
         {
         case SCREEN_RX_CMD_LOGIN:
-            // sscanf((char *)screen_rx_buf + 2, "%s:%s", account, passwd);
+            sscanf((char *)screen_rx_buf + 2, "%s:%s", account, passwd);
             uprintf(&g_uart7_ctrl, "login\n");
             login_auth();
             // screen_login_page_disp(1);
