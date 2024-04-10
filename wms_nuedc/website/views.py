@@ -159,17 +159,13 @@ def sensor(request):
     return HttpResponse(cmd, content_type="text/plain")
 
 
-@csrf_exempt
-def cargo(request):
+def cargo_operation(request,cargo_id,in_out,self_id):
     #/interface/cargo/?cargo_id=%s&self_id%s&in=%d
     #inout: in1 out2 change3
     #L:%d,Origin:%d,Target:%d,Work:%d,
-    cargo_id = request.GET.get("cargo_id")
-    self_id = request.GET.get("self_id")
-    in_out = request.GET.get("in")
 
     worigin=0
-    wtarger=0
+    wtarget=0
     if(self_id=="1-1-1"):
         wtarget=1
     elif(self_id=="1-1-2"):
@@ -232,7 +228,9 @@ def cargo(request):
         elif(previous_self_id=="1-2-3"):
             worigin=6
         
-    models.cmd8266.objects.create(cmd="L:0"+",Origin:"+str(worigin)+",Target:"+str(wtarget)+",Work:"+str(in_out)+",")
+    models.cmd8266.objects.create(cmd="L:0"+",Origin:"+str(worigin)+",Target:"+str(wtarget)+\
+                                  ",Work:"+str(in_out)+",Vacant:"+\
+                                    str(models.goods.objects.filter(isempty=True).count())+",")
     
     return HttpResponse("success", content_type="text/plain")
 
@@ -256,3 +254,25 @@ def get_goods(request):
 
     goods_list="\""+goods_list+"\""
     return HttpResponse(goods_list, content_type="text/plain")
+
+
+def lighton(request):
+    models.cmd8266.objects.create(cmd="L:1,Origin:0,Target:0,Work:0,Vacant:"+\
+                                  str(models.goods.objects.filter(isempty=True).count())+",")
+    return HttpResponse("success", content_type="text/plain")
+
+def lightoff(request):
+    models.cmd8266.objects.create(cmd="L:2,Origin:0,Target:0,Work:0,Vacant:"+\
+                                  str(models.goods.objects.filter(isempty=True).count())+",")
+    return HttpResponse("success", content_type="text/plain")
+
+def change_cargo(request):
+    
+
+    return
+
+def cargo(request):
+
+
+
+    return
