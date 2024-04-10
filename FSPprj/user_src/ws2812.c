@@ -3,7 +3,7 @@
  * @Author:				Hermes
  * @Version:
  * @Date:
- * @Description:  SPI ·½Ê½ÊµÏÖ¹éÁãÂë·¢ËÍ µÆ´øÇý¶¯Ä£¿é
+ * @Description:  SPI ï¿½ï¿½Ê½Êµï¿½Ö¹ï¿½ï¿½ï¿½ï¿½ë·¢ï¿½ï¿½ ï¿½Æ´ï¿½ï¿½ï¿½ï¿½ï¿½Ä£ï¿½ï¿½
  *************************************************************/
 #include "ws2812.h"
 
@@ -33,7 +33,7 @@ static void user_sci_spi_write(uint8_t * p_data, uint32_t length)
 
 
 /**
- * @Description  	WS2812µÆ´ø³õÊ¼»¯Ö÷µ÷º¯Êý
+ * @Description  	WS2812ï¿½Æ´ï¿½ï¿½ï¿½Ê¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @Param     	  {void}
  * @Return    	  {void}
  */
@@ -59,7 +59,7 @@ void ws2812_Init(void)
 }
 
 /**
- * @Description  	WS2812 ·¢ËÍÊý¾Ý
+ * @Description  	WS2812 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @Param     	  {void}
  * @Return    	  {void}
  */
@@ -68,19 +68,19 @@ void ws2812_Send_Data(void)
 	user_sci_spi_write((uint8_t *)ws2812_data_buffer, WS2812_LED_NUM * 24);
 }
 
-// ½«ÈýÔ­É«µ¥¶ÀÊý¾ÝºÏ²¢Îª24Î»Êý¾Ý
+// ï¿½ï¿½ï¿½ï¿½Ô­É«ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ÝºÏ²ï¿½Îª24Î»ï¿½ï¿½ï¿½ï¿½
 uint32_t ws281x_color(uint8_t red, uint8_t green, uint8_t blue)
 {
-	return (uint32_t)(green << 16 | red << 8 | blue);
+	return green << 16 | red << 8 | blue;
 }
 
 /**
- * @Description  	WS2812 ÉèÖÃµÚn¸öµÆÖéµÄÑÕÉ«
- * @Param     n:µÚ¼¸¸öµÆÖé   red:0-255   green:0-255    blue:0-255 	   eg:yellow:255 255 0
+ * @Description  	WS2812 ï¿½ï¿½ï¿½Ãµï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
+ * @Param     n:ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   red:0-255   green:0-255    blue:0-255 	   eg:yellow:255 255 0
  * @Return
  */
 
-// Éè¶¨µÚn¸öµÆÖéµÄÑÕÉ«
+// ï¿½è¶¨ï¿½ï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«
 void ws281x_setPixelRGB(uint16_t n, uint8_t red, uint8_t green, uint8_t blue)
 {
 	uint8_t i;
@@ -97,8 +97,8 @@ void ws281x_setPixelRGB(uint16_t n, uint8_t red, uint8_t green, uint8_t blue)
 }
 
 /**
- * @Description  	WS2812 ÉèÖÃµÆÖéÑÕÉ«£¨¹Ì¶¨µÄ£©
- * @Param       		 n:µÚ¼¸¸öµÆÖé   color:ÄÄÖÖÑÕÉ«£¨0-7£©
+ * @Description  	WS2812 ï¿½ï¿½ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½ï¿½Ì¶ï¿½ï¿½Ä£ï¿½
+ * @Param       		 n:ï¿½Ú¼ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½   color:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½É«ï¿½ï¿½0-7ï¿½ï¿½
  * @Return
  */
 void set_pixel_rgb(uint16_t n, uint8_t color)
@@ -132,7 +132,7 @@ void set_pixel_rgb(uint16_t n, uint8_t color)
 	}
 }
 
-// ÉèÖÃ¹Ø±ÕµÚn¸öµÆÖé
+// ï¿½ï¿½ï¿½Ã¹Ø±Õµï¿½nï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 void ws281x_ShutoffPixel(uint16_t n)
 {
 	uint8_t i;
@@ -150,7 +150,7 @@ void ws281x_ShutoffPixel(uint16_t n)
 }
 
 /**
- * @Description  	WS2812¹Ø±ÕËùÓÐµÆ¹â		1. ·¢ËÍWS2812_LED_NUM * 24Î»µÄ 0 Âë
+ * @Description  	WS2812ï¿½Ø±ï¿½ï¿½ï¿½ï¿½ÐµÆ¹ï¿½		1. ï¿½ï¿½ï¿½ï¿½WS2812_LED_NUM * 24Î»ï¿½ï¿½ 0 ï¿½ï¿½
 
  * @Param     	  {void}
  * @Return    	  {void}
@@ -184,14 +184,14 @@ void ws2812_all_on(float brightness, uint32_t GRB_color)
 	__brightnessAdjust(brightness / 100.0f, rgb_color);
 	for (uint16_t j = 0; j < WS2812_LED_NUM; j++)
 	{
-		ws2812_Set_one_LED_Color(j, (uint32_t)((rgb_color.G << 16) | (rgb_color.R << 8) | (rgb_color.B)));
+		ws2812_Set_one_LED_Color(j, (rgb_color.G << 16) | (rgb_color.R << 8) | (rgb_color.B));
 	}
 		ws2812_Send_Data();
 }
 
 
 /**
- * @Description  	WS2812ÉèÖÃÄ³Ò»Î»µÄLEDµÄÑÕÉ« µ«²»·¢ËÍ
+ * @Description  	WS2812ï¿½ï¿½ï¿½ï¿½Ä³Ò»Î»ï¿½ï¿½LEDï¿½ï¿½ï¿½ï¿½É« ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
  * @Param     	  {uint16_t LED_index ,uint32_t GRB_color}
  * @Return    	  {void}
  */
@@ -234,7 +234,7 @@ void light_ctrl(uint8_t switch_flag)
 										Private Function
 ************************************************************/
 /**
- * @Description  	»ñµÃÁ½Êý×î´óÖµ
+ * @Description  	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
  * @Param     	  {float a,float b}
  * @Return    	  {float}
  */
@@ -244,7 +244,7 @@ float __getMaxValue(float a, float b)
 }
 
 /**
- * @Description  	»ñµÃÁ½Êý×îÐ¡Öµ
+ * @Description  	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð¡Öµ
  * @Param     	  {void}
  * @Return    	  {void}
  */
@@ -330,7 +330,7 @@ void __HSV_2_RGB(HSV_Color HSV, RGB_Color *RGB)
 		}
 		HSV.H *= 6.0f;
 		k = (int)floor(HSV.H);
-		f = HSV.H - (float)k;
+		f = HSV.H - k;
 		aa = HSV.V * (1.0f - HSV.S);
 		bb = HSV.V * (1.0f - HSV.S * f);
 		cc = HSV.V * (1.0f - (HSV.S * (1.0f - f)));
@@ -374,7 +374,7 @@ void __HSV_2_RGB(HSV_Color HSV, RGB_Color *RGB)
 }
 
 /**
- * @Description  	ÁÁ¶Èµ÷½Ú
+ * @Description  	ï¿½ï¿½ï¿½Èµï¿½ï¿½ï¿½
  * @Param     	  {void}
  * @Return    	  {void}
  */
