@@ -28,6 +28,7 @@ extern SemaphoreHandle_t uart8rxc;
 extern SemaphoreHandle_t uart4rxc;
 extern SemaphoreHandle_t uart5rxc;
 extern SemaphoreHandle_t on8266;
+extern SemaphoreHandle_t on_hmi;
 void g_common_init(void);
 FSP_FOOTER
 #endif /* COMMON_DATA_H_ */

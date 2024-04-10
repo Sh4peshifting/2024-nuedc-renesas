@@ -142,8 +142,8 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
         case SCREEN_RX_CMD_LOGIN:
             sscanf((char *)screen_rx_buf + 2, "%s:%s", account, passwd);
             uprintf(&g_uart7_ctrl, "login\n");
-            screen_login_page_disp(1);
-
+            login_auth();
+            // screen_login_page_disp(1);
             // login function and use screen_login_page_disp() to display the result
             break;
         case SCREEN_RX_CMD_PUT:
@@ -170,10 +170,12 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             break;
         case SCREEN_RX_CMD_SHELF_LIST:
             // update shelf list
+            uprintf(&g_uart7_ctrl, "get good list\n");
             get_goods();
             break;
         case SCREEN_RX_CMD_LOG_LIST:
             // update log list
+            uprintf(&g_uart7_ctrl, "get log\n");
             get_log();
             break;
         default:

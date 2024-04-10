@@ -52,6 +52,11 @@ SemaphoreHandle_t on8266;
                 StaticSemaphore_t on8266_memory;
                 #endif
                 void rtos_startup_err_callback(void * p_instance, void * p_data);
+SemaphoreHandle_t on_hmi;
+                #if 1
+                StaticSemaphore_t on_hmi_memory;
+                #endif
+                void rtos_startup_err_callback(void * p_instance, void * p_data);
 void g_common_init(void) {
 uart7rxc =
                 #if 1
@@ -126,20 +131,29 @@ uart5rxc =
                 rtos_startup_err_callback(uart5rxc, 0);
                 }
 on8266 =
+                #if 1
+                xSemaphoreCreateBinaryStatic(&on8266_memory);
+                #else
+                xSemaphoreCreateBinary();
+                #endif
+                if (NULL == on8266) {
+                rtos_startup_err_callback(on8266, 0);
+                }
+on_hmi =
                 #if 0
                 #if 1
-                xSemaphoreCreateRecursiveMutexStatic(&on8266_memory);
+                xSemaphoreCreateRecursiveMutexStatic(&on_hmi_memory);
                 #else
                 xSemaphoreCreateRecursiveMutex();
                 #endif
                 #else
                 #if 1
-                xSemaphoreCreateMutexStatic(&on8266_memory);
+                xSemaphoreCreateMutexStatic(&on_hmi_memory);
                 #else
                 xSemaphoreCreateMutex();
                 #endif
                 #endif
-                if (NULL == on8266) {
-                rtos_startup_err_callback(on8266, 0);
+                if (NULL == on_hmi) {
+                rtos_startup_err_callback(on_hmi, 0);
                 }
 }

@@ -168,10 +168,6 @@ def cargo(request):
     self_id = request.GET.get("self_id")
     in_out = request.GET.get("in")
 
-    run_cmd[0]=0x55
-
-    run_cmd=[0x00,0x00,0x00]
-
     worigin=0
     wtarger=0
     if(self_id=="1-1-1"):
@@ -188,27 +184,37 @@ def cargo(request):
         wtarget=6
 
     if(in_out=="1"):
-        if(models.goods.objects.filter(place=self_id).first().isempty==False):
-            run_cmd[0]=0x01
-            return HttpResponse(run_cmd, content_type="text/plain")
-        models.goods.objects.filter(place=self_id).update(number=cargo_id,isempty=False)
+        goods_self=models.goods.objects.filter(place=self_id).first()
+        if(not goods_self):#self_id不存在
+            return HttpResponse("error", content_type="text/plain")
+        if(goods_self.isempty==False):#self_id已有货物
+            return HttpResponse("error", content_type="text/plain")
+        goods_self.update(number=cargo_id,isempty=False)
         models.log.objects.create(staff=request.user, time=timezone.now(), operation="入库", other=cargo_id)
 
 
     elif(in_out=="2"):
-        if(models.goods.objects.filter(number=cargo_id).first().isempty==True):
-            run_cmd[0]=0x01
-            return HttpResponse(run_cmd, content_type="text/plain")
-        self_id=models.goods.objects.filter(number=cargo_id).first().place
-        models.goods.objects.filter(place=self_id).update(number="",isempty=True)
+        goods_self=models.goods.objects.filter(number=cargo_id).first()
+        if(not goods_self):#cargo_id不存在
+            return HttpResponse("error", content_type="text/plain")
+        if(goods_self.isempty==True):#cargo_id已出库
+            return HttpResponse("error", content_type="text/plain")
+        goods_self.update(number="",isempty=True)
         models.log.objects.create(staff=request.user, time=timezone.now(), operation="出库", other=cargo_id)
 
     
 
     elif(in_out=="3"):
+        goods_self=models.goods.objects.filter(place=self_id).first()
+        if(not goods_self):#self_id不存在
+            return HttpResponse("error", content_type="text/plain")
+        goods_self=models.goods.objects.filter(number=cargo_id).first()
+        if(not goods_self):#cargo_id不存在
+            return HttpResponse("error", content_type="text/plain")
+        
+
         if(models.goods.objects.filter(place=self_id).first().isempty==False  or models.goods.objects.filter(number=cargo_id).first().isempty==True):
-            run_cmd[0]=0x01
-            return HttpResponse(run_cmd, content_type="text/plain")
+            return HttpResponse("error", content_type="text/plain")
         previous_self_id=models.goods.objects.filter(number=cargo_id).first().place
         models.goods.objects.filter(place=previous_self_id).update(number="",isempty=True)
         models.goods.objects.filter(place=self_id).update(number=cargo_id,isempty=False)
@@ -227,7 +233,8 @@ def cargo(request):
             worigin=6
         
     models.cmd8266.objects.create(cmd="L:0"+",Origin:"+str(worigin)+",Target:"+str(wtarget)+",Work:"+str(in_out)+",")
-    return HttpResponse(run_cmd, content_type="text/plain")
+    
+    return HttpResponse("success", content_type="text/plain")
 
 
 @csrf_exempt

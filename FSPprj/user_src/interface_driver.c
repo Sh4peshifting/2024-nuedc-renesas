@@ -15,10 +15,15 @@ uint8_t wait_8266return(uint16_t timeout)
 }
 void esp_init(void)
 {
-    xSemaphoreTake(on8266,portMAX_DELAY);
+    
     while(!strstr((const char *)uart8pack.data,"WIFI GOT IP")){
         uprintf(&g_uart7_ctrl,"Connecting...\n");
-        wait_8266return(10000);
+        if(1==wait_8266return(10000)){
+            uprintf(&g_uart7_ctrl,"Connecting failed\nReseting...\n");
+            uprintf(&g_uart8_ctrl,"+++");//退出透传
+            vTaskDelay(1000);
+            uprintf(&g_uart8_ctrl,"AT+RST\r\n");
+        }
 
     }
 
@@ -54,11 +59,11 @@ void status_upload(void)
     fire_status_t onfire=fire_detect();
 
     xSemaphoreTake(on8266,portMAX_DELAY);
-    vTaskDelay(10);
+    vTaskDelay(100);
 
     uprintf(&uart_esp_ctrl,"GET /interface/sensor/?humi=%d&temp=%d.%d&fire=%d&working=%d\r\n\r\n",
         dht11_data.humi_int,dht11_data.temp_int,dht11_data.temp_deci,onfire,onworking);
-    if(wait_8266return(500)){
+    if(wait_8266return(2000)){
         return;
     }
 
@@ -83,20 +88,34 @@ void status_upload(void)
         onworking=l_onworking;
     }
 
-    xSemaphoreGive(on8266);
 
+    xSemaphoreGive(on8266);//把串口屏操作也放在8266互斥锁中
+
+    xSemaphoreTake(on_hmi,portMAX_DELAY);
     env_info_t env_info={("55"),not_empty_shelf,dht11_data.temp_int,dht11_data.humi_int};//未解决
     //env_info_t env_info={"45",5,15,15};
+
     update_env_info(&env_info);
-
-
+    xSemaphoreGive(on_hmi);
 }
 
 void login_auth()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
+    vTaskDelay(100);
+    // xSemaphoreTake(on_hmi,portMAX_DELAY);
+    // screen_login_page_disp(1);
+    // xSemaphoreGive(on_hmi);
+    // xSemaphoreGive(on8266);
 
-
+    //     uprintf(&g_uart8_ctrl,"GET /interface/get_log/\r\n\r\n");
+    // if(!wait_8266return(2000)){
+        R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
+        xSemaphoreTake(uart7txc,portMAX_DELAY);
+        esppack.data[esppack.len]=0;
+        // uprintf(&g_uart7_ctrl,uart8pack.data);
+         screen_login_page_disp(1);
+    // }
 
     xSemaphoreGive(on8266);
 }
@@ -105,17 +124,23 @@ void login_auth()
 void storge_inout(uint8_t *cargo_id,uint8_t *self_id,uint8_t inout)
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-    xSemaphoreTake(uart8rxc,0);
-    uprintf(&uart_esp_ctrl,"GET /interface/cargo/?cargo_id=%s&self_id%s&in=%d\r\n",cargo_id,self_id,inout);
-    xSemaphoreTake(uart8rxc,portMAX_DELAY);
+    vTaskDelay(100);
 
-    uart8pack.data[uart8pack.len]=0;
-    if(strstr((const char *)uart8pack.data,"success")){
-        //申请成功
-    }
-    else {
-        //操作失败 弹窗
-        screen_error_msg_disp(1);
+
+    xSemaphoreTake(uart8rxc,0);
+    uprintf(&uart_esp_ctrl,"GET /interface/cargo/?cargo_id=%s&self_id=%s&in=%d\r\n\r\n",cargo_id,self_id,inout);
+    if(!wait_8266return(2000))
+    {
+        uart8pack.data[uart8pack.len] = 0;
+        if (strstr((const char *)uart8pack.data, "success"))
+        {
+            // 申请成功
+        }
+        else
+        {
+            // 操作失败 弹窗
+            screen_error_msg_disp(1);
+        }
     }
 
     xSemaphoreGive(on8266);
@@ -124,7 +149,7 @@ void storge_inout(uint8_t *cargo_id,uint8_t *self_id,uint8_t inout)
 void get_log()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-
+    vTaskDelay(100);
     uprintf(&g_uart8_ctrl,"GET /interface/get_log/\r\n\r\n");
     if(!wait_8266return(2000)){
         R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
@@ -139,11 +164,11 @@ void get_log()
 void get_goods()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-    vTaskDelay(10);
+    vTaskDelay(100);
     uprintf(&g_uart8_ctrl,"GET /interface/get_goods/\r\n\r\n");
     if(!wait_8266return(2000)){
-        R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
-        xSemaphoreTake(uart7txc,portMAX_DELAY);
+        // R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
+        // xSemaphoreTake(uart7txc,portMAX_DELAY);
         esppack.data[esppack.len]=0;
         update_data_list(SCREEN_UPDATE_SHLF_LIST,esppack.data);
     }

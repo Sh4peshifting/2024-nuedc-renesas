@@ -777,7 +777,7 @@ FSP Configuration
     Symbol: usartprocess
     Name: usartprocess
     Stack size (bytes): 1024
-    Priority: 1
+    Priority: 4
     Thread Context: NULL
     Memory Allocation: Static
     Allocate Secure Context: Enable
@@ -803,7 +803,7 @@ FSP Configuration
   Thread "hmi"
     Symbol: hmi
     Name: hmi
-    Stack size (bytes): 1024
+    Stack size (bytes): 2048
     Priority: 1
     Thread Context: NULL
     Memory Allocation: Static
@@ -850,8 +850,12 @@ FSP Configuration
     Symbol: uart5rxc
     Memory Allocation: Static
     
-  Object "on8266 Mutex"
+  Object "on8266 Binary Semaphore"
     Symbol: on8266
+    Memory Allocation: Static
+    
+  Object "on_hmi Mutex"
+    Symbol: on_hmi
     Type: Mutex
     Memory Allocation: Static
     

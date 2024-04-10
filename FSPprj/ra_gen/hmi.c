@@ -4,9 +4,9 @@
 #if 1
                 static StaticTask_t hmi_memory;
                 #if defined(__ARMCC_VERSION)           /* AC6 compiler */
-                static uint8_t hmi_stack[1024] BSP_PLACE_IN_SECTION(BSP_UNINIT_SECTION_PREFIX ".stack.thread") BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT);
+                static uint8_t hmi_stack[2048] BSP_PLACE_IN_SECTION(BSP_UNINIT_SECTION_PREFIX ".stack.thread") BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT);
                 #else
-                static uint8_t hmi_stack[1024] BSP_PLACE_IN_SECTION(BSP_UNINIT_SECTION_PREFIX ".stack.hmi") BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT);
+                static uint8_t hmi_stack[2048] BSP_PLACE_IN_SECTION(BSP_UNINIT_SECTION_PREFIX ".stack.hmi") BSP_ALIGN_VARIABLE(BSP_STACK_ALIGNMENT);
                 #endif
                 #endif
                 TaskHandle_t hmi;
@@ -36,7 +36,7 @@ extern uint32_t g_fsp_common_thread_count;
                     #endif
                         hmi_func,
                         (const char *)"hmi",
-                        1024/4, // In words, not bytes
+                        2048/4, // In words, not bytes
                         (void *) &hmi_parameters, //pvParameters
                         1,
                         #if 1

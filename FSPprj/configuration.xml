@@ -636,8 +636,12 @@
       <property id="rtos.awsfreertos.object.binary_semaphore.symbol" value="uart5rxc"/>
       <property id="rtos.awsfreertos.object.binary_semaphore.allocation" value="rtos.awsfreertos.object.binary_semaphore.allocation.static"/>
     </object>
-    <object id="rtos.awsfreertos.object.mutex.1169965744">
-      <property id="rtos.awsfreertos.object.mutex.symbol" value="on8266"/>
+    <object id="rtos.awsfreertos.object.binary_semaphore.756949583">
+      <property id="rtos.awsfreertos.object.binary_semaphore.symbol" value="on8266"/>
+      <property id="rtos.awsfreertos.object.binary_semaphore.allocation" value="rtos.awsfreertos.object.binary_semaphore.allocation.static"/>
+    </object>
+    <object id="rtos.awsfreertos.object.mutex.1929212977">
+      <property id="rtos.awsfreertos.object.mutex.symbol" value="on_hmi"/>
       <property id="rtos.awsfreertos.object.mutex.type" value="rtos.awsfreertos.object.mutex.type.mutex"/>
       <property id="rtos.awsfreertos.object.mutex.allocation" value="rtos.awsfreertos.object.mutex.allocation.static"/>
     </object>
@@ -673,7 +677,7 @@
       <property id="_symbol" value="usartprocess"/>
       <property id="rtos.awsfreertos.thread.name" value="usartprocess"/>
       <property id="rtos.awsfreertos.thread.stack" value="1024"/>
-      <property id="rtos.awsfreertos.thread.priority" value="1"/>
+      <property id="rtos.awsfreertos.thread.priority" value="4"/>
       <property id="rtos.awsfreertos.thread.context" value="NULL"/>
       <property id="rtos.awsfreertos.thread.allocation" value="rtos.awsfreertos.thread.allocation.static"/>
       <property id="rtos.awsfreertos.thread.secure_context" value="rtos.awsfreertos.thread.secure_context.enable"/>
@@ -699,7 +703,7 @@
     <context id="rtos.awsfreertos.thread.1001037234">
       <property id="_symbol" value="hmi"/>
       <property id="rtos.awsfreertos.thread.name" value="hmi"/>
-      <property id="rtos.awsfreertos.thread.stack" value="1024"/>
+      <property id="rtos.awsfreertos.thread.stack" value="2048"/>
       <property id="rtos.awsfreertos.thread.priority" value="1"/>
       <property id="rtos.awsfreertos.thread.context" value="NULL"/>
       <property id="rtos.awsfreertos.thread.allocation" value="rtos.awsfreertos.thread.allocation.static"/>
