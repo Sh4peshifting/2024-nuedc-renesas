@@ -7,6 +7,8 @@
                 #include "semphr.h"
 #include "FreeRTOS.h"
                 #include "semphr.h"
+#include "FreeRTOS.h"
+                #include "semphr.h"
 #include "r_ioport.h"
 #include "bsp_pin_cfg.h"
 FSP_HEADER
@@ -27,8 +29,8 @@ extern SemaphoreHandle_t uart8txc;
 extern SemaphoreHandle_t uart8rxc;
 extern SemaphoreHandle_t uart4rxc;
 extern SemaphoreHandle_t uart5rxc;
-extern SemaphoreHandle_t on8266;
 extern SemaphoreHandle_t on_hmi;
+extern SemaphoreHandle_t on8266;
 void g_common_init(void);
 FSP_FOOTER
 #endif /* COMMON_DATA_H_ */

@@ -785,7 +785,7 @@ FSP Configuration
   Thread "interface"
     Symbol: interface
     Name: interface
-    Stack size (bytes): 1024
+    Stack size (bytes): 2048
     Priority: 1
     Thread Context: NULL
     Memory Allocation: Static
@@ -850,12 +850,14 @@ FSP Configuration
     Symbol: uart5rxc
     Memory Allocation: Static
     
-  Object "on8266 Binary Semaphore"
-    Symbol: on8266
-    Memory Allocation: Static
-    
   Object "on_hmi Mutex"
     Symbol: on_hmi
     Type: Mutex
+    Memory Allocation: Static
+    
+  Object "on8266 Counting Semaphore"
+    Symbol: on8266
+    Initial count: 0
+    Maximum count: 8
     Memory Allocation: Static
     

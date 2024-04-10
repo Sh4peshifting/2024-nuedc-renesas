@@ -47,14 +47,14 @@ SemaphoreHandle_t uart5rxc;
                 StaticSemaphore_t uart5rxc_memory;
                 #endif
                 void rtos_startup_err_callback(void * p_instance, void * p_data);
-SemaphoreHandle_t on8266;
-                #if 1
-                StaticSemaphore_t on8266_memory;
-                #endif
-                void rtos_startup_err_callback(void * p_instance, void * p_data);
 SemaphoreHandle_t on_hmi;
                 #if 1
                 StaticSemaphore_t on_hmi_memory;
+                #endif
+                void rtos_startup_err_callback(void * p_instance, void * p_data);
+SemaphoreHandle_t on8266;
+                #if 1
+                StaticSemaphore_t on8266_memory;
                 #endif
                 void rtos_startup_err_callback(void * p_instance, void * p_data);
 void g_common_init(void) {
@@ -130,15 +130,6 @@ uart5rxc =
                 if (NULL == uart5rxc) {
                 rtos_startup_err_callback(uart5rxc, 0);
                 }
-on8266 =
-                #if 1
-                xSemaphoreCreateBinaryStatic(&on8266_memory);
-                #else
-                xSemaphoreCreateBinary();
-                #endif
-                if (NULL == on8266) {
-                rtos_startup_err_callback(on8266, 0);
-                }
 on_hmi =
                 #if 0
                 #if 1
@@ -155,5 +146,20 @@ on_hmi =
                 #endif
                 if (NULL == on_hmi) {
                 rtos_startup_err_callback(on_hmi, 0);
+                }
+on8266 =
+                #if 1
+                xSemaphoreCreateCountingStatic(
+                #else
+                xSemaphoreCreateCounting(
+                #endif
+                8,
+                0
+                #if 1
+                , &on8266_memory
+                #endif
+                );
+                if (NULL == on8266) {
+                rtos_startup_err_callback(on8266, 0);
                 }
 }

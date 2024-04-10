@@ -221,7 +221,7 @@ void light_ctrl(uint8_t switch_flag)
 {
 	if (switch_flag == LIGHT_ON)
 	{
-		ws2812_all_on(20, C_Purple);
+		ws2812_all_on(20, C_Red);
 	}
 	else
 	{

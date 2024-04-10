@@ -53,29 +53,32 @@ float read_yaw(void)
 void status_upload(void)
 {
     DHT11_Data_TypeDef dht11_data;
-    uint8_t light_status;
-    uint8_t l_worigin,l_wtarget,l_onworking,not_empty_shelf;
+    int light_status;
+    int l_worigin,l_wtarget,l_onworking,not_empty_shelf;
     Read_DHT11(&dht11_data);
     fire_status_t onfire=fire_detect();
-
+    
     xSemaphoreTake(on8266,portMAX_DELAY);
     vTaskDelay(100);
-
+    
     uprintf(&uart_esp_ctrl,"GET /interface/sensor/?humi=%d&temp=%d.%d&fire=%d&working=%d\r\n\r\n",
         dht11_data.humi_int,dht11_data.temp_int,dht11_data.temp_deci,onfire,onworking);
     if(wait_8266return(2000)){
         return;
     }
-
-    //process website cmd
+    uprintf(&g_uart7_ctrl,"dht11first:%d,%.2f\n",dht11_data.humi_int,(float)dht11_data.temp_int);
     uart8pack.data[uart8pack.len]=0;
-    sscanf((const char *)uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,Vacant:%d,\r\n",
-    (int *)&light_status,(int *)&l_worigin,(int *)&l_wtarget,(int *)&l_onworking,(int *)&not_empty_shelf);
+    R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
+    xSemaphoreTake(uart7txc,portMAX_DELAY);
+    //process website cmd
+    uint8_t rescanf = sscanf(uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,Vacant:%d,",
+    &light_status,&l_worigin,&l_wtarget,&l_onworking,&not_empty_shelf);
     // #define WORK_IN 1
     // #define WORK_OUT 2
     // #define WORK_CH 3
     //L2关,1开,0无操作
     //传递运行命令
+    env_info_t env_info={("55"),not_empty_shelf,dht11_data.temp_int,dht11_data.humi_int};//未解决
     if(light_status){
         if(light_status==1) light_ctrl(LIGHT_ON);
         else if(light_status==2) light_ctrl(LIGHT_OFF);
@@ -92,16 +95,17 @@ void status_upload(void)
     xSemaphoreGive(on8266);//把串口屏操作也放在8266互斥锁中
 
     xSemaphoreTake(on_hmi,portMAX_DELAY);
-    env_info_t env_info={("55"),not_empty_shelf,dht11_data.temp_int,dht11_data.humi_int};//未解决
+    uprintf(&g_uart7_ctrl,"dht11:%d,%.2f\n",dht11_data.humi_int,(float)dht11_data.temp_int);
+    
     //env_info_t env_info={"45",5,15,15};
-
-    update_env_info(&env_info);
+    uprintf(&g_uart7_ctrl,"env_info:%d,%.2f,%d\n",env_info.humidity,(float)env_info.temperature,rescanf);
+    update_env_info(env_info);
     xSemaphoreGive(on_hmi);
 }
 
 void login_auth()
 {
-    xSemaphoreTake(on8266,portMAX_DELAY);
+    xSemaphoreTake(on8266,5000);
     vTaskDelay(100);
     // xSemaphoreTake(on_hmi,portMAX_DELAY);
     // screen_login_page_disp(1);
@@ -110,13 +114,12 @@ void login_auth()
 
     //     uprintf(&g_uart8_ctrl,"GET /interface/get_log/\r\n\r\n");
     // if(!wait_8266return(2000)){
-        R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
-        xSemaphoreTake(uart7txc,portMAX_DELAY);
-        esppack.data[esppack.len]=0;
+        // R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
+        // xSemaphoreTake(uart7txc,portMAX_DELAY);
+        // esppack.data[esppack.len]=0;
         // uprintf(&g_uart7_ctrl,uart8pack.data);
          screen_login_page_disp(1);
     // }
-
     xSemaphoreGive(on8266);
 }
 

@@ -50,7 +50,7 @@ typedef struct
 void screen_beep(uint8_t beep_milisec);
 void update_data_list(uint8_t data_type, uint8_t *data_list);
 
-void update_env_info(env_info_t *env_info);
+void update_env_info(env_info_t env_info);
 void shelf_list_insert(shelf_info_t* shelf_info);
 void log_list_insert(log_info_t* log_info);
 void list_clear(char* list_name);

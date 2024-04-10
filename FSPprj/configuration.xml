@@ -636,14 +636,16 @@
       <property id="rtos.awsfreertos.object.binary_semaphore.symbol" value="uart5rxc"/>
       <property id="rtos.awsfreertos.object.binary_semaphore.allocation" value="rtos.awsfreertos.object.binary_semaphore.allocation.static"/>
     </object>
-    <object id="rtos.awsfreertos.object.binary_semaphore.756949583">
-      <property id="rtos.awsfreertos.object.binary_semaphore.symbol" value="on8266"/>
-      <property id="rtos.awsfreertos.object.binary_semaphore.allocation" value="rtos.awsfreertos.object.binary_semaphore.allocation.static"/>
-    </object>
     <object id="rtos.awsfreertos.object.mutex.1929212977">
       <property id="rtos.awsfreertos.object.mutex.symbol" value="on_hmi"/>
       <property id="rtos.awsfreertos.object.mutex.type" value="rtos.awsfreertos.object.mutex.type.mutex"/>
       <property id="rtos.awsfreertos.object.mutex.allocation" value="rtos.awsfreertos.object.mutex.allocation.static"/>
+    </object>
+    <object id="rtos.awsfreertos.object.semaphore.1915891519">
+      <property id="rtos.awsfreertos.object.semaphore.symbol" value="on8266"/>
+      <property id="rtos.awsfreertos.object.semaphore.count" value="0"/>
+      <property id="rtos.awsfreertos.object.semaphore.count_max" value="8"/>
+      <property id="rtos.awsfreertos.object.semaphore.allocation" value="rtos.awsfreertos.object.semaphore.allocation.static"/>
     </object>
     <context id="_hal.0">
       <stack module="module.driver.ioport_on_ioport.0"/>
@@ -685,7 +687,7 @@
     <context id="rtos.awsfreertos.thread.1546913562">
       <property id="_symbol" value="interface"/>
       <property id="rtos.awsfreertos.thread.name" value="interface"/>
-      <property id="rtos.awsfreertos.thread.stack" value="1024"/>
+      <property id="rtos.awsfreertos.thread.stack" value="2048"/>
       <property id="rtos.awsfreertos.thread.priority" value="1"/>
       <property id="rtos.awsfreertos.thread.context" value="NULL"/>
       <property id="rtos.awsfreertos.thread.allocation" value="rtos.awsfreertos.thread.allocation.static"/>

@@ -34,10 +34,10 @@ void led1_entry(void *pvParameters)
         // dht11_data.humi_int,dht11_data.humi_deci);
 
         // uprintf(&g_uart7_ctrl,"hello\n");
-        // light_ctrl(LIGHT_ON);
+        light_ctrl(LIGHT_ON);
         R_IOPORT_PinWrite(g_ioport.p_ctrl, led, 0);
         vTaskDelay(500);
-        // light_ctrl(LIGHT_OFF);
+        light_ctrl(LIGHT_OFF);
         R_IOPORT_PinWrite(g_ioport.p_ctrl, led, 1);
         vTaskDelay(500);
         // xSemaphoreTake(uart9rxc,portMAX_DELAY);
