@@ -253,7 +253,7 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             break;
         case SCREEN_RX_CMD_SWITCH:
             // sscanf((char *)screen_rx_buf + 2, "%s %s", cargo_id, shelf_id);
-            sscanf((char *)screen_rx_buf + 2, "%s %s", old_shelf_id, shelf_id);
+            sscanf((char *)screen_rx_buf + 2, "%5s %5s", old_shelf_id, shelf_id);
             uprintf(&g_uart7_ctrl, "switch\n");
             // switch shelf function
             // storge_inout(cargo_id, shelf_id, 3);//need to modify
