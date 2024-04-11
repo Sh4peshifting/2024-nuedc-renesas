@@ -57,9 +57,10 @@ void status_upload(void)
     int light_status;
     int l_worigin,l_wtarget,l_onworking,not_empty_shelf;
 
-    
+    vTaskSuspendAll();
     Read_DHT11(&dht11_data);
-    
+    xTaskResumeAll();
+
     fire_status_t onfire=fire_detect();
     
     xSemaphoreTake(on8266,portMAX_DELAY);

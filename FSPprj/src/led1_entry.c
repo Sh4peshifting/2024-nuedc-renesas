@@ -8,7 +8,7 @@ void led1_entry(void *pvParameters)
 {
     FSP_PARAMETER_NOT_USED(pvParameters);
     /* TODO: add your own code here */
-    g_uart7.p_api->open(g_uart7.p_ctrl, g_uart7.p_cfg);
+    
     // R_SCI_UART_Open(&g_uart9_ctrl,&g_uart9_cfg);
     ws2812_Init();
     motor_init();

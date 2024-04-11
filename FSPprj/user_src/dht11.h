@@ -15,7 +15,7 @@
 #define DHT11_Mode_IPU() R_IOPORT_PinCfg(&g_ioport_ctrl, DHT11_Pin, IOPORT_CFG_PORT_DIRECTION_INPUT)
 
 #define Delay_us(x) R_BSP_SoftwareDelay(x, BSP_DELAY_UNITS_MICROSECONDS)
-#define Delay_ms(x) vTaskDelay(x) //R_BSP_SoftwareDelay(x, BSP_DELAY_UNITS_MILLISECONDS)
+#define Delay_ms(x) R_BSP_SoftwareDelay(x, BSP_DELAY_UNITS_MILLISECONDS)
 
 #define DHT11_DATA_OUT(pin_level)                   \
 	if (pin_level)                                  \
