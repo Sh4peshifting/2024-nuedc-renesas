@@ -20,6 +20,8 @@
 #define SCREEN_UPDATE_SHLF_LIST  0x01
 #define SCREEN_UPDATE_LOG_LIST   0x02
 
+#define SCREEN_UPDATE_SHELF_INFO 0x06
+
 #define HIDDEN 0x00
 #define VISIBLE 0x01
 
@@ -53,6 +55,7 @@ void update_data_list(uint8_t data_type, uint8_t *data_list);
 void update_env_info(env_info_t env_info);
 void shelf_list_insert(shelf_info_t* shelf_info);
 void log_list_insert(log_info_t* log_info);
+void update_shelf_info(uint8_t *shelf_status);
 void list_clear(char* list_name);
 void screen_login_page_disp(uint8_t is_pwd_correct);
 void screen_car_busy_disp(uint8_t is_car_busy);
