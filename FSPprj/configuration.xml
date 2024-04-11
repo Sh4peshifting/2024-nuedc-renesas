@@ -446,7 +446,7 @@
       <property id="module.driver.spi.txi_ipl" value="board.icu.common.irq.priority12"/>
       <property id="module.driver.spi.tei_ipl" value="board.icu.common.irq.priority12"/>
       <property id="module.driver.spi.eri_ipl" value="board.icu.common.irq.priority12"/>
-      <property id="module.driver.spi.bitrate" value="9000000"/>
+      <property id="module.driver.spi.bitrate" value="8000000"/>
       <property id="module.driver.spi.bitrate_modulation" value="module.driver.spi.bitrate_modulation.disabled"/>
     </module>
     <module id="module.driver.transfer_on_dtc.2000565928">
@@ -641,11 +641,10 @@
       <property id="rtos.awsfreertos.object.mutex.type" value="rtos.awsfreertos.object.mutex.type.mutex"/>
       <property id="rtos.awsfreertos.object.mutex.allocation" value="rtos.awsfreertos.object.mutex.allocation.static"/>
     </object>
-    <object id="rtos.awsfreertos.object.semaphore.1915891519">
-      <property id="rtos.awsfreertos.object.semaphore.symbol" value="on8266"/>
-      <property id="rtos.awsfreertos.object.semaphore.count" value="0"/>
-      <property id="rtos.awsfreertos.object.semaphore.count_max" value="8"/>
-      <property id="rtos.awsfreertos.object.semaphore.allocation" value="rtos.awsfreertos.object.semaphore.allocation.static"/>
+    <object id="rtos.awsfreertos.object.mutex.311753331">
+      <property id="rtos.awsfreertos.object.mutex.symbol" value="on8266"/>
+      <property id="rtos.awsfreertos.object.mutex.type" value="rtos.awsfreertos.object.mutex.type.mutex"/>
+      <property id="rtos.awsfreertos.object.mutex.allocation" value="rtos.awsfreertos.object.mutex.allocation.static"/>
     </object>
     <context id="_hal.0">
       <stack module="module.driver.ioport_on_ioport.0"/>
@@ -688,7 +687,7 @@
       <property id="_symbol" value="interface"/>
       <property id="rtos.awsfreertos.thread.name" value="interface"/>
       <property id="rtos.awsfreertos.thread.stack" value="2048"/>
-      <property id="rtos.awsfreertos.thread.priority" value="1"/>
+      <property id="rtos.awsfreertos.thread.priority" value="2"/>
       <property id="rtos.awsfreertos.thread.context" value="NULL"/>
       <property id="rtos.awsfreertos.thread.allocation" value="rtos.awsfreertos.thread.allocation.static"/>
       <property id="rtos.awsfreertos.thread.secure_context" value="rtos.awsfreertos.thread.secure_context.enable"/>
@@ -697,7 +696,7 @@
       <property id="_symbol" value="motion"/>
       <property id="rtos.awsfreertos.thread.name" value="motion"/>
       <property id="rtos.awsfreertos.thread.stack" value="1024"/>
-      <property id="rtos.awsfreertos.thread.priority" value="1"/>
+      <property id="rtos.awsfreertos.thread.priority" value="3"/>
       <property id="rtos.awsfreertos.thread.context" value="NULL"/>
       <property id="rtos.awsfreertos.thread.allocation" value="rtos.awsfreertos.thread.allocation.static"/>
       <property id="rtos.awsfreertos.thread.secure_context" value="rtos.awsfreertos.thread.secure_context.enable"/>
@@ -706,7 +705,7 @@
       <property id="_symbol" value="hmi"/>
       <property id="rtos.awsfreertos.thread.name" value="hmi"/>
       <property id="rtos.awsfreertos.thread.stack" value="2048"/>
-      <property id="rtos.awsfreertos.thread.priority" value="1"/>
+      <property id="rtos.awsfreertos.thread.priority" value="2"/>
       <property id="rtos.awsfreertos.thread.context" value="NULL"/>
       <property id="rtos.awsfreertos.thread.allocation" value="rtos.awsfreertos.thread.allocation.static"/>
       <property id="rtos.awsfreertos.thread.secure_context" value="rtos.awsfreertos.thread.secure_context.enable"/>
@@ -715,7 +714,7 @@
       <property id="_symbol" value="working"/>
       <property id="rtos.awsfreertos.thread.name" value="working"/>
       <property id="rtos.awsfreertos.thread.stack" value="1024"/>
-      <property id="rtos.awsfreertos.thread.priority" value="1"/>
+      <property id="rtos.awsfreertos.thread.priority" value="3"/>
       <property id="rtos.awsfreertos.thread.context" value="NULL"/>
       <property id="rtos.awsfreertos.thread.allocation" value="rtos.awsfreertos.thread.allocation.static"/>
       <property id="rtos.awsfreertos.thread.secure_context" value="rtos.awsfreertos.thread.secure_context.enable"/>

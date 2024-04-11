@@ -38,13 +38,30 @@ void run_in()
     go_to_line1(0.5f);
     go_to_line1(0.2f);
     set_position(1);
-
     back_to_cross();
 
     turn_to(TurnRight);
 
-    
-    
+    go_to_line(wtarget > 3 ? wtarget : wtarget - 3);
+
+    turn_to(TurnLeft);
+
+    set_position(2);
+
+    go_to_line1(0.2f);
+
+    back_to_cross();
+
+    turn_to(TurnLeft);
+
+    go_to_line(wtarget > 3 ? wtarget : wtarget - 3);
+
+
+    turn_to(TurnRight);
+
+    back_to_cross();
+
+    onworking = WORK_IDLE;
 }
 
 

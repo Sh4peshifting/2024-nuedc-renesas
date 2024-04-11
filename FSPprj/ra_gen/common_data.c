@@ -148,17 +148,19 @@ on_hmi =
                 rtos_startup_err_callback(on_hmi, 0);
                 }
 on8266 =
+                #if 0
                 #if 1
-                xSemaphoreCreateCountingStatic(
+                xSemaphoreCreateRecursiveMutexStatic(&on8266_memory);
                 #else
-                xSemaphoreCreateCounting(
+                xSemaphoreCreateRecursiveMutex();
                 #endif
-                8,
-                0
+                #else
                 #if 1
-                , &on8266_memory
+                xSemaphoreCreateMutexStatic(&on8266_memory);
+                #else
+                xSemaphoreCreateMutex();
                 #endif
-                );
+                #endif
                 if (NULL == on8266) {
                 rtos_startup_err_callback(on8266, 0);
                 }

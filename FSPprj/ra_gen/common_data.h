@@ -7,8 +7,6 @@
                 #include "semphr.h"
 #include "FreeRTOS.h"
                 #include "semphr.h"
-#include "FreeRTOS.h"
-                #include "semphr.h"
 #include "r_ioport.h"
 #include "bsp_pin_cfg.h"
 FSP_HEADER

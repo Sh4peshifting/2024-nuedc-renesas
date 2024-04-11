@@ -15,7 +15,7 @@ uint8_t wait_8266return(uint16_t timeout)
 }
 void esp_init(void)
 {
-
+    xSemaphoreTake(on8266,portMAX_DELAY);
     while(!strstr((const char *)uart8pack.data,"WIFI GOT IP")){
         uprintf(&g_uart7_ctrl,"Connecting...\n");
         if(1==wait_8266return(10000)){
@@ -57,7 +57,9 @@ void status_upload(void)
     int light_status;
     int l_worigin,l_wtarget,l_onworking,not_empty_shelf;
 
+    
     Read_DHT11(&dht11_data);
+    
     fire_status_t onfire=fire_detect();
     
     xSemaphoreTake(on8266,portMAX_DELAY);
@@ -75,13 +77,13 @@ void status_upload(void)
     // #define WORK_CH 3
     //L2关,1开,0无操作
     //传递运行命令
-    uint8_t rescanf = sscanf(uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,Vacant:%d,",
+    sscanf(uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,Vacant:%d,",
     &light_status,&l_worigin,&l_wtarget,&l_onworking,&not_empty_shelf);
 
     env_info.temperature = (float)dht11_data.temp_int+(float)dht11_data.temp_deci/10;
     env_info.humidity = dht11_data.humi_int;
-    if(onfire==FIRE_DETECTED) strcpy(env_info.alarm_sta,"报警");
-    else  strcpy(env_info.alarm_sta,"正常");
+    if(onfire==FIRE_DETECTED) memcpy(env_info.alarm_sta,"11",2);
+    else  memcpy(env_info.alarm_sta,"11",2);
 
     if(light_status){
         if(light_status==1) light_ctrl(LIGHT_ON);
@@ -95,8 +97,8 @@ void status_upload(void)
         onworking=l_onworking;
     }
 
-    if(99 == not_empty_shelf){
-        env_info.not_empty_shelf = not_empty_shelf;
+    if(99 != not_empty_shelf){
+        env_info.not_empty_shelf = (uint8_t)not_empty_shelf;
     }
     update_env_info(env_info);
 

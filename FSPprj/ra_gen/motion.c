@@ -38,7 +38,7 @@ extern uint32_t g_fsp_common_thread_count;
                         (const char *)"motion",
                         1024/4, // In words, not bytes
                         (void *) &motion_parameters, //pvParameters
-                        1,
+                        3,
                         #if 1
                         (StackType_t *)&motion_stack,
                         (StaticTask_t *)&motion_memory

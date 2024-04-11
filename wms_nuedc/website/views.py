@@ -148,7 +148,7 @@ def sensor(request):
     status.humidity = humidity
     status.temperature = temperature
     status.fire = fire
-    status.car_status = working
+    status.car_status = True if working else False
     status.empty_self=models.goods.objects.filter(isempty=True).count()
 
     status.save()
@@ -253,7 +253,7 @@ def get_log(request):
     log=""
     logs=models.log.objects.all()
     for item in logs:
-        log+=item.staff.username+" "+item.operation+" "+item.other+" "+str(item.time)+"\r\n"
+        log+=item.staff.username+" "+item.operation+" "+item.other+"\r\n"
     log="\""+log+"\""
     return HttpResponse(log, content_type="text/plain")
 
@@ -285,6 +285,8 @@ def lightoff(request):
 
 @csrf_exempt
 def change_cargo(request):
+    if(models.sataus.objects.first().car_status==False):
+        return JsonResponse({"status":0}, safe=False)
     self_id = request.POST.get("cargo_loc")
     cargo_id = request.POST.get("cargo_id")
     in_out = request.POST.get("cargo_op")

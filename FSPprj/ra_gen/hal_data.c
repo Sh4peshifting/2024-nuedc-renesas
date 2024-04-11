@@ -554,7 +554,7 @@ sci_spi_instance_ctrl_t g_sci_spi3_ctrl;
 const sci_spi_extended_cfg_t g_sci_spi3_cfg_extend =
 {
     .clk_div = {
-        /* Actual calculated bitrate: 8333333. */ .cks = 0, .brr = 2, .mddr = 0,
+        /* Actual calculated bitrate: 6250000. */ .cks = 0, .brr = 3, .mddr = 0,
     }
 };
 

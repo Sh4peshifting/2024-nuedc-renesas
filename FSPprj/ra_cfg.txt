@@ -605,7 +605,7 @@ FSP Configuration
       Transmit Interrupt Priority: Priority 12
       Transmit End Interrupt Priority: Priority 12
       Error Interrupt Priority: Priority 12
-      Bitrate: 9000000
+      Bitrate: 8000000
       Bitrate Modulation: Disabled
       
       Instance "g_transfer0 Transfer (r_dtc) SCI3 TXI (Transmit data empty)"
@@ -786,7 +786,7 @@ FSP Configuration
     Symbol: interface
     Name: interface
     Stack size (bytes): 2048
-    Priority: 1
+    Priority: 2
     Thread Context: NULL
     Memory Allocation: Static
     Allocate Secure Context: Enable
@@ -795,7 +795,7 @@ FSP Configuration
     Symbol: motion
     Name: motion
     Stack size (bytes): 1024
-    Priority: 1
+    Priority: 3
     Thread Context: NULL
     Memory Allocation: Static
     Allocate Secure Context: Enable
@@ -804,7 +804,7 @@ FSP Configuration
     Symbol: hmi
     Name: hmi
     Stack size (bytes): 2048
-    Priority: 1
+    Priority: 2
     Thread Context: NULL
     Memory Allocation: Static
     Allocate Secure Context: Enable
@@ -813,7 +813,7 @@ FSP Configuration
     Symbol: working
     Name: working
     Stack size (bytes): 1024
-    Priority: 1
+    Priority: 3
     Thread Context: NULL
     Memory Allocation: Static
     Allocate Secure Context: Enable
@@ -855,9 +855,8 @@ FSP Configuration
     Type: Mutex
     Memory Allocation: Static
     
-  Object "on8266 Counting Semaphore"
+  Object "on8266 Mutex"
     Symbol: on8266
-    Initial count: 0
-    Maximum count: 8
+    Type: Mutex
     Memory Allocation: Static
     

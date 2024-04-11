@@ -38,7 +38,7 @@ extern uint32_t g_fsp_common_thread_count;
                         (const char *)"interface",
                         2048/4, // In words, not bytes
                         (void *) &interface_parameters, //pvParameters
-                        1,
+                        2,
                         #if 1
                         (StackType_t *)&interface_stack,
                         (StaticTask_t *)&interface_memory
