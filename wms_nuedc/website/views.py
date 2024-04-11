@@ -148,7 +148,7 @@ def sensor(request):
     status.humidity = humidity
     status.temperature = temperature
     status.fire = fire
-    status.car_status = True if working else False
+    status.car_status = False if working else True
     status.empty_self=models.goods.objects.filter(isempty=True).count()
 
     status.save()
@@ -255,7 +255,7 @@ def get_log(request):
     for item in logs:
         log+=item.staff.username+" "+item.operation+" "+item.other+"\r\n"
     log="\""+log+"\""
-    return HttpResponse(log, content_type="text/plain")
+    return HttpResponse(log.encode('gb2312'), content_type="text/plain")
 
 
 @csrf_exempt
@@ -266,7 +266,7 @@ def get_goods(request):
         goods_list+=item.place+" "+item.number+"\r\n"
 
     goods_list="\""+goods_list+"\""
-    return HttpResponse(goods_list, content_type="text/plain")
+    return HttpResponse(goods_list.encode('gb2312'), content_type="text/plain")
 
 
 @csrf_exempt

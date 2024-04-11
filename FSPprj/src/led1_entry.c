@@ -11,7 +11,7 @@ void led1_entry(void *pvParameters)
     
     // R_SCI_UART_Open(&g_uart9_ctrl,&g_uart9_cfg);
     ws2812_Init();
-    motor_init();
+    
     ic_detect_init();
     // motion_cfg(0, 0.2f, 0);
     // vTaskDelay(3000);
@@ -34,19 +34,21 @@ void led1_entry(void *pvParameters)
         // dht11_data.humi_int,dht11_data.humi_deci);
 
         // uprintf(&g_uart7_ctrl,"hello\n");
-        light_ctrl(LIGHT_ON);
+        // light_ctrl(LIGHT_ON);
         R_IOPORT_PinWrite(g_ioport.p_ctrl, led, 0);
-        vTaskDelay(500);
-        light_ctrl(LIGHT_OFF);
+        vTaskDelay(200);
+        // light_ctrl(LIGHT_OFF);
         R_IOPORT_PinWrite(g_ioport.p_ctrl, led, 1);
-        vTaskDelay(500);
+        vTaskDelay(200);
+
+        // uprintf(&g_uart7_ctrl,"yaw:%.2f\n",read_yaw());
         // xSemaphoreTake(uart9rxc,portMAX_DELAY);
         // R_SCI_UART_Write(&g_uart7_ctrl,uart9pack.data,uart9pack.len);
         // xSemaphoreTake(uart7txc,portMAX_DELAY);
 
-        // a=read_card(card_id, NULL);
-        // uprintf(&g_uart7_ctrl, "card id:%02x%02x%02x%02x   %d\n", 
-        //     card_id[0], card_id[1], card_id[2], card_id[3],a);
+        a=read_card(card_id, NULL);
+        uprintf(&g_uart7_ctrl, "card id:%02x%02x%02x%02x   %d\n", 
+            card_id[0], card_id[1], card_id[2], card_id[3],a);
         // memset(card_id, 0, 5);
   
 

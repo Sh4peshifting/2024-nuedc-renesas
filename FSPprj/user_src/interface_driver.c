@@ -20,7 +20,7 @@ void esp_init(void)
         uprintf(&g_uart7_ctrl,"Connecting...\n");
         if(1==wait_8266return(10000)){
             uprintf(&g_uart7_ctrl,"Connecting failed\nReseting...\n");
-            uprintf(&g_uart8_ctrl,"+++");//é€€å‡ºé€ä¼ 
+            uprintf(&g_uart8_ctrl,"+++");//ÍË³öÍ¸´«
             vTaskDelay(1000);
             uprintf(&g_uart8_ctrl,"AT+RST\r\n");
         }
@@ -47,7 +47,7 @@ void esp_init(void)
 
 float read_yaw(void)
 {
-	return (float)((uart5pack.data[7]<<8)+uart5pack.data[6])/32768*180;
+	return (float)((uart5pack.data[29]<<8)+uart5pack.data[28])/32768*180;
 }
 
 void status_upload(void)
@@ -76,15 +76,15 @@ void status_upload(void)
     // #define WORK_IN 1
     // #define WORK_OUT 2
     // #define WORK_CH 3
-    //L2å…³,1å¼€,0æ— æ“ä½œ
-    //ä¼ é€’è¿è¡Œå‘½ä»¤
+    //L2¹Ø,1¿ª,0ÎŞ²Ù×÷
+    //´«µİÔËĞĞÃüÁî
     sscanf(uart8pack.data,"L:%d,Origin:%d,Target:%d,Work:%d,Vacant:%d,",
     &light_status,&l_worigin,&l_wtarget,&l_onworking,&not_empty_shelf);
 
     env_info.temperature = (float)dht11_data.temp_int+(float)dht11_data.temp_deci/10;
     env_info.humidity = dht11_data.humi_int;
-    if(onfire==FIRE_DETECTED) memcpy(env_info.alarm_sta,"11",2);
-    else  memcpy(env_info.alarm_sta,"11",2);
+    if(onfire==FIRE_DETECTED) memcpy(env_info.alarm_sta,"±¨¾¯",6);
+    else  memcpy(env_info.alarm_sta,"Õı³£",6);
 
     if(light_status){
         if(light_status==1) light_ctrl(LIGHT_ON);
@@ -104,7 +104,7 @@ void status_upload(void)
     update_env_info(env_info);
 
 
-    xSemaphoreGive(on8266);//æŠŠä¸²å£å±æ“ä½œä¹Ÿæ”¾åœ¨8266äº’æ–¥é”ä¸­
+    xSemaphoreGive(on8266);//°Ñ´®¿ÚÆÁ²Ù×÷Ò²·ÅÔÚ8266»¥³âËøÖĞ
 
 }
 
@@ -116,11 +116,11 @@ void login_auth()
     if(!wait_8266return(2000)){
         uart8pack.data[uart8pack.len] = 0;
         if(strstr((const char *)uart8pack.data,"success")){
-            // ç™»å½•æˆåŠŸ
+            // µÇÂ¼³É¹¦
             screen_login_page_disp(1);
         }
         else{
-            // ç™»å½•å¤±è´¥ å¼¹çª—
+            // µÇÂ¼Ê§°Ü µ¯´°
             screen_login_page_disp(0);
         }
 
@@ -143,11 +143,11 @@ void storge_inout(uint8_t *cargo_id,uint8_t *self_id,uint8_t inout)
         uart8pack.data[uart8pack.len] = 0;
         if (strstr((const char *)uart8pack.data, "success"))
         {
-            // ç”³è¯·æˆåŠŸ
+            // ÉêÇë³É¹¦
         }
         else
         {
-            // æ“ä½œå¤±è´¥ å¼¹çª—
+            // ²Ù×÷Ê§°Ü µ¯´°
             screen_error_msg_disp(1);
         }
     }

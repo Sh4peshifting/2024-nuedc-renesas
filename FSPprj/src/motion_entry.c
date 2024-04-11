@@ -22,7 +22,7 @@ float pid_track(float target, float current)
 
 float pid_angle(float target, float current)
 {	
-	float limit=3,kp=0,kd=0;
+	float limit=0.2,kp=0.009,kd=0.00001;
 	float bias,output;  
 	static float last_bais;
 	bias=target-current; //求偏差
@@ -54,8 +54,13 @@ float pid_angle(float target, float current)
 void motion_entry(void *pvParameters)
 {
     FSP_PARAMETER_NOT_USED(pvParameters);
-
+	
     /* TODO: add your own code here */
+	motor_init();
+	run_mode=RunAngle;
+	xSemaphoreTake(uart5rxc,portMAX_DELAY);
+	// motion_cfg(-0.3f,0,0);
+	target_angle=read_yaw();
     while (1)
     {
         if(run_mode==RunForward){

@@ -149,8 +149,8 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             uprintf(&g_uart7_ctrl, "username:%s\n", account);
             uprintf(&g_uart7_ctrl,"password:%s\n", passwd);
 
-            // login_auth();
-            screen_login_page_disp(1);
+            login_auth();
+            // screen_login_page_disp(1);
             // login function and use screen_login_page_disp() to display the result
             break;
         case SCREEN_RX_CMD_PUT:

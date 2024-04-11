@@ -9,6 +9,8 @@ void usartprocess_entry(void *pvParameters)
     g_uart7.p_api->open(g_uart7.p_ctrl, g_uart7.p_cfg);
     R_SCI_UART_Open(&g_uart9_ctrl,&g_uart9_cfg);
     R_SCI_UART_Open(&g_uart8_ctrl,&g_uart8_cfg);
+    R_SCI_UART_Open(&g_uart4_ctrl,&g_uart4_cfg);
+    R_SCI_UART_Open(&g_uart5_ctrl,&g_uart5_cfg);
     uint32_t nowtime;
     while (1)
     {

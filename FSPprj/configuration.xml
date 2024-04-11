@@ -816,11 +816,11 @@
     </config>
   </raModuleConfiguration>
   <raPinConfiguration>
+    <symbolicName propertyId="p005.symbolic_name" value="m_c1"/>
     <symbolicName propertyId="p014.symbolic_name" value="m_a1"/>
     <symbolicName propertyId="p301.symbolic_name" value="step_dir"/>
     <symbolicName propertyId="p400.symbolic_name" value="led"/>
     <symbolicName propertyId="p411.symbolic_name" value="m_d1"/>
-    <symbolicName propertyId="p505.symbolic_name" value="m_c1"/>
     <symbolicName propertyId="p513.symbolic_name" value="m_a2"/>
     <symbolicName propertyId="p610.symbolic_name" value="firepin"/>
     <symbolicName propertyId="p704.symbolic_name" value="m_b1"/>
@@ -840,6 +840,8 @@
       <configSetting altId="gpt6.gtioca.p702" configurationId="gpt6.gtioca"/>
       <configSetting altId="gpt6.gtiocb.p703" configurationId="gpt6.gtiocb"/>
       <configSetting altId="gpt6.mode.gtiocaandgtiocb.free" configurationId="gpt6.mode"/>
+      <configSetting altId="p005.output.low" configurationId="p005"/>
+      <configSetting altId="p005.gpio_mode.gpio_mode_out.low" configurationId="p005.gpio_mode"/>
       <configSetting altId="p014.output.low" configurationId="p014"/>
       <configSetting altId="p014.gpio_mode.gpio_mode_out.low" configurationId="p014.gpio_mode"/>
       <configSetting altId="p108.debug0.swdio" configurationId="p108"/>
@@ -872,8 +874,6 @@
       <configSetting altId="p501.gpio_mode.gpio_mode_peripheral" configurationId="p501.gpio_mode"/>
       <configSetting altId="p502.sci5.rxd" configurationId="p502"/>
       <configSetting altId="p502.gpio_mode.gpio_mode_peripheral" configurationId="p502.gpio_mode"/>
-      <configSetting altId="p505.output.low" configurationId="p505"/>
-      <configSetting altId="p505.gpio_mode.gpio_mode_out.low" configurationId="p505.gpio_mode"/>
       <configSetting altId="p511.sci4.rxd" configurationId="p511"/>
       <configSetting altId="p511.gpio_mode.gpio_mode_peripheral" configurationId="p511.gpio_mode"/>
       <configSetting altId="p512.sci4.txd" configurationId="p512"/>
