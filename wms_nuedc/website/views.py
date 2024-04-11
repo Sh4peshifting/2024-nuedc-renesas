@@ -149,23 +149,28 @@ def sensor(request):
     status.temperature = temperature
     status.fire = fire
     status.car_status = working
+    status.empty_self=models.goods.objects.filter(isempty=True).count()
 
     status.save()
 
     if(models.cmd8266.objects.all().count()!=0):
-        cmd=models.cmd8266.objects.first().cmd
+        cmd_record=models.cmd8266.objects.first()
+        cmd=cmd_record.cmd
+        cmd_record.delete()
     else:
         cmd="L:0,Origin:0,Target:0,Work:0,Vacant:"+str(status.empty_self)+","
     return HttpResponse(cmd, content_type="text/plain")
 
 
-def cargo_operation(request,cargo_id,in_out,self_id):
+
+def cargo_operation(cargo_id,in_out,self_id,user):
     #/interface/cargo/?cargo_id=%s&self_id%s&in=%d
     #inout: in1 out2 change3
     #L:%d,Origin:%d,Target:%d,Work:%d,
 
     worigin=0
     wtarget=0
+
     if(self_id=="1-1-1"):
         wtarget=1
     elif(self_id=="1-1-2"):
@@ -182,39 +187,46 @@ def cargo_operation(request,cargo_id,in_out,self_id):
     if(in_out=="1"):
         goods_self=models.goods.objects.filter(place=self_id).first()
         if(not goods_self):#self_id不存在
-            return HttpResponse("error", content_type="text/plain")
+            return 1
         if(goods_self.isempty==False):#self_id已有货物
-            return HttpResponse("error", content_type="text/plain")
-        goods_self.update(number=cargo_id,isempty=False)
-        models.log.objects.create(staff=request.user, time=timezone.now(), operation="入库", other=cargo_id)
+            return 1
+        goods_self.number=cargo_id
+        goods_self.isempty=False
+        goods_self.save()
+
+        models.log.objects.create(staff=user, time=timezone.now(), operation="入库", other=cargo_id)
 
 
     elif(in_out=="2"):
         goods_self=models.goods.objects.filter(number=cargo_id).first()
         if(not goods_self):#cargo_id不存在
-            return HttpResponse("error", content_type="text/plain")
+            return 1
         if(goods_self.isempty==True):#cargo_id已出库
-            return HttpResponse("error", content_type="text/plain")
-        goods_self.update(number="",isempty=True)
-        models.log.objects.create(staff=request.user, time=timezone.now(), operation="出库", other=cargo_id)
+            return 1
+        goods_self.number=""
+        goods_self.isempty=True
+        goods_self.save()
+
+        models.log.objects.create(staff=user, time=timezone.now(), operation="出库", other=cargo_id)
 
     
 
     elif(in_out=="3"):
         goods_self=models.goods.objects.filter(place=self_id).first()
         if(not goods_self):#self_id不存在
-            return HttpResponse("error", content_type="text/plain")
+            return 1
         goods_self=models.goods.objects.filter(number=cargo_id).first()
         if(not goods_self):#cargo_id不存在
-            return HttpResponse("error", content_type="text/plain")
+            return 1
         
 
-        if(models.goods.objects.filter(place=self_id).first().isempty==False  or models.goods.objects.filter(number=cargo_id).first().isempty==True):
-            return HttpResponse("error", content_type="text/plain")
+        if(models.goods.objects.filter(place=self_id).first().isempty==False  \
+           or models.goods.objects.filter(number=cargo_id).first().isempty==True):
+            return 1
         previous_self_id=models.goods.objects.filter(number=cargo_id).first().place
         models.goods.objects.filter(place=previous_self_id).update(number="",isempty=True)
         models.goods.objects.filter(place=self_id).update(number=cargo_id,isempty=False)
-        models.log.objects.create(staff=request.user, time=timezone.now(), operation="转移", other=cargo_id)
+        models.log.objects.create(staff=user, time=timezone.now(), operation="转移", other=cargo_id)
         if(previous_self_id=="1-1-1"):
             worigin=1
         elif(previous_self_id=="1-1-2"):
@@ -227,12 +239,13 @@ def cargo_operation(request,cargo_id,in_out,self_id):
             worigin=5
         elif(previous_self_id=="1-2-3"):
             worigin=6
-        
+    else:
+        return 1
+    status = models.status.objects.first()
     models.cmd8266.objects.create(cmd="L:0"+",Origin:"+str(worigin)+",Target:"+str(wtarget)+\
-                                  ",Work:"+str(in_out)+",Vacant:"+\
-                                    str(models.goods.objects.filter(isempty=True).count())+",")
-    
-    return HttpResponse("success", content_type="text/plain")
+                                  ",Work:"+str(in_out)+",Vacant:99,")
+    print("suddo",self_id)
+    return 0
 
 
 @csrf_exempt
@@ -256,23 +269,65 @@ def get_goods(request):
     return HttpResponse(goods_list, content_type="text/plain")
 
 
+@csrf_exempt
 def lighton(request):
-    models.cmd8266.objects.create(cmd="L:1,Origin:0,Target:0,Work:0,Vacant:"+\
-                                  str(models.goods.objects.filter(isempty=True).count())+",")
+    status = models.status.objects.first()
+    models.cmd8266.objects.create(cmd="L:1,Origin:0,Target:0,Work:0,Vacant:99")
     return HttpResponse("success", content_type="text/plain")
 
+
+@csrf_exempt
 def lightoff(request):
-    models.cmd8266.objects.create(cmd="L:2,Origin:0,Target:0,Work:0,Vacant:"+\
-                                  str(models.goods.objects.filter(isempty=True).count())+",")
+    status = models.status.objects.first()
+    models.cmd8266.objects.create(cmd="L:2,Origin:0,Target:0,Work:0,Vacant:99")
     return HttpResponse("success", content_type="text/plain")
 
+
+@csrf_exempt
 def change_cargo(request):
-    
+    self_id = request.POST.get("cargo_loc")
+    cargo_id = request.POST.get("cargo_id")
+    in_out = request.POST.get("cargo_op")
 
-    return
+    if(in_out=="in_storage"):
+        in_out="1"
+    elif(in_out=="out_storage"):
+        in_out="2"
+    elif(in_out=="sw_cargo"):
+        in_out="3"
+    else:
+        return HttpResponse("error", content_type="text/plain")
 
+    if(cargo_operation(cargo_id,in_out,self_id,request.user)):
+        return JsonResponse({"status":1}, safe=False)
+
+    return JsonResponse({"status":0}, safe=False)
+
+@csrf_exempt
 def cargo(request):
+    self_id = request.GET.get("self_id")
+    cargo_id = request.GET.get("cargo_id")
+    in_out = request.GET.get("in")
+    username = request.GET.get("username")
+    password = request.GET.get("password")
+
+    user_obj = auth.authenticate(username=username, password=password)
+    if not user_obj:
+        return HttpResponse("error", content_type="text/plain")
+    else:
+        if(cargo_operation(cargo_id,in_out,self_id,user_obj)):
+            return HttpResponse("error", content_type="text/plain")
+
+    return HttpResponse("success", content_type="text/plain")
 
 
+@csrf_exempt
+def interface_login(request):
+    username = request.GET.get("username")
+    password = request.GET.get("password")
+    user_obj = auth.authenticate(username=username, password=password)
+    if not user_obj:
+        return HttpResponse("error", content_type="text/plain")
+    else:
+        return HttpResponse("success", content_type="text/plain")
 
-    return

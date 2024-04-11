@@ -61,7 +61,7 @@ $(document).ready(function () {
             }
         });
     }
-
+    updateTable();
     setInterval(updateTable, 1000);
 
 

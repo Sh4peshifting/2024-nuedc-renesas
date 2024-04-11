@@ -18,5 +18,6 @@ urlpatterns = [
     path('interface/cargo/', views.cargo),
     path('interface/get_log/', views.get_log),
     path('interface/get_goods/', views.get_goods),
+    path('interface/login', views.interface_login),
 
 ]

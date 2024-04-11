@@ -177,14 +177,14 @@ void ws2812_AllShutOff(void)
 
 void ws2812_all_on(float brightness, uint32_t GRB_color)
 {
-	rgb_color.G = (unsigned char)GRB_color >> 16;
-	rgb_color.R = (unsigned char)GRB_color >> 8;
-	rgb_color.B = (unsigned char)GRB_color;
+	rgb_color.G = GRB_color >> 16;
+	rgb_color.R = GRB_color >> 8;
+	rgb_color.B = GRB_color;
 	
 	__brightnessAdjust(brightness / 100.0f, rgb_color);
 	for (uint16_t j = 0; j < WS2812_LED_NUM; j++)
 	{
-		ws2812_Set_one_LED_Color(j, (rgb_color.G << 16) | (rgb_color.R << 8) | (rgb_color.B));
+		ws2812_Set_one_LED_Color(j, ((rgb_color.G << 16) | (rgb_color.R << 8) | (rgb_color.B)));
 	}
 		ws2812_Send_Data();
 }
@@ -221,7 +221,7 @@ void light_ctrl(uint8_t switch_flag)
 {
 	if (switch_flag == LIGHT_ON)
 	{
-		ws2812_all_on(20, C_Red);
+		ws2812_all_on(20, C_Purple);
 	}
 	else
 	{

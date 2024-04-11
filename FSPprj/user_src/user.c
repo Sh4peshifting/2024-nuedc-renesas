@@ -16,6 +16,8 @@ uint32_t  step_position;
 float speed_forward,target_angle;
 volatile uint8_t onworking=1,run_mode;
 
+uint8_t username[20],password[20];
+
 void uart7_callback(uart_callback_args_t * p_args)
 {
     switch (p_args->event)

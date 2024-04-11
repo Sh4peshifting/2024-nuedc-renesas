@@ -161,7 +161,7 @@
             const cargo_id = $('input[aria-label="cargo_id"]').val();
             const cargo_loc = $('input[aria-label=""]').val();
             $.ajax({
-                url: '/change_cargo',
+                url: '/change_cargo/',
                 type: 'POST',
                 data: {
                     'cargo_op': cargo_op,
@@ -181,7 +181,7 @@
         $('#confirm').click(function () {
             if (flag['light'] == 1) {
                 $.ajax({
-                    url: '/light_on',
+                    url: '/light_on/',
                     type: 'GET',
                     success: function (receivedData) {
                         console.log(receivedData);
@@ -189,7 +189,7 @@
                 });
             } else if (flag['light'] == 2) {
                 $.ajax({
-                    url: '/light_off',
+                    url: '/light_off/',
                     type: 'GET',
                     success: function (receivedData) {
                         console.log(receivedData);
