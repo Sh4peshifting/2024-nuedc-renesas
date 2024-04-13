@@ -65,6 +65,88 @@ void update_env_info(env_info_t env_info)
     OS_DELAY(1);
 }
 
+void update_shelf_info(uint8_t *shelf_status)
+{
+    if (shelf_status[0] == '1')
+    {
+        change_attribute("c111", "pic", "4");
+        change_attribute("c111", "pic2", "4");
+    }
+    else
+    {
+        change_attribute("c111", "pic", "5");
+        change_attribute("c111", "pic2", "5");
+    }
+    if (shelf_status[1] == '1')
+    {
+        change_attribute("c112", "pic", "4");
+        change_attribute("c112", "pic2", "4");
+    }
+    else
+    {
+        change_attribute("c112", "pic", "5");
+        change_attribute("c112", "pic2", "5");
+    }
+    if (shelf_status[2] == '1')
+    {
+        change_attribute("c113", "pic", "4");
+        change_attribute("c113", "pic2", "4");
+    }
+    else
+    {
+        change_attribute("c113", "pic", "5");
+        change_attribute("c113", "pic2", "5");
+    }
+    if (shelf_status[3] == '1')
+    {
+        change_attribute("c121", "pic", "4");
+        change_attribute("c121", "pic2", "4");
+    }
+    else
+    {
+        change_attribute("c121", "pic", "5");
+        change_attribute("c121", "pic2", "5");
+    }
+    if (shelf_status[4] == '1')
+    {
+        change_attribute("c122", "pic", "4");
+        change_attribute("c122", "pic2", "4");
+    }
+    else
+    {
+        change_attribute("c122", "pic", "5");
+        change_attribute("c122", "pic2", "5");
+    }
+    if (shelf_status[5] == '1')
+    {
+        change_attribute("c123", "pic", "4");
+        change_attribute("c123", "pic2", "4");
+    }
+    else
+    {
+        change_attribute("c123", "pic", "5");
+        change_attribute("c123", "pic2", "5");
+    }
+}
+
+static char *get_inout_shelf_id(uint8_t *recv_data)
+{
+    if (recv_data[0] == 0x01)
+        return "1-1-1";
+    else if (recv_data[1] == 0x01)
+        return "1-1-2";
+    else if (recv_data[2] == 0x01)
+        return "1-1-3";
+    else if (recv_data[3] == 0x01)
+        return "1-2-1";
+    else if (recv_data[4] == 0x01)
+        return "1-2-2";
+    else if (recv_data[5] == 0x01)
+        return "1-2-3";
+    else
+        return "0";
+}
+
 void shelf_list_insert(shelf_info_t *shelf_info)
 {
     char tx_data[50] = {0};
@@ -130,7 +212,8 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
 {
     uint8_t account[20];
     uint8_t passwd[20];
-    uint8_t cargo_id[10];
+    // uint8_t cargo_id[10];
+    uint8_t old_shelf_id[10];
     uint8_t shelf_id[10];
 
     screen_rx_buf[rx_buf_index - 1] = 0x00;
@@ -154,7 +237,7 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             // login function and use screen_login_page_disp() to display the result
             break;
         case SCREEN_RX_CMD_PUT:
-            sscanf((char *)screen_rx_buf + 2, "%s", shelf_id);
+            sscanf(get_inout_shelf_id(screen_rx_buf + 2), "%s", shelf_id);
             uprintf(&g_uart7_ctrl, "in\n");
             // in storage function
             // read rfid
@@ -162,17 +245,18 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
 
             break;
         case SCREEN_RX_CMD_GET:
-            sscanf((char *)screen_rx_buf + 2, "%s", cargo_id); 
+            sscanf(get_inout_shelf_id(screen_rx_buf + 2), "%s", shelf_id); 
             uprintf(&g_uart7_ctrl, "out\n");
             // out storage function
-            storge_inout(cargo_id, (uint8_t *)"None", 2);
+            // storge_inout(cargo_id, (uint8_t *)"None", 2);//need to modify
 
             break;
         case SCREEN_RX_CMD_SWITCH:
-            sscanf((char *)screen_rx_buf + 2, "%s %s", cargo_id, shelf_id);
+            // sscanf((char *)screen_rx_buf + 2, "%s %s", cargo_id, shelf_id);
+            sscanf((char *)screen_rx_buf + 2, "%5s %5s", old_shelf_id, shelf_id);
             uprintf(&g_uart7_ctrl, "switch\n");
             // switch shelf function
-            storge_inout(cargo_id, shelf_id, 3);
+            // storge_inout(cargo_id, shelf_id, 3);//need to modify
 
             break;
         case SCREEN_RX_CMD_SHELF_LIST:
@@ -184,6 +268,10 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             // update log list
             uprintf(&g_uart7_ctrl, "get log\n");
             get_log();
+
+            break;
+        case SCREEN_UPDATE_SHELF_INFO:
+            // update shelf info
 
             break;
         default:
