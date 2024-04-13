@@ -192,10 +192,10 @@
     </div>
 </div>
 <script>
-    let cargo_id;
+    let cargo_loc;
 
     function get_cargo_id(click_id) {
-        cargo_id = click_id;
+        cargo_loc = click_id;
     }
 
     $(document).ready(function () {
@@ -224,7 +224,7 @@
         })
 
         $('#cargo_btn').click(function () {
-            let cargo_loc = $('#sw_cargo_sel').val();
+            let cargo_id = $('#sw_cargo_sel').val();
             console.log(cargo_id, cargo_loc);
             $.ajax({
                 url: '/change_cargo/',
