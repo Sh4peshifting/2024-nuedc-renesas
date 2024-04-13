@@ -19,5 +19,5 @@ urlpatterns = [
     path('interface/get_log/', views.get_log),
     path('interface/get_goods/', views.get_goods),
     path('interface/login/', views.interface_login),
-
+    path('interface/shelf/', views.interface_shelf),
 ]

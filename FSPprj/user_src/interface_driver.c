@@ -45,6 +45,38 @@ void esp_init(void)
 
 }
 
+void reconnect_server(void)
+{
+
+    uprintf(&g_uart8_ctrl,"AT+RST\r\n");
+    while (!strstr((const char *)uart8pack.data, "WIFI GOT IP"))
+    {
+        uprintf(&g_uart7_ctrl, "Connecting...\n");
+        if (1 == wait_8266return(10000))
+        {
+            uprintf(&g_uart7_ctrl, "Connecting failed\nReseting...\n");
+            uprintf(&g_uart8_ctrl, "+++"); // 退出透传
+            vTaskDelay(1000);
+            uprintf(&g_uart8_ctrl, "AT+RST\r\n");
+        }
+    }
+    uprintf(&g_uart8_ctrl,"ATE0\r\n");
+    wait_8266return(3000);
+    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"192.168.100.166\",8000\r\n");
+    wait_8266return(3000);
+    uprintf(&g_uart8_ctrl,"AT+CIPMODE=1\r\n");
+    wait_8266return(3000);
+    uprintf(&g_uart8_ctrl,"AT+CIPSEND\r\n");
+    wait_8266return(3000);
+    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"192.168.100.166\",8000\r\n");
+    wait_8266return(3000);
+    uprintf(&g_uart8_ctrl,"AT+CIPMODE=1\r\n");
+    wait_8266return(3000);
+    uprintf(&g_uart8_ctrl,"AT+CIPSEND\r\n");
+    wait_8266return(3000);
+
+    uprintf(&g_uart7_ctrl,"esp restart success\n");
+}
 float read_yaw(void)
 {
 	return (float)((uart5pack.data[29]<<8)+uart5pack.data[28])/32768*180;
@@ -69,10 +101,16 @@ void status_upload(void)
     uprintf(&uart_esp_ctrl,"GET /interface/sensor/?humi=%d&temp=%d.%d&fire=%d&working=%d\r\n\r\n",
         dht11_data.humi_int,dht11_data.temp_int,dht11_data.temp_deci,onfire,onworking);
     if(wait_8266return(2000)){
-        return;
+        reconnect_server();
+        goto esperror;
     }
+    R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
+    xSemaphoreTake(uart7txc,portMAX_DELAY);
     uart8pack.data[uart8pack.len]=0;
-
+    if(strstr((const char *)uart8pack.data,"ERROR")){
+        reconnect_server();
+        goto esperror;
+    }
     // #define WORK_IN 1
     // #define WORK_OUT 2
     // #define WORK_CH 3
@@ -103,7 +141,7 @@ void status_upload(void)
     }
     update_env_info(env_info);
 
-
+esperror:
     xSemaphoreGive(on8266);//把串口屏操作也放在8266互斥锁中
 
 }
@@ -180,6 +218,21 @@ void get_goods()
         // xSemaphoreTake(uart7txc,portMAX_DELAY);
         esppack.data[esppack.len]=0;
         update_data_list(SCREEN_UPDATE_SHLF_LIST,esppack.data);
+    }
+    
+    xSemaphoreGive(on8266);
+}
+
+void get_shelf()
+{
+    xSemaphoreTake(on8266,portMAX_DELAY);
+    vTaskDelay(100);
+    uprintf(&g_uart8_ctrl,"GET /interface/shelf/\r\n\r\n");
+    if(!wait_8266return(2000)){
+        // R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
+        // xSemaphoreTake(uart7txc,portMAX_DELAY);
+        esppack.data[esppack.len]=0;
+        update_shelf_info(esppack.data);
     }
     
     xSemaphoreGive(on8266);

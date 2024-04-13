@@ -41,7 +41,7 @@ void led1_entry(void *pvParameters)
         R_IOPORT_PinWrite(g_ioport.p_ctrl, led, 1);
         vTaskDelay(200);
 
-        uprintf(&g_uart7_ctrl,"yaw:%.2f\n",read_yaw());
+        // uprintf(&g_uart7_ctrl,"yaw:%.2f\n",read_yaw());
         // xSemaphoreTake(uart9rxc,portMAX_DELAY);
         // R_SCI_UART_Write(&g_uart7_ctrl,uart9pack.data,uart9pack.len);
         // xSemaphoreTake(uart7txc,portMAX_DELAY);

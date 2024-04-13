@@ -108,7 +108,7 @@ void motion_cfg(float vx, float vy,float omega)
 
 void motion_cfg2(float vt, float theta,float omega)
 {
-    theta=theta/360*_2PI;
+    theta=_normalizeAngle(theta/360*_2PI);
     float omegaprxpry=omega*2;
     float duty1,duty2,duty3,duty4;
     float vx=vt*_cos(theta);

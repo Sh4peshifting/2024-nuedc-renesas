@@ -167,7 +167,7 @@ def cargo_operation(cargo_id,in_out,self_id,user):
     #/interface/cargo/?cargo_id=%s&self_id%s&in=%d
     #inout: in1 out2 change3
     #L:%d,Origin:%d,Target:%d,Work:%d,
-
+    
     worigin=0
     wtarget=0
 
@@ -198,10 +198,14 @@ def cargo_operation(cargo_id,in_out,self_id,user):
 
 
     elif(in_out=="2"):
-        goods_self=models.goods.objects.filter(number=cargo_id).first()
-        if(not goods_self):#cargo_id不存在
+        # findself=models.goods.objects.filter(place=cargo_id).first()
+        # if(not findself):#self_id不存在
+        #     return 1
+        # cargo_id=findself.number
+        goods_self=models.goods.objects.filter(place=self_id).first()
+        if(not goods_self):#self_id
             return 1
-        if(goods_self.isempty==True):#cargo_id已出库
+        if(goods_self.isempty==True):#self_id已出库
             return 1
         goods_self.number=""
         goods_self.isempty=True
@@ -251,9 +255,9 @@ def cargo_operation(cargo_id,in_out,self_id,user):
 @csrf_exempt
 def get_log(request):
     log=""
-    logs=models.log.objects.all()
+    logs=models.log.objects.all().order_by('-id')[:10]
     for item in logs:
-        log+=item.staff.username+" "+item.operation+" "+item.other+"\r\n"
+        log+=str(item.id)+" "+item.staff.username+" "+item.operation+" "+item.other+"\r\n"
     log="\""+log+"\""
     return HttpResponse(log.encode('gb2312'), content_type="text/plain")
 
@@ -272,14 +276,14 @@ def get_goods(request):
 @csrf_exempt
 def lighton(request):
     status = models.status.objects.first()
-    models.cmd8266.objects.create(cmd="L:1,Origin:0,Target:0,Work:0,Vacant:99")
+    models.cmd8266.objects.create(cmd="L:1,Origin:0,Target:0,Work:0,Vacant:99,")
     return HttpResponse("success", content_type="text/plain")
 
 
 @csrf_exempt
 def lightoff(request):
     status = models.status.objects.first()
-    models.cmd8266.objects.create(cmd="L:2,Origin:0,Target:0,Work:0,Vacant:99")
+    models.cmd8266.objects.create(cmd="L:2,Origin:0,Target:0,Work:0,Vacant:99,")
     return HttpResponse("success", content_type="text/plain")
 
 
@@ -332,4 +336,14 @@ def interface_login(request):
         return HttpResponse("error", content_type="text/plain")
     else:
         return HttpResponse("success", content_type="text/plain")
+    
+@csrf_exempt
+def interface_shelf(request):
+    shelf=""
+    for item in models.goods.objects.all():
+        if(item.isempty==True):
+            shelf+="0"
+        else:
+            shelf+="1"
+    return HttpResponse(shelf.encode('gb2312'), content_type="text/plain")
 

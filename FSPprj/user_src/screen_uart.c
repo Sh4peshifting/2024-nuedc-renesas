@@ -242,13 +242,15 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             // in storage function
             // read rfid
             storge_inout((uint8_t *)"None", shelf_id, 1);
+            get_shelf();
 
             break;
         case SCREEN_RX_CMD_GET:
             sscanf(get_inout_shelf_id(screen_rx_buf + 2), "%s", shelf_id); 
             uprintf(&g_uart7_ctrl, "out\n");
             // out storage function
-            // storge_inout(cargo_id, (uint8_t *)"None", 2);//need to modify
+            storge_inout((uint8_t *)"None", shelf_id, 2);//need to modify
+            get_shelf();
 
             break;
         case SCREEN_RX_CMD_SWITCH:
@@ -256,7 +258,7 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             sscanf((char *)screen_rx_buf + 2, "%5s %5s", old_shelf_id, shelf_id);
             uprintf(&g_uart7_ctrl, "switch\n");
             // switch shelf function
-            // storge_inout(cargo_id, shelf_id, 3);//need to modify
+            storge_inout(old_shelf_id, shelf_id, 3);//need to modify
 
             break;
         case SCREEN_RX_CMD_SHELF_LIST:
@@ -272,6 +274,8 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             break;
         case SCREEN_UPDATE_SHELF_INFO:
             // update shelf info
+            uprintf(&g_uart7_ctrl, "get shelf\n");
+            get_shelf();
 
             break;
         default:
