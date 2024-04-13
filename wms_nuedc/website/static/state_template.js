@@ -8,7 +8,8 @@ $(document).ready(function () {
         <div class="row row-cols-1 row-cols-md-3 g-4">
         {{#each cargo}}
         <div class="col">
-            <div class="card border-secondary">
+            <div type="button" class="card border-secondary" data-bs-toggle="modal" 
+            data-bs-target="#staticBackdrop" onclick="get_cargo_id('{{this.cargo_list_id}}')">
                 <div class="card-body">
                     <h5 class="card-header mb-2" >{{this.cargo_list_id}}</h5>
                     <div class="card-text">
