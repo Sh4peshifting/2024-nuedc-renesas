@@ -10,7 +10,7 @@
       <TargetName>Target 1</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
-      <pCCUsed>6190000::V6.19::ARMCLANG</pCCUsed>
+      <pCCUsed>6160000::V6.16::ARMCLANG</pCCUsed>
       <uAC6>1</uAC6>
       <TargetOption>
         <TargetCommonOption>
@@ -470,6 +470,11 @@
               <FileName>interface_driver.c</FileName>
               <FileType>1</FileType>
               <FilePath>.\user_src\interface_driver.c</FilePath>
+            </File>
+            <File>
+              <FileName>foc_utils.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>.\user_src\foc_utils.c</FilePath>
             </File>
           </Files>
         </Group>

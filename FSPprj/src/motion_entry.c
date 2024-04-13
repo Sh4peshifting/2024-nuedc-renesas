@@ -3,7 +3,7 @@
 
 float pid_track(float target, float current)
 {	
-	float limit=3,kp=0,kd=0;
+	float limit=3.0f,kp=0,kd=0;
 	float bias;  
 	static float output,last_bais;
 	bias=target-current; //求偏差
@@ -22,7 +22,7 @@ float pid_track(float target, float current)
 
 float pid_angle(float target, float current)
 {	
-	float limit=0.2,kp=0.009,kd=0.00001;
+	float limit=0.2f,kp=0.009f,kd=0.00001f;
 	float bias,output;  
 	static float last_bais;
 	bias=target-current; //求偏差
@@ -57,15 +57,15 @@ void motion_entry(void *pvParameters)
 	
     /* TODO: add your own code here */
 	motor_init();
-	run_mode=RunAngle;
-	xSemaphoreTake(uart5rxc,portMAX_DELAY);
+	run_mode=RunVt;
+	// xSemaphoreTake(uart5rxc,portMAX_DELAY);
 	// motion_cfg(-0.3f,0,0);
-	target_angle=read_yaw();
+	// target_angle=read_yaw();
     while (1)
     {
         if(run_mode==RunForward){
             xSemaphoreTake(uart4rxc,portMAX_DELAY);
-            float omega=pid_angle(128,uart4pack.data[4]);
+            float omega=pid_angle(128,uart4pack.data[4]*0.3f+uart4pack.data[3]*0.7f);
             float vy=pid_track(128,uart4pack.data[3]);
             motion_cfg(speed_forward,vy,omega);
 
@@ -78,6 +78,10 @@ void motion_entry(void *pvParameters)
         else if(run_mode == RunIdle){
             
         }
+		else if(run_mode== RunVt){
+			xSemaphoreTake(uart5rxc,portMAX_DELAY);
+			motion_cfg2(0.3f,read_yaw(),0.2f);
+		}
        
         vTaskDelay(5);
     }

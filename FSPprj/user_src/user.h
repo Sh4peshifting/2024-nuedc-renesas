@@ -17,6 +17,7 @@
 #define RunBackward 1
 #define RunAngle 2
 #define RunIdle 3
+#define RunVt 4
 
 #define WORK_IN 1
 #define WORK_OUT 2

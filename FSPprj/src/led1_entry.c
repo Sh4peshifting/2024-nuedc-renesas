@@ -41,14 +41,14 @@ void led1_entry(void *pvParameters)
         R_IOPORT_PinWrite(g_ioport.p_ctrl, led, 1);
         vTaskDelay(200);
 
-        // uprintf(&g_uart7_ctrl,"yaw:%.2f\n",read_yaw());
+        uprintf(&g_uart7_ctrl,"yaw:%.2f\n",read_yaw());
         // xSemaphoreTake(uart9rxc,portMAX_DELAY);
         // R_SCI_UART_Write(&g_uart7_ctrl,uart9pack.data,uart9pack.len);
         // xSemaphoreTake(uart7txc,portMAX_DELAY);
 
-        a=read_card(card_id, NULL);
-        uprintf(&g_uart7_ctrl, "card id:%02x%02x%02x%02x   %d\n", 
-            card_id[0], card_id[1], card_id[2], card_id[3],a);
+        // a=read_card(card_id, NULL);
+        // uprintf(&g_uart7_ctrl, "card id:%02x%02x%02x%02x   %d\n", 
+        //     card_id[0], card_id[1], card_id[2], card_id[3],a);
         // memset(card_id, 0, 5);
   
 
