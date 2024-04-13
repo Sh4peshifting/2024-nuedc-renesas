@@ -34,6 +34,7 @@ void usartprocess_entry(void *pvParameters)
             if (uart4pack.cnt){
                 uart4pack.len = uart4pack.cnt;
                 uart4pack.cnt = 0;
+                if(0x65 == uart4pack.data[0] && 0x55 == uart4pack.data[1])
                 xSemaphoreGive(uart4rxc);
 
             }
