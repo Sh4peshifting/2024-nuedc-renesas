@@ -44,11 +44,11 @@
                 </div>
 
                 <div class="modal fade" id="modal_msg" data-bs-backdrop="static" data-bs-keyboard="false"
-                     tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                    <div class="modal-dialog">
+                     tabindex="-1" aria-labelledby="info_modal_msg" aria-hidden="true">
+                    <div class="modal-dialog  modal-dialog-centered">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h1 class="modal-title fs-5" id="staticBackdropLabel">提示</h1>
+                                <h1 class="modal-title fs-5" id="info_modal_msg">提示</h1>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal"
                                         aria-label="Close"></button>
                             </div>
@@ -79,7 +79,8 @@
                             </svg>
                             操作说明
                         </h5>
-                        <p class="card-text">概况显示仓库环境状态，货架概览显示货架具体信息，点击相应位置卡片可进行出入库、换货操作，
+                        <p class="card-text">概况显示仓库环境状态及货架占用状况，
+                            货架概览显示货架具体信息，点击相应位置卡片可进行出入库、换货操作，
                             运输车概况显示当前运输车状态，点击灯光控制灯光开关。</p>
                     </div>
                 </div>
@@ -137,11 +138,11 @@
                         </h5>
                         <div class="cargo-list-box"></div>
                         <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                             tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                             tabindex="-1" aria-labelledby="cargo_man_msg" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="staticBackdropLabel">货物管理</h1>
+                                        <h1 class="modal-title fs-5" id="cargo_man_msg">货物管理</h1>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                 aria-label="Close"></button>
                                     </div>
@@ -165,7 +166,7 @@
                                         </div>
                                         <select class="form-select mb-3" aria-label="Default select example"
                                                 id="sw_cargo_sel" disabled>
-                                            <option value=null selected>选择货架号</option>
+                                            <option value=null selected>选择目标货架号</option>
                                             <option value="1-1-1">1-1-1</option>
                                             <option value="1-1-2">1-1-2</option>
                                             <option value="1-1-3">1-1-3</option>
@@ -177,7 +178,9 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">取消
                                         </button>
-                                        <button type="button" class="btn btn-primary" id="cargo_btn">确认</button>
+                                        <button type="button" class="btn btn-primary" id="cargo_btn"
+                                                data-bs-dismiss="modal">确认
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -233,9 +236,9 @@
                 },
                 success: function (receivedData) {
                     if (receivedData['status'] == 0) {
-                        alert('换货成功');
+                        alert('操作成功');
                     } else {
-                        alert('换货失败');
+                        alert('操作失败');
                     }
                 }
             });
