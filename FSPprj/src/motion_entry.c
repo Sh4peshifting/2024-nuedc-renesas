@@ -67,7 +67,7 @@ void motion_entry(void *pvParameters)
 	
     /* TODO: add your own code here */
 	motor_init();
-	run_mode=RunForward;
+	run_mode=RunIdle;
 	// xSemaphoreTake(uart5rxc,portMAX_DELAY);
 	// motion_cfg(-0.3f,0,0);
 	// target_angle=read_yaw();
@@ -78,7 +78,7 @@ void motion_entry(void *pvParameters)
             float omega=pid_angle(128,uart4pack.data[4]);
 			float vd,vq;
 			vq=pid_track(128,uart4pack.data[3]);//track
-			motion_cfgground(0.2f,-vq,128-uart4pack.data[4],omega);
+			motion_cfgground(speed_forward,-vq,128-uart4pack.data[4],omega);
 
         }
         else if(run_mode == RunAngle){
@@ -87,7 +87,8 @@ void motion_entry(void *pvParameters)
             motion_cfg(0,0,omega);
         }
         else if(run_mode == RunIdle){
-            
+            speed_forward=0;
+			motion_cfg(0,0,0);
         }
 		else if(run_mode== RunVt){
 			xSemaphoreTake(uart5rxc,portMAX_DELAY);

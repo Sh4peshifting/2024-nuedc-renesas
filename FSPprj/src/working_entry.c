@@ -14,6 +14,8 @@ void working_entry(void *pvParameters)
     while (1)
     {
         if(onworking == WORK_IN){
+            back_to_cross();
+            onworking=WORK_IDLE;
 
         }
         else if(onworking == WORK_OUT){

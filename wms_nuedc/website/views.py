@@ -148,7 +148,7 @@ def sensor(request):
     status.humidity = humidity
     status.temperature = temperature
     status.fire = fire
-    status.car_status = False if working else True
+    status.car_status = False if int(working) else True
     status.empty_self=models.goods.objects.filter(isempty=True).count()
 
     status.save()
