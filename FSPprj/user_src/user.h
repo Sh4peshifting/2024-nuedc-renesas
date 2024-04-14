@@ -57,7 +57,7 @@ extern uint8_t username[20],password[20];
 void uprintf(uart_ctrl_t *p_ctrl,char *fmt, ...);
 void go_to_line1(float speed);
 void set_position(uint32_t pos);
-void back_to_cross(void);
+void back_to_cross(uint8_t nn);
 void turn_to(uint8_t dir);
 void go_to_line(uint8_t line);
 

@@ -8,6 +8,12 @@
 #define MOTOR_C 3
 #define MOTOR_D 4
 
+#define STEP_F1 0
+#define STEP_F1_LIFT 5000
+
+#define STEP_F2
+#define STEP_F2_LIFT
+
 void motor_init(void);
 void motion_cfg(float vx, float vy,float omega);
 void set_fre(uint32_t fre);

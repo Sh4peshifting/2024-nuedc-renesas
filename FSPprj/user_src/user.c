@@ -14,7 +14,7 @@ volatile uartpack uart4pack={{0},0,0,0};
 
 uint32_t  step_position;
 float speed_forward,target_angle;
-volatile uint8_t onworking=1,run_mode;
+volatile uint8_t onworking=0,run_mode;
 
 uint8_t username[20],password[20];
 
@@ -196,15 +196,20 @@ void go_to_line(uint8_t line)
 
 }
 
-void back_to_cross(void)
+void back_to_cross(uint8_t nn)
 {
     speed_forward=-0.3f;
     run_mode=RunForward;//后退为负速度的前进
 
-    while(k210pack.data[SignIndex]!=SignCross){
-        vTaskDelay(2);
+    while (nn--)
+    {
+        while (k210pack.data[SignIndex] != SignCross)
+        {
+            vTaskDelay(2);
+        }
+        vTaskDelay(600);
     }
-    vTaskDelay(300);
+
     run_mode=RunIdle;
     speed_forward=0;
     vTaskDelay(300);

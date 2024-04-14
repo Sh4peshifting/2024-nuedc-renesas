@@ -11,6 +11,8 @@ void motor_init()
     motion_cfg(0,0,0);
     R_GPT_Start(g_timer5.p_ctrl);
     R_GPT_Start(g_timer6.p_ctrl);
+
+    motion_step(10000,0);
 }
 
 void set_pwm(timer_ctrl_t * const p_ctrl,uint32_t const pin, float duty)
@@ -114,8 +116,6 @@ void motion_cfg2(float vt, float theta,float omega)
     float duty1,duty2,duty3,duty4;
     float vx=vt*_cos(theta);
     float vy=-vt*_sin(theta);
-
-    uprintf(&g_uart7_ctrl,"vt:%.2f theta:%.2f omega:%.2f\n",vt,theta,omega);
 
     duty1=vx-vy-omegaprxpry;
     duty2=vx+vy+omegaprxpry;

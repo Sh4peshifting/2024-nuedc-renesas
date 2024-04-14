@@ -230,8 +230,8 @@
                 type: 'POST',
                 data: {
                     'cargo_op': cargo_op,
-                    'cargo_id': (target_loc == null) ? null : curr_loc,
-                    'cargo_loc': (target_loc == null) ? curr_loc : target_loc,
+                    'cargo_id':  target_loc,
+                    'cargo_loc': curr_loc,
                 },
                 success: function (receivedData) {
                     if (receivedData['status'] == 0) {

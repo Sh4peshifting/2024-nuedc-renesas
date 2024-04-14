@@ -228,8 +228,8 @@ def cargo_operation(cargo_id,in_out,self_id,user):
            or models.goods.objects.filter(number=cargo_id).first().isempty==True):
             return 1
         previous_cargo_id=models.goods.objects.filter(place=cargo_id).first().number
-        models.goods.objects.filter(place=cargo_id).update(number="",isempty=True)
-        models.goods.objects.filter(place=self_id).update(number=previous_cargo_id,isempty=False)
+        models.goods.objects.filter(place=self_id).update(number="",isempty=True)
+        models.goods.objects.filter(place=cargo_id).update(number=previous_cargo_id,isempty=False)
         models.log.objects.create(staff=user, time=timezone.now(), operation="转移", other=cargo_id)
         if(cargo_id=="1-1-1"):
             worigin=1

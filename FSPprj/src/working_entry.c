@@ -14,11 +14,14 @@ void working_entry(void *pvParameters)
     while (1)
     {
         if(onworking == WORK_IN){
-            back_to_cross();
+            set_position(STEP_F1);
+            back_to_cross(1);
             onworking=WORK_IDLE;
 
         }
         else if(onworking == WORK_OUT){
+            back_to_cross(3);
+            onworking=WORK_IDLE;
 
         }
         else if(onworking == WORK_CH){
@@ -40,7 +43,7 @@ void run_in()
     go_to_line1(0.5f);
     go_to_line1(0.2f);
     set_position(1);
-    back_to_cross();
+    back_to_cross(1);
 
     turn_to(TurnRight);
 
@@ -52,7 +55,7 @@ void run_in()
 
     go_to_line1(0.2f);
 
-    back_to_cross();
+    back_to_cross(1);
 
     turn_to(TurnLeft);
 
@@ -61,7 +64,7 @@ void run_in()
 
     turn_to(TurnRight);
 
-    back_to_cross();
+    back_to_cross(1);
 
     onworking = WORK_IDLE;
 }
@@ -70,4 +73,10 @@ void run_in()
 void run_out()
 {
 
+}
+
+void go_to_enter(void)
+{   
+    back_to_cross(1);
+    
 }
