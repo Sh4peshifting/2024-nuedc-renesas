@@ -219,7 +219,7 @@ def cargo_operation(cargo_id,in_out,self_id,user):
         goods_self=models.goods.objects.filter(place=self_id).first()
         if(not goods_self):#self_id不存在
             return 1
-        goods_self=models.goods.objects.filter(number=cargo_id).first()
+        goods_self=models.goods.objects.filter(place=cargo_id).first()
         if(not goods_self):#cargo_id不存在
             return 1
         
@@ -227,21 +227,21 @@ def cargo_operation(cargo_id,in_out,self_id,user):
         if(models.goods.objects.filter(place=self_id).first().isempty==False  \
            or models.goods.objects.filter(number=cargo_id).first().isempty==True):
             return 1
-        previous_self_id=models.goods.objects.filter(number=cargo_id).first().place
-        models.goods.objects.filter(place=previous_self_id).update(number="",isempty=True)
-        models.goods.objects.filter(place=self_id).update(number=cargo_id,isempty=False)
+        previous_cargo_id=models.goods.objects.filter(place=cargo_id).first().number
+        models.goods.objects.filter(place=cargo_id).update(number="",isempty=True)
+        models.goods.objects.filter(place=self_id).update(number=previous_cargo_id,isempty=False)
         models.log.objects.create(staff=user, time=timezone.now(), operation="转移", other=cargo_id)
-        if(previous_self_id=="1-1-1"):
+        if(cargo_id=="1-1-1"):
             worigin=1
-        elif(previous_self_id=="1-1-2"):
+        elif(cargo_id=="1-1-2"):
             worigin=2
-        elif(previous_self_id=="1-1-3"):
+        elif(cargo_id=="1-1-3"):
             worigin=3
-        elif(previous_self_id=="1-2-1"):
+        elif(cargo_id=="1-2-1"):
             worigin=4
-        elif(previous_self_id=="1-2-2"):
+        elif(cargo_id=="1-2-2"):
             worigin=5
-        elif(previous_self_id=="1-2-3"):
+        elif(cargo_id=="1-2-3"):
             worigin=6
     else:
         return 1
@@ -289,8 +289,8 @@ def lightoff(request):
 
 @csrf_exempt
 def change_cargo(request):
-    if(models.sataus.objects.first().car_status==False):
-        return JsonResponse({"status":0}, safe=False)
+    # if(models.status.objects.first().car_status==False):
+    #     return JsonResponse({"status":1}, safe=False)
     self_id = request.POST.get("cargo_loc")
     cargo_id = request.POST.get("cargo_id")
     in_out = request.POST.get("cargo_op")

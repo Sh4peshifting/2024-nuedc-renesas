@@ -13,5 +13,7 @@ void motion_cfg(float vx, float vy,float omega);
 void set_fre(uint32_t fre);
 void motion_step(uint32_t step,uint8_t dir);
 void motion_cfg2(float vt, float theta,float omega);
+void motion_cfgground(float vd, float vq,float alpha,float omega);
+void motion_cfgk(float vt, float theta,float omega);
 #endif
 

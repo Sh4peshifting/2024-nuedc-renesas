@@ -1,5 +1,6 @@
 #include "motor.h"
 #include "foc_utils.h"
+#include "user.h"
 volatile uint32_t step_cnt=0;
 
 void motor_init()
@@ -114,12 +115,12 @@ void motion_cfg2(float vt, float theta,float omega)
     float vx=vt*_cos(theta);
     float vy=-vt*_sin(theta);
 
+    uprintf(&g_uart7_ctrl,"vt:%.2f theta:%.2f omega:%.2f\n",vt,theta,omega);
+
     duty1=vx-vy-omegaprxpry;
     duty2=vx+vy+omegaprxpry;
     duty3=vx+vy-omegaprxpry;
     duty4=vx-vy+omegaprxpry;
-    
-    uprintf(&g_uart7_ctrl,"vx:%.2f vy:%.2f\n",vx,vy);
 
     motor_cfg(MOTOR_C,duty1);
     motor_cfg(MOTOR_A,duty2);
@@ -127,6 +128,41 @@ void motion_cfg2(float vt, float theta,float omega)
     motor_cfg(MOTOR_B,duty4);
     
 }
+
+void motion_cfgk(float vt, float theta,float omega)
+{
+    theta=_normalizeAngle(theta/360*_2PI);
+    float omegaprxpry=omega*2;
+    float duty1,duty2,duty3,duty4;
+    float vx=vt*_cos(theta);
+    float vy=vt*_sin(theta);
+
+    duty1=vx-vy-omegaprxpry;
+    duty2=vx+vy+omegaprxpry;
+    duty3=vx+vy-omegaprxpry;
+    duty4=vx-vy+omegaprxpry;
+
+    motor_cfg(MOTOR_C,duty1);
+    motor_cfg(MOTOR_A,duty2);
+    motor_cfg(MOTOR_D,duty3);
+    motor_cfg(MOTOR_B,duty4);
+    
+}
+
+/*  alpha = 128-thetak210 */
+void motion_cfgground(float vd, float vq,float alpha,float omega)
+{
+    float vt=_sqrtApprox(vd*vd+vq*vq);
+    float beta=_normalizeAngle(alpha*_2PI/360+atan2f(vq,vd));
+    uprintf(&g_uart7_ctrl,"beta: %.2f",beta);
+    beta=beta*360/_2PI;
+    
+
+    uprintf(&g_uart7_ctrl,"vt:%.2f beta:%.2f omega:%.2f\n",vt,beta,omega);
+    motion_cfgk(vt,beta,omega);    
+}
+
+
 
 void motion_step(uint32_t step,uint8_t dir)
 {

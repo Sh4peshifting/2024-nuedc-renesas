@@ -96,7 +96,7 @@ void status_upload(void)
     fire_status_t onfire=fire_detect();
     
     xSemaphoreTake(on8266,portMAX_DELAY);
-    vTaskDelay(100);
+    vTaskDelay(20);
     
     uprintf(&uart_esp_ctrl,"GET /interface/sensor/?humi=%d&temp=%d.%d&fire=%d&working=%d\r\n\r\n",
         dht11_data.humi_int,dht11_data.temp_int,dht11_data.temp_deci,onfire,onworking);
@@ -104,8 +104,8 @@ void status_upload(void)
         reconnect_server();
         goto esperror;
     }
-    R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
-    xSemaphoreTake(uart7txc,portMAX_DELAY);
+    // R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
+    // xSemaphoreTake(uart7txc,portMAX_DELAY);
     uart8pack.data[uart8pack.len]=0;
     if(strstr((const char *)uart8pack.data,"ERROR")){
         reconnect_server();
@@ -149,7 +149,7 @@ esperror:
 void login_auth()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-    vTaskDelay(100);
+    vTaskDelay(20);
     uprintf(&uart_esp_ctrl,"GET /interface/login/?username=%s&password=%s\r\n\r\n",username,password);
     if(!wait_8266return(2000)){
         uart8pack.data[uart8pack.len] = 0;
@@ -170,7 +170,7 @@ void login_auth()
 void storge_inout(uint8_t *cargo_id,uint8_t *self_id,uint8_t inout)
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-    vTaskDelay(100);
+    vTaskDelay(20);
 
     xSemaphoreTake(uart8rxc,0);
     uprintf(&uart_esp_ctrl,"GET /interface/cargo/?cargo_id=%s&self_id=%s&in=%d&username=%s&password=%s\r\n\r\n",
@@ -196,7 +196,7 @@ void storge_inout(uint8_t *cargo_id,uint8_t *self_id,uint8_t inout)
 void get_log()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-    vTaskDelay(100);
+    vTaskDelay(20);
     uprintf(&g_uart8_ctrl,"GET /interface/get_log/\r\n\r\n");
     if(!wait_8266return(2000)){
         R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
@@ -211,7 +211,7 @@ void get_log()
 void get_goods()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-    vTaskDelay(100);
+    vTaskDelay(20);
     uprintf(&g_uart8_ctrl,"GET /interface/get_goods/\r\n\r\n");
     if(!wait_8266return(2000)){
         // R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);
@@ -226,7 +226,7 @@ void get_goods()
 void get_shelf()
 {
     xSemaphoreTake(on8266,portMAX_DELAY);
-    vTaskDelay(100);
+    vTaskDelay(20);
     uprintf(&g_uart8_ctrl,"GET /interface/shelf/\r\n\r\n");
     if(!wait_8266return(2000)){
         // R_SCI_UART_Write(&g_uart7_ctrl,uart8pack.data,uart8pack.len);

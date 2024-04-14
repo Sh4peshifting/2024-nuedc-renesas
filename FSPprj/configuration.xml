@@ -687,7 +687,7 @@
       <property id="_symbol" value="interface"/>
       <property id="rtos.awsfreertos.thread.name" value="interface"/>
       <property id="rtos.awsfreertos.thread.stack" value="2048"/>
-      <property id="rtos.awsfreertos.thread.priority" value="2"/>
+      <property id="rtos.awsfreertos.thread.priority" value="3"/>
       <property id="rtos.awsfreertos.thread.context" value="NULL"/>
       <property id="rtos.awsfreertos.thread.allocation" value="rtos.awsfreertos.thread.allocation.static"/>
       <property id="rtos.awsfreertos.thread.secure_context" value="rtos.awsfreertos.thread.secure_context.enable"/>

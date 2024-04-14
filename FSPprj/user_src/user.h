@@ -22,8 +22,8 @@
 #define WORK_IN 1
 #define WORK_OUT 2
 #define WORK_CH 3
+#define WORK_PREIN 4
 #define WORK_IDLE 0
-
 
 #define TurnLeft 0
 #define TurnRight 1

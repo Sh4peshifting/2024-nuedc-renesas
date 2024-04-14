@@ -143,7 +143,40 @@
           <Name>UL2V8M(-S0 -C0 -P0 )  -FN3 -FC2000 -FD20000000 -FF0RA6M5_1M -FF1RA6M5_DATA_C1M -FF2RA6M5_CONF -FL0100000 -FL12000 -FL2300 -FS00 -FS18000000 -FS2100A000 -FP0($$Device:R7FA6M5BF$Flash\RA6M5_1M.FLM) -FP1($$Device:R7FA6M5BF$Flash\RA6M5_DATA_C1M.FLM) -FP2($$Device:R7FA6M5BF$Flash\RA6M5_CONF.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>51</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>19570</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\user_src\interface_driver.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\FSP_rtosprj\user_src/interface_driver.c\51</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>78</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>19894</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\user_src\interface_driver.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\FSP_rtosprj\user_src/interface_driver.c\78</Expression>
+        </Bp>
+      </Breakpoint>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>

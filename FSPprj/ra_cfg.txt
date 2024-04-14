@@ -786,7 +786,7 @@ FSP Configuration
     Symbol: interface
     Name: interface
     Stack size (bytes): 2048
-    Priority: 2
+    Priority: 3
     Thread Context: NULL
     Memory Allocation: Static
     Allocate Secure Context: Enable

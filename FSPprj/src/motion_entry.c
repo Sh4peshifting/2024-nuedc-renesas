@@ -76,31 +76,9 @@ void motion_entry(void *pvParameters)
         if(run_mode==RunForward){
             xSemaphoreTake(uart4rxc,portMAX_DELAY);
             float omega=pid_angle(128,uart4pack.data[4]);
-			// R_SCI_UART_Write(&g_uart7_ctrl,uart4pack.data,uart4pack.len);
-			// xSemaphoreTake(uart7txc,portMAX_DELAY);
-            // float vy=pid_track(128,uart4pack.data[3]);
-			
-			
-
-			float vd,vq,vx,vy,alpha;
-
-			// vd=0;
+			float vd,vq;
 			vq=pid_track(128,uart4pack.data[3]);//track
-			// alpha = uart4pack.data[4]-128;
-			// vx=vd*_cos(alpha)-vq*_sin(alpha);
-			// vy=-(vd*_sin(alpha)+vq*_cos(alpha));
-			
-			// limit(&vx,0.3f);
-			// limit(&vy,0.3f);
-			// motion_cfg(vx,vy,0);
-            // motion_cfg(speed_forward,vy,omega);
-			// motion_cfg(0,0,omega);
-
-			float increase;
-			uprintf(&g_uart7_ctrl,"vq:%.2f increase:%.2f\n",vq,increase);
-			float vqqq=_sqrtApprox(vq*vq+0.04f);
-			// motion_cfg2(vq,uart4pack.data[4]-128+90,omega);
-			motion_cfg2(vqqq,uart4pack.data[4]-128+atan2f(vq,0.2f),omega);
+			motion_cfgground(0.2f,-vq,128-uart4pack.data[4],omega);
 
         }
         else if(run_mode == RunAngle){
