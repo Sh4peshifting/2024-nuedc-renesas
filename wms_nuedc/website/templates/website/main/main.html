@@ -192,10 +192,10 @@
     </div>
 </div>
 <script>
-    let cargo_loc;
+    let curr_loc;
 
     function get_cargo_id(click_id) {
-        cargo_loc = click_id;
+        curr_loc = click_id;
     }
 
     $(document).ready(function () {
@@ -224,15 +224,14 @@
         })
 
         $('#cargo_btn').click(function () {
-            let cargo_id = $('#sw_cargo_sel').val();
-            console.log(cargo_id, cargo_loc);
+            let target_loc = $('#sw_cargo_sel').val();
             $.ajax({
                 url: '/change_cargo/',
                 type: 'POST',
                 data: {
                     'cargo_op': cargo_op,
-                    'cargo_id': cargo_id,
-                    'cargo_loc': cargo_loc
+                    'cargo_id': (target_loc == null) ? null : curr_loc,
+                    'cargo_loc': (target_loc == null) ? curr_loc : target_loc,
                 },
                 success: function (receivedData) {
                     if (receivedData['status'] == 0) {
