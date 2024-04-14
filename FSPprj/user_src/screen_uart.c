@@ -69,63 +69,63 @@ void update_shelf_info(uint8_t *shelf_status)
 {
     if (shelf_status[0] == '1')
     {
-        change_attribute("c111", "pic", "4");
-        change_attribute("c111", "pic2", "4");
+        change_attribute("c111", "pic", "2");
+        change_attribute("c111", "pic2", "2");
     }
     else
     {
-        change_attribute("c111", "pic", "5");
-        change_attribute("c111", "pic2", "5");
+        change_attribute("c111", "pic", "3");
+        change_attribute("c111", "pic2", "3");
     }
     if (shelf_status[1] == '1')
     {
-        change_attribute("c112", "pic", "4");
-        change_attribute("c112", "pic2", "4");
+        change_attribute("c112", "pic", "2");
+        change_attribute("c112", "pic2", "2");
     }
     else
     {
-        change_attribute("c112", "pic", "5");
-        change_attribute("c112", "pic2", "5");
+        change_attribute("c112", "pic", "3");
+        change_attribute("c112", "pic2", "3");
     }
     if (shelf_status[2] == '1')
     {
-        change_attribute("c113", "pic", "4");
-        change_attribute("c113", "pic2", "4");
+        change_attribute("c113", "pic", "2");
+        change_attribute("c113", "pic2", "2");
     }
     else
     {
-        change_attribute("c113", "pic", "5");
-        change_attribute("c113", "pic2", "5");
+        change_attribute("c113", "pic", "3");
+        change_attribute("c113", "pic2", "3");
     }
     if (shelf_status[3] == '1')
     {
-        change_attribute("c121", "pic", "4");
-        change_attribute("c121", "pic2", "4");
+        change_attribute("c121", "pic", "2");
+        change_attribute("c121", "pic2", "2");
     }
     else
     {
-        change_attribute("c121", "pic", "5");
-        change_attribute("c121", "pic2", "5");
+        change_attribute("c121", "pic", "3");
+        change_attribute("c121", "pic2", "3");
     }
     if (shelf_status[4] == '1')
     {
-        change_attribute("c122", "pic", "4");
-        change_attribute("c122", "pic2", "4");
+        change_attribute("c122", "pic", "2");
+        change_attribute("c122", "pic2", "2");
     }
     else
     {
-        change_attribute("c122", "pic", "5");
-        change_attribute("c122", "pic2", "5");
+        change_attribute("c122", "pic", "3");
+        change_attribute("c122", "pic2", "3");
     }
     if (shelf_status[5] == '1')
     {
-        change_attribute("c123", "pic", "4");
-        change_attribute("c123", "pic2", "4");
+        change_attribute("c123", "pic", "2");
+        change_attribute("c123", "pic2", "2");
     }
     else
     {
-        change_attribute("c123", "pic", "5");
-        change_attribute("c123", "pic2", "5");
+        change_attribute("c123", "pic", "3");
+        change_attribute("c123", "pic2", "3");
     }
 }
 
