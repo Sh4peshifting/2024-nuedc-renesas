@@ -6,5 +6,5 @@
 
 void ic_detect_init(void);
 uint8_t read_card(uint8_t *read_uid, void (*funCallBack)(void));
-
+uint8_t read_card_pro(uint8_t *read_uid);
 #endif

@@ -10,6 +10,7 @@
 #include "screen_uart.h"
 #include "fire_alarm.h"
 #include "ic_detect.h"
+#include "rc522.h"
 
 #define osDelay(milisec) vTaskDelay(milisec)
 

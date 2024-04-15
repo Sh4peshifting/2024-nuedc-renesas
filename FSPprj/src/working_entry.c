@@ -4,6 +4,7 @@
 void run_in(void);
 void run_out(void);
 void run_change(void);
+void run_prein(void);
 /* working entry function */
 /* pvParameters contains TaskHandle_t */
 void working_entry(void *pvParameters)
@@ -28,8 +29,11 @@ void working_entry(void *pvParameters)
         else if(onworking == WORK_CH){
 
         }
-        else if(onworking == 0){
+        else if(onworking == WORK_IDLE){
             
+        }
+        else if(onworking == WORK_PREIN){
+            run_prein();
         }
         else{
 
@@ -80,4 +84,25 @@ void go_to_enter(void)
 {   
     back_to_cross(1);
     
+}
+void run_prein(void)
+{
+    uint8_t card_id[5]={0};
+    back_to_cross(1);
+    turn_to(TurnRight);
+
+    speed_forward=0.2f;
+    run_mode=RunForward;
+    vTaskDelay(1000);
+    run_mode=RunAlign;
+    vTaskDelay(1000);
+    
+    uint8_t status=read_card_pro(card_id);
+    if(status){
+
+    }
+    else{
+        
+    }
+
 }

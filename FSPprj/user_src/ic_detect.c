@@ -47,3 +47,18 @@ uint8_t read_card(uint8_t *read_uid, void (*funCallBack)(void))
 	return 1;
 }
 
+uint8_t read_card_pro(uint8_t *read_uid)
+{
+	uint8_t temp[5];
+	uint8_t nn=3;
+	while(nn--){
+		if (PCD_Request(0x52, temp) == 0)
+		{
+			if (PCD_Anticoll(read_uid) == 0)
+			{
+				return 0;
+			}
+		}
+	}
+	return 1;
+}

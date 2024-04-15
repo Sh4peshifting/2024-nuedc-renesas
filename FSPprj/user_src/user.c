@@ -226,3 +226,12 @@ void set_position(uint32_t pos)
     step_position = pos;
 
 }
+
+// void go_time(void)
+// {
+//     run_mode=RunForward;
+//     speed_forward=0.3f;
+//     vTaskDelay(2000);
+//     run_mode=RunIdle;
+//     speed_forward=0;
+// }

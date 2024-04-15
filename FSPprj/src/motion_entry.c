@@ -84,7 +84,7 @@ void motion_entry(void *pvParameters)
 	
     /* TODO: add your own code here */
 	motor_init();
-	run_mode=RunAlign;
+	run_mode=RunIdle;
 	// xSemaphoreTake(uart5rxc,portMAX_DELAY);
 	// motion_cfg(-0.3f,0,0);
 	// target_angle=read_yaw();
