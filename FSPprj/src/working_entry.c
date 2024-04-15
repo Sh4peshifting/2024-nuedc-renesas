@@ -14,8 +14,9 @@ void working_entry(void *pvParameters)
     while (1)
     {
         if(onworking == WORK_IN){
-            set_position(STEP_F1);
+            set_position(_pos_mm(20));
             back_to_cross(1);
+            set_position(_pos_mm(0));
             onworking=WORK_IDLE;
 
         }

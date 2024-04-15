@@ -156,9 +156,6 @@ void motion_cfgground(float vd, float vq,float alpha,float omega)
     float beta=_normalizeAngle(alpha*_2PI/360+atan2f(vq,vd));
     uprintf(&g_uart7_ctrl,"beta: %.2f",beta);
     beta=beta*360/_2PI;
-    
-
-    uprintf(&g_uart7_ctrl,"vt:%.2f beta:%.2f omega:%.2f\n",vt,beta,omega);
     motion_cfgk(vt,beta,omega);    
 }
 

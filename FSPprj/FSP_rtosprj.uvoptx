@@ -147,36 +147,48 @@
         <Bp>
           <Number>0</Number>
           <Type>0</Type>
-          <LineNumber>51</LineNumber>
+          <LineNumber>19</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>19570</Address>
+          <Address>27312</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\user_src\interface_driver.c</Filename>
+          <Filename>.\src\working_entry.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\FSP_rtosprj\user_src/interface_driver.c\51</Expression>
+          <Expression>\\FSP_rtosprj\src/working_entry.c\19</Expression>
         </Bp>
         <Bp>
           <Number>1</Number>
           <Type>0</Type>
-          <LineNumber>78</LineNumber>
+          <LineNumber>17</LineNumber>
           <EnabledFlag>1</EnabledFlag>
-          <Address>19894</Address>
+          <Address>27298</Address>
           <ByteObject>0</ByteObject>
           <HtxType>0</HtxType>
           <ManyObjects>0</ManyObjects>
           <SizeOfObject>0</SizeOfObject>
           <BreakByAccess>0</BreakByAccess>
           <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\user_src\interface_driver.c</Filename>
+          <Filename>.\src\working_entry.c</Filename>
           <ExecCommand></ExecCommand>
-          <Expression>\\FSP_rtosprj\user_src/interface_driver.c\78</Expression>
+          <Expression>\\FSP_rtosprj\src/working_entry.c\17</Expression>
         </Bp>
       </Breakpoint>
+      <WatchWindow1>
+        <Ww>
+          <count>0</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>onworking</ItemText>
+        </Ww>
+        <Ww>
+          <count>1</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>uart5pack</ItemText>
+        </Ww>
+      </WatchWindow1>
       <Tracepoint>
         <THDelay>0</THDelay>
       </Tracepoint>

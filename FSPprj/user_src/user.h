@@ -18,6 +18,7 @@
 #define RunAngle 2
 #define RunIdle 3
 #define RunVt 4
+#define RunAlign 5
 
 #define WORK_IN 1
 #define WORK_OUT 2
@@ -38,6 +39,8 @@
 #define SignCross 0x02
 #define SignIndex 2
 #define k210pack uart4pack
+
+#define _pos_mm(x)   (x*1600)
 
 typedef struct 
 {

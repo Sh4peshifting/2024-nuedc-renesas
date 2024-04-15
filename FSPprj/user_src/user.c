@@ -222,5 +222,7 @@ void set_position(uint32_t pos)
     uint8_t dir = pos > step_position ? 1 : 0;
     if(dir) motion_step(pos-step_position, 1);
     else motion_step(step_position-pos, 0);
+    
+    step_position = pos;
 
 }
