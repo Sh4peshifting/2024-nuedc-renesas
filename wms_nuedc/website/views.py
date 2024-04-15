@@ -20,6 +20,8 @@ def sign_in(request):
 def main(request):
     return render(request, "website/main/main.html")
 
+def mobile_main(request):
+    return render(request, "website/mobile_main/mobile_main.html")
 
 def log_list(request):
     return render(request, "website/log_list/log_list.html")
