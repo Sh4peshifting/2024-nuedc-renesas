@@ -29,6 +29,10 @@
 
 #define TurnLeft 0
 #define TurnRight 1
+#define TurnBack 2
+
+#define SlideLeft 0
+#define SlideRight 1
 
 // 0x00	直线模式
 // 0x01	初始化成功
@@ -64,6 +68,6 @@ void set_position(uint32_t pos);
 void back_to_cross(uint8_t nn);
 void turn_to(uint8_t dir);
 void go_to_line(uint8_t line);
-
-
+void go_to_cross(uint8_t nn);
+void slide_to_line(uint8_t dir,uint8_t nn);
 #endif

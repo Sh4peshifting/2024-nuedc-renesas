@@ -170,25 +170,21 @@ def cargo_operation(cargo_id,in_out,self_id,user):
     
     worigin=0
     wtarget=0
-
-    if(self_id=="1-1-1"):
-        wtarget=1
-    elif(self_id=="1-1-2"):
-        wtarget=2
-    elif(self_id=="1-1-3"):
-        wtarget=3
-    elif(self_id=="1-2-1"):
-        wtarget=4
-    elif(self_id=="1-2-2"):
-        wtarget=5
-    elif(self_id=="1-2-3"):
-        wtarget=6
+    
+    shelf_dict={"1-1-1":1,"1-1-2":2,"1-1-3":3,"1-2-1":4,"1-2-2":5,"1-2-3":6}
+    
 
     if(in_out=="1"):
+        wtarget=self_id
+        revert_shelf_dict = {str(v) : k for k, v in shelf_dict.items()}
+        self_id=revert_shelf_dict[self_id]
         goods_self=models.goods.objects.filter(place=self_id).first()
+
         if(not goods_self):#self_id不存在
+            print("self_id不存在")
             return 1
         if(goods_self.isempty==False):#self_id已有货物
+            print("self_id已有货物")
             return 1
         goods_self.number=cargo_id
         goods_self.isempty=False
@@ -210,45 +206,42 @@ def cargo_operation(cargo_id,in_out,self_id,user):
         goods_self.number=""
         goods_self.isempty=True
         goods_self.save()
-
+        wtarget=shelf_dict[self_id]
         models.log.objects.create(staff=user, time=timezone.now(), operation="出库", other=cargo_id)
-
-    
 
     elif(in_out=="3"):
         goods_self=models.goods.objects.filter(place=self_id).first()
-        if(not goods_self):#self_id不存在
+        if(not goods_self):#self_id不存在 原货物
             return 1
         goods_self=models.goods.objects.filter(place=cargo_id).first()
-        if(not goods_self):#cargo_id不存在
+        if(not goods_self):#cargo_id不存在 现货物
             return 1
         
 
-        if(models.goods.objects.filter(place=self_id).first().isempty==False  \
-           or models.goods.objects.filter(number=cargo_id).first().isempty==True):
+        if(models.goods.objects.filter(place=self_id).first().isempty==True  \
+           or models.goods.objects.filter(place=cargo_id).first().isempty==False):
             return 1
-        previous_cargo_id=models.goods.objects.filter(place=cargo_id).first().number
+        previous_cargo_id=models.goods.objects.filter(place=self_id).first().number
         models.goods.objects.filter(place=self_id).update(number="",isempty=True)
         models.goods.objects.filter(place=cargo_id).update(number=previous_cargo_id,isempty=False)
         models.log.objects.create(staff=user, time=timezone.now(), operation="转移", other=cargo_id)
-        if(cargo_id=="1-1-1"):
-            worigin=1
-        elif(cargo_id=="1-1-2"):
-            worigin=2
-        elif(cargo_id=="1-1-3"):
-            worigin=3
-        elif(cargo_id=="1-2-1"):
-            worigin=4
-        elif(cargo_id=="1-2-2"):
-            worigin=5
-        elif(cargo_id=="1-2-3"):
-            worigin=6
+        worigin=shelf_dict[self_id]
+        wtarget=shelf_dict[cargo_id]
+    elif(in_out=="4"):
+        goods_self=models.goods.objects.filter(place=self_id).first()
+        if(not goods_self):#self_id不存在
+            return 1
+        if(goods_self.isempty==False):#self_id已有货物
+            return 1
+        worigin=user.id
+        wtarget=shelf_dict[self_id]
+
     else:
         return 1
     status = models.status.objects.first()
     models.cmd8266.objects.create(cmd="L:0"+",Origin:"+str(worigin)+",Target:"+str(wtarget)+\
                                   ",Work:"+str(in_out)+",Vacant:99,")
-    print("suddo",self_id)
+  
     return 0
 
 
@@ -296,7 +289,7 @@ def change_cargo(request):
     in_out = request.POST.get("cargo_op")
 
     if(in_out=="in_storage"):
-        in_out="1"
+        in_out="4"
     elif(in_out=="out_storage"):
         in_out="2"
     elif(in_out=="sw_cargo"):
@@ -317,7 +310,12 @@ def cargo(request):
     username = request.GET.get("username")
     password = request.GET.get("password")
 
-    user_obj = auth.authenticate(username=username, password=password)
+    if(in_out=="11"):
+        in_out="1"
+        user_obj = User.objects.filter(id=int(username)).first()
+    else:
+        user_obj = auth.authenticate(username=username, password=password)
+
     if not user_obj:
         return HttpResponse("error", content_type="text/plain")
     else:

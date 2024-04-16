@@ -158,8 +158,12 @@ void turn_to(uint8_t dir)
 {
     if(dir == TurnLeft) target_angle = read_yaw()+90.0f;
     else if(dir == TurnRight) target_angle = read_yaw()-90.0f;
+    else if(dir == TurnBack){
+        target_angle = read_yaw()-180.0f;
+    }
     run_mode=RunAngle;
-    vTaskDelay(2000);
+    vTaskDelay(2200);
+    if(dir == TurnBack) vTaskDelay(600);
     run_mode=RunIdle;
 }
 
@@ -207,14 +211,58 @@ void back_to_cross(uint8_t nn)
         {
             vTaskDelay(2);
         }
-        vTaskDelay(600);
+        vTaskDelay(1000);
     }
 
     run_mode=RunIdle;
     speed_forward=0;
-    vTaskDelay(300);
+    vTaskDelay(500);
     
 }
+
+void go_to_cross(uint8_t nn)
+{
+    speed_forward=0.25f;
+    run_mode=RunForward;//后退为负速度的前进
+
+    while (nn--)
+    {
+        while (k210pack.data[SignIndex] != SignCross)
+        {
+            vTaskDelay(2);
+        }
+        if(nn==0) break;
+        vTaskDelay(1000);
+    }
+
+    run_mode=RunIdle;
+    speed_forward=0;
+    vTaskDelay(300);  
+}
+
+void slide_to_line(uint8_t dir,uint8_t nn)
+{
+    speed_forward=0.3f;
+    if(dir== SlideLeft) target_angle = -90.0f;
+    else if(dir== SlideRight) target_angle = 90.0f;
+    run_mode=RunVt;
+
+    while (nn--)
+    {
+        while (abs(128 - (int)(k210pack.data[3]))>50)
+        {
+            vTaskDelay(2);
+        }
+        if(nn==0) break;
+        vTaskDelay(1200);
+    }
+
+    run_mode=RunIdle;
+    speed_forward=0;
+    vTaskDelay(300); 
+
+}
+
 
 void set_position(uint32_t pos)
 {

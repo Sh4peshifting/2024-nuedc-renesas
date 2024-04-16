@@ -9,10 +9,10 @@
 #define MOTOR_D 4
 
 #define STEP_F1 0
-#define STEP_F1_LIFT 5000
+#define STEP_F1_LIFT 20
 
-#define STEP_F2
-#define STEP_F2_LIFT
+#define STEP_F2 122
+#define STEP_F2_LIFT (STEP_F2+20)
 
 void motor_init(void);
 void motion_cfg(float vx, float vy,float omega);

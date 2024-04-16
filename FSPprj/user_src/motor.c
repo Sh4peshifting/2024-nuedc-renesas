@@ -12,7 +12,6 @@ void motor_init()
     R_GPT_Start(g_timer5.p_ctrl);
     R_GPT_Start(g_timer6.p_ctrl);
 
-    motion_step(10000,0);
 }
 
 void set_pwm(timer_ctrl_t * const p_ctrl,uint32_t const pin, float duty)
