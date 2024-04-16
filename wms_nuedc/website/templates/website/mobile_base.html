@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="zh-CN">
+{% load static %}
+<link href="{% static 'assets/dist/css/google.css2.css' %}" rel="stylesheet">
+<script type="importmap">
+    {
+      "imports": {
+        "@material/web/": "https://esm.run/@material/web/"
+      }
+    }
+</script>
+<script type="module">
+    import '@material/web/all.js';
+    import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+
+    document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+</script>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>智能仓储管理系统</title>
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <link rel="stylesheet" href="{% static 'assets/dist/css/material-icon.css' %}">
+
+    <script src="{% static 'assets/js/jquery-3.5.1.min.js' %}"></script>
+    <script src="{% static 'assets/js/handlebars.js' %}"></script>
+
+    <link href="{% static 'assets/dist/css/bootstrap.min1.css' %}" rel="stylesheet">
+
+</head>
+<script>
+    $(`#main`).attr('active', true);
+    $(`#shelf`).removeAttr('active');
+    $(`#log`).removeAttr('active');
+
+    function animateAndRedirect(url) {
+        setTimeout(function () {
+            window.location.href = url;
+
+        }, 500);  // 动画播放时间
+    }
+</script>
+<body>
+<main>
+    <style>
+        .fixed-bottom {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+    <md-tabs class="fixed-bottom" .activeTabIndex=1>
+        <md-primary-tab id="main" has-icon=true active=true onclick="animateAndRedirect('/mobile/')">
+            <md-icon class="material-icons">
+                dashboard
+            </md-icon>
+            概览
+        </md-primary-tab>
+        <md-primary-tab id="shelf" has-icon=true onclick="animateAndRedirect('/mobile/shelf/')">
+            <md-icon class="material-icons">
+                inventory
+            </md-icon>
+            货物管理
+        </md-primary-tab>
+        <md-primary-tab id="log" has-icon=true onclick="animateAndRedirect('/mobile/log_list/')">
+            <md-icon class="material-icons">
+                library_books
+            </md-icon>
+            日志
+        </md-primary-tab>
+    </md-tabs>
+    {% block mainbody %}
+
+    {% endblock mainbody %}
+</main>
+</body>
+<script src="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}"></script>
+</html>

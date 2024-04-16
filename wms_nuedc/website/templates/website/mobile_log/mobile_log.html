@@ -1,0 +1,37 @@
+{% extends "website/mobile_base.html" %}
+{% load static %}
+{% block mainbody %}
+
+    <br>
+    <div class="container">
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="log-list-box"></div>
+                <md-list style="border-radius: 20px;">
+                    <md-list-item>
+                        <h5>日志</h5>
+                    </md-list-item>
+                    <md-divider></md-divider>
+                    <md-list-item>
+                        Apple
+                    </md-list-item>
+                    <md-list-item>
+                        Banana
+                    </md-list-item>
+                    <md-list-item>
+                        <div slot="headline">Cucumber</div>
+                        <div slot="supporting-text">Cucumbers are long green fruits that are just as long as this
+                            multi-line description
+                        </div>
+                    </md-list-item>
+                </md-list>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(`#main`).removeAttr('active');
+        $(`#shelf`).removeAttr('active');
+        $(`#log`).attr('active', true);
+    </script>
+{% endblock %}
