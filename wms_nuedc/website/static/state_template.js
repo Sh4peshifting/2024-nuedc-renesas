@@ -18,7 +18,7 @@ $(document).ready(function () {
                     {{else}}
                     <div>状态：<span class="badge rounded-pill text-bg-warning">有货</span></div>
                     {{/if}}
-                    <div>货物ID：<span>{{this.cargo_id}}</div>
+                    <div>货物ID：<span>{{this.cargo_id}}</span></div>
                     </div>
                 </div>
             </div>

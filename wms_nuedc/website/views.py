@@ -26,6 +26,13 @@ def mobile_main(request):
 def log_list(request):
     return render(request, "website/log_list/log_list.html")
 
+def mobile_log_list(request):
+    return render(request, "website/mobile_log/mobile_log.html")
+def mobile_shelf(request):
+    return render(request, "website/mobile_shelf/mobile_shelf.html")
+
+def mobile_login(request):
+    return render(request, "website/mobile_login/mobile_login.html")
 
 @csrf_exempt
 def login(request):
