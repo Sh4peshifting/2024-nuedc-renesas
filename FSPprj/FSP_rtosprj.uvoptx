@@ -143,40 +143,7 @@
           <Name>UL2V8M(-S0 -C0 -P0 )  -FN3 -FC2000 -FD20000000 -FF0RA6M5_1M -FF1RA6M5_DATA_C1M -FF2RA6M5_CONF -FL0100000 -FL12000 -FL2300 -FS00 -FS18000000 -FS2100A000 -FP0($$Device:R7FA6M5BF$Flash\RA6M5_1M.FLM) -FP1($$Device:R7FA6M5BF$Flash\RA6M5_DATA_C1M.FLM) -FP2($$Device:R7FA6M5BF$Flash\RA6M5_CONF.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint>
-        <Bp>
-          <Number>0</Number>
-          <Type>0</Type>
-          <LineNumber>19</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>27312</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\working_entry.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\FSP_rtosprj\src/working_entry.c\19</Expression>
-        </Bp>
-        <Bp>
-          <Number>1</Number>
-          <Type>0</Type>
-          <LineNumber>17</LineNumber>
-          <EnabledFlag>1</EnabledFlag>
-          <Address>27298</Address>
-          <ByteObject>0</ByteObject>
-          <HtxType>0</HtxType>
-          <ManyObjects>0</ManyObjects>
-          <SizeOfObject>0</SizeOfObject>
-          <BreakByAccess>0</BreakByAccess>
-          <BreakIfRCount>1</BreakIfRCount>
-          <Filename>.\src\working_entry.c</Filename>
-          <ExecCommand></ExecCommand>
-          <Expression>\\FSP_rtosprj\src/working_entry.c\17</Expression>
-        </Bp>
-      </Breakpoint>
+      <Breakpoint/>
       <WatchWindow1>
         <Ww>
           <count>0</count>

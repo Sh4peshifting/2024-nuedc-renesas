@@ -108,7 +108,7 @@ void motion_entry(void *pvParameters)
         }
 		else if(run_mode== RunVt){
 			xSemaphoreTake(uart5rxc,portMAX_DELAY);
-			motion_cfg2(0.3f,read_yaw(),0.2f);
+			motion_cfg2(speed_forward,read_yaw()+target_angle,0);
 		}
 		else if(run_mode==RunAlign){
 			xSemaphoreTake(uart4rxc,portMAX_DELAY);
@@ -116,10 +116,11 @@ void motion_entry(void *pvParameters)
 			float vd=0,vq;
 			vq=pid_track(128,uart4pack.data[3]);
 			if(uart4pack.data[5]+uart4pack.data[6]>0){
-				vd=pid_align(128,(uart4pack.data[5]+uart4pack.data[6])/2);
+				vd=pid_align(95,(uart4pack.data[5]+uart4pack.data[6])/2);
 			}
 			motion_cfgground(-vd,-vq,128-uart4pack.data[4],omega);
 		}
+		else
        
         vTaskDelay(5);
     }

@@ -241,7 +241,7 @@ void screen_rx_proc(uint8_t *screen_rx_buf, uint8_t rx_buf_index)
             uprintf(&g_uart7_ctrl, "in\n");
             // in storage function
             // read rfid
-            storge_inout((uint8_t *)"None", shelf_id, 1);
+            storge_inout((uint8_t *)"None", shelf_id, 4);
             get_shelf();
 
             break;
