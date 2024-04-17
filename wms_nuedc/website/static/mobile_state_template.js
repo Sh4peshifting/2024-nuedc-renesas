@@ -7,7 +7,7 @@ $(document).ready(function () {
                 let source = `
         <div class="row row-cols-sm-3 row-cols-md-3 g-4">
         {{#each cargo}}
-        <div class="col-sm-3" style="width: 8rem;">
+        <div class="col-sm-3" style="width: 8rem; margin-right: -20px">
             <div type="button" class="card border-secondary" onclick="get_cargo_id('{{this.cargo_list_id}}')">
                 <div class="card-body">
                     <div style="margin: -7px">
