@@ -8,51 +8,55 @@ void led1_entry(void *pvParameters)
 {
     FSP_PARAMETER_NOT_USED(pvParameters);
     /* TODO: add your own code here */
-    
-    // R_SCI_UART_Open(&g_uart9_ctrl,&g_uart9_cfg);
-    ws2812_Init();
-    
-    
-    // motion_cfg(0, 0.2f, 0);
-    // vTaskDelay(3000);
-    // motion_cfg(0.2f, 0, 0);
-    // vTaskDelay(3000);
-    //    DHT11_Data dht11;
-    //    DHT11_Data_TypeDef dht11_data;
-    // motion_step(40000, 1);
-    // vTaskDelay(200);
-    // motion_step(40000, 0);
-    // motion_cfg(0.3f, 0.3f, 0);
 
-    uint8_t card_id[5];
-    uint8_t a=0;
+    ws2812_Init();
+    uint8_t ledcnt=0;
     while (1)
     {
-        // dht11=read_dht11();
-        // Read_DHT11(&dht11_data);
-        // uprintf(&g_uart7_ctrl,"temp:%d.%d,humi:%d.%d\n",dht11_data.temp_int,dht11_data.temp_deci,
-        // dht11_data.humi_int,dht11_data.humi_deci);
+        if(light_status==1){
+            ws2812_Set_one_LED_Color(0,C_white);
+            ws2812_Set_one_LED_Color(7,C_white);
+            light_status=0;
+        }
+        else if(light_status==2){
+            ws2812_Set_one_LED_Color(0,0);
+            ws2812_Set_one_LED_Color(7,0);
+            light_status=0;
+        }
 
-        // uprintf(&g_uart7_ctrl,"hello\n");
-        // light_ctrl(LIGHT_ON);
+        if(0==onworking){
+            ws2812_Set_one_LED_Color(1,0);
+            ws2812_Set_one_LED_Color(2,0);
+            ws2812_Set_one_LED_Color(3,0);
+            ws2812_Set_one_LED_Color(4,0);
+            ws2812_Set_one_LED_Color(5,0);
+            ws2812_Set_one_LED_Color(6,0);
+        }
+        else{
+            if(ledcnt){
+                ws2812_Set_one_LED_Color(1,C_Blue);
+                ws2812_Set_one_LED_Color(2,C_Blue);
+                ws2812_Set_one_LED_Color(3,C_Blue);
+                ws2812_Set_one_LED_Color(4,C_Red);
+                ws2812_Set_one_LED_Color(5,C_Red);
+                ws2812_Set_one_LED_Color(6,C_Red);
+            }
+            else{
+                ws2812_Set_one_LED_Color(1,C_Red);
+                ws2812_Set_one_LED_Color(2,C_Red);
+                ws2812_Set_one_LED_Color(3,C_Red);
+                ws2812_Set_one_LED_Color(4,C_Blue);
+                ws2812_Set_one_LED_Color(5,C_Blue);
+                ws2812_Set_one_LED_Color(6,C_Blue);
+            }
+            ledcnt=!ledcnt;
+        }
+
+        ws2812_Send_Data();
         R_IOPORT_PinWrite(g_ioport.p_ctrl, led, 0);
-        vTaskDelay(200);
-        // light_ctrl(LIGHT_OFF);
+        vTaskDelay(300);
         R_IOPORT_PinWrite(g_ioport.p_ctrl, led, 1);
-        vTaskDelay(200);
-
-        // uprintf(&g_uart7_ctrl,"yaw:%.2f\n",read_yaw());
-        // xSemaphoreTake(uart9rxc,portMAX_DELAY);
-        // R_SCI_UART_Write(&g_uart7_ctrl,uart9pack.data,uart9pack.len);
-        // xSemaphoreTake(uart7txc,portMAX_DELAY);
-
-        // a=read_card_pro(card_id);
-        // uprintf(&g_uart7_ctrl, "card id:%02x%02x%02x%02x   %d\n", 
-        //     card_id[0], card_id[1], card_id[2], card_id[3],a);
-        // memset(card_id, 0, 5);
-  
-
-        vTaskDelay(1);
+        vTaskDelay(300);
         
     }
 }

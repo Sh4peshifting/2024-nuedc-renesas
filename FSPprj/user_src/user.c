@@ -242,7 +242,7 @@ void go_to_cross(uint8_t nn)
 
 void slide_to_line(uint8_t dir,uint8_t nn)
 {
-    speed_forward=0.3f;
+    speed_forward=0.28f;
     if(dir== SlideLeft) target_angle = -90.0f;
     else if(dir== SlideRight) target_angle = 90.0f;
     run_mode=RunVt;
@@ -254,7 +254,7 @@ void slide_to_line(uint8_t dir,uint8_t nn)
             vTaskDelay(2);
         }
         if(nn==0) break;
-        vTaskDelay(1200);
+        vTaskDelay(1800);
     }
 
     run_mode=RunIdle;

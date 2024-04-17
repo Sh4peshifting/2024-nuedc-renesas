@@ -21,7 +21,7 @@ float pid_track(float target, float current)
 }
 float pid_align(float target, float current)
 {	
-	float limit=0.3f,kp=0.009f,kd=0;
+	float limit=0.23f,kp=0.009f,kd=0.00001;
 	float bias;  
 	static float output,last_bais;
 	bias=target-current; //求偏差
@@ -105,10 +105,11 @@ void motion_entry(void *pvParameters)
         else if(run_mode == RunIdle){
             speed_forward=0;
 			motion_cfg(0,0,0);
+			vTaskDelay(50);
         }
 		else if(run_mode== RunVt){
 			xSemaphoreTake(uart5rxc,portMAX_DELAY);
-			motion_cfg2(speed_forward,read_yaw()+target_angle,0);
+			motion_cfg2c(speed_forward,-target_angle,0);
 		}
 		else if(run_mode==RunAlign){
 			xSemaphoreTake(uart4rxc,portMAX_DELAY);
@@ -120,6 +121,11 @@ void motion_entry(void *pvParameters)
 			}
 			motion_cfgground(-vd,-vq,128-uart4pack.data[4],omega);
 		}
+		else if(run_mode==RunVt2){
+			xSemaphoreTake(uart5rxc,portMAX_DELAY);
+
+		}
+		
 		else
        
         vTaskDelay(5);

@@ -888,6 +888,7 @@
       <configSetting altId="p607.gpio_mode.gpio_mode_peripheral" configurationId="p607.gpio_mode"/>
       <configSetting altId="p610.input" configurationId="p610"/>
       <configSetting altId="p610.gpio_mode.gpio_mode_in" configurationId="p610.gpio_mode"/>
+      <configSetting altId="p610.gpio_pupd.gpio_pupd_ip_up" configurationId="p610.gpio_pupd"/>
       <configSetting altId="p613.sci7.txd" configurationId="p613"/>
       <configSetting altId="p613.gpio_mode.gpio_mode_peripheral" configurationId="p613.gpio_mode"/>
       <configSetting altId="p614.sci7.rxd" configurationId="p614"/>

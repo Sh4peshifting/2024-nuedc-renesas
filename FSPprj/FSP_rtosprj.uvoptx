@@ -143,7 +143,72 @@
           <Name>UL2V8M(-S0 -C0 -P0 )  -FN3 -FC2000 -FD20000000 -FF0RA6M5_1M -FF1RA6M5_DATA_C1M -FF2RA6M5_CONF -FL0100000 -FL12000 -FL2300 -FS00 -FS18000000 -FS2100A000 -FP0($$Device:R7FA6M5BF$Flash\RA6M5_1M.FLM) -FP1($$Device:R7FA6M5BF$Flash\RA6M5_DATA_C1M.FLM) -FP2($$Device:R7FA6M5BF$Flash\RA6M5_CONF.FLM)</Name>
         </SetRegEntry>
       </TargetDriverDllRegistry>
-      <Breakpoint/>
+      <Breakpoint>
+        <Bp>
+          <Number>0</Number>
+          <Type>0</Type>
+          <LineNumber>65</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>14640</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>E:\Project\2024NUEDC_Renesas\2024-nuedc-renesas\FSPprj\ra_gen\led1.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\FSP_rtosprj\ra_gen/led1.c\65</Expression>
+        </Bp>
+        <Bp>
+          <Number>1</Number>
+          <Type>0</Type>
+          <LineNumber>252</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>23626</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\user_src\user.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\FSP_rtosprj\user_src/user.c\252</Expression>
+        </Bp>
+        <Bp>
+          <Number>2</Number>
+          <Type>0</Type>
+          <LineNumber>43</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>28862</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\user_src\ws2812.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\FSP_rtosprj\user_src/ws2812.c\43</Expression>
+        </Bp>
+        <Bp>
+          <Number>3</Number>
+          <Type>0</Type>
+          <LineNumber>16</LineNumber>
+          <EnabledFlag>1</EnabledFlag>
+          <Address>14556</Address>
+          <ByteObject>0</ByteObject>
+          <HtxType>0</HtxType>
+          <ManyObjects>0</ManyObjects>
+          <SizeOfObject>0</SizeOfObject>
+          <BreakByAccess>0</BreakByAccess>
+          <BreakIfRCount>1</BreakIfRCount>
+          <Filename>.\src\led1_entry.c</Filename>
+          <ExecCommand></ExecCommand>
+          <Expression>\\FSP_rtosprj\src/led1_entry.c\16</Expression>
+        </Bp>
+      </Breakpoint>
       <WatchWindow1>
         <Ww>
           <count>0</count>
@@ -154,6 +219,11 @@
           <count>1</count>
           <WinNumber>1</WinNumber>
           <ItemText>uart5pack</ItemText>
+        </Ww>
+        <Ww>
+          <count>2</count>
+          <WinNumber>1</WinNumber>
+          <ItemText>uart4pack,0x0A</ItemText>
         </Ww>
       </WatchWindow1>
       <Tracepoint>

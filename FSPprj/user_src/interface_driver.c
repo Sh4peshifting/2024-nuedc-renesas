@@ -2,6 +2,7 @@
 #include "user.h"
 
 uint8_t wtarget,worigin; 
+int light_status;
 
 uint8_t wait_8266return(uint16_t timeout)
 {
@@ -18,7 +19,7 @@ void esp_init(void)
     xSemaphoreTake(on8266,portMAX_DELAY);
     while(!strstr((const char *)uart8pack.data,"WIFI GOT IP")){
         uprintf(&g_uart7_ctrl,"Connecting...\n");
-        if(1==wait_8266return(10000)){
+        if(1==wait_8266return(6000)){
             uprintf(&g_uart7_ctrl,"Connecting failed\nReseting...\n");
             uprintf(&g_uart8_ctrl,"+++");//退出透传
             vTaskDelay(1000);
@@ -47,12 +48,21 @@ void esp_init(void)
 
 void reconnect_server(void)
 {
+    uprintf(&g_uart8_ctrl,"GET /index/\r\n\r\n");
+    if(!wait_8266return(3000)){
+        uart8pack.data[uart8pack.len] = 0;
+        if (strstr((const char *)uart8pack.data, "hello")){
+            return;
+        }
+        else{
+        }
+    }
 
     uprintf(&g_uart8_ctrl,"AT+RST\r\n");
     while (!strstr((const char *)uart8pack.data, "WIFI GOT IP"))
     {
         uprintf(&g_uart7_ctrl, "Connecting...\n");
-        if (1 == wait_8266return(10000))
+        if (1 == wait_8266return(6000))
         {
             uprintf(&g_uart7_ctrl, "Connecting failed\nReseting...\n");
             uprintf(&g_uart8_ctrl, "+++"); // 退出透传
@@ -86,14 +96,13 @@ void status_upload(void)
 {
     static env_info_t env_info;
     DHT11_Data_TypeDef dht11_data;
-    int light_status;
     int l_worigin,l_wtarget,l_onworking,not_empty_shelf;
 
     vTaskSuspendAll();
     Read_DHT11(&dht11_data);
     xTaskResumeAll();
 
-    fire_status_t onfire=fire_detect();
+    fire_status_t onfire = fire_detect();
     
     xSemaphoreTake(on8266,portMAX_DELAY);
     vTaskDelay(20);
@@ -121,19 +130,16 @@ void status_upload(void)
 
     env_info.temperature = (float)dht11_data.temp_int+(float)dht11_data.temp_deci/10;
     env_info.humidity = dht11_data.humi_int;
-    if(onfire==FIRE_DETECTED) memcpy(env_info.alarm_sta,"报警",6);
-    else  memcpy(env_info.alarm_sta,"正常",6);
-
-    if(light_status){
-        if(light_status==1) light_ctrl(LIGHT_ON);
-        else if(light_status==2) light_ctrl(LIGHT_OFF);
-        else ;
+    if(onfire==FIRE_DETECTED) {
+        memcpy(env_info.alarm_sta,"报警",7);
+        screen_beep(200);
     }
+    else  memcpy(env_info.alarm_sta,"正常",7);
 
     if(l_onworking!=WORK_IDLE){
-        worigin=l_worigin;
-        wtarget=l_wtarget;
-        onworking=l_onworking;
+        worigin=(uint8_t)l_worigin;
+        wtarget=(uint8_t)l_wtarget;
+        onworking=(uint8_t)l_onworking;
     }
 
     if(99 != not_empty_shelf){

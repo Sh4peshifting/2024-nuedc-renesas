@@ -10,8 +10,8 @@ urlpatterns = [
     path('repository/get_repository_info/', views.get_respository_info),
     path('repository/get_log_info/', views.get_log_info),
     path('index/', views.index),
-    path('lighton/', views.lighton),
-    path('lightoff/', views.lightoff),
+    path('light_on/', views.lighton),
+    path('light_off/', views.lightoff),
     path('change_cargo/', views.change_cargo),
 
     path('interface/sensor/', views.sensor),

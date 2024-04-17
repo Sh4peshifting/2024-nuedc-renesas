@@ -128,6 +128,26 @@ void motion_cfg2(float vt, float theta,float omega)
     
 }
 
+void motion_cfg2c(float vt, float theta,float omega)
+{
+    theta=_normalizeAngle(theta/360*_2PI);
+    float omegaprxpry=omega*2;
+    float duty1,duty2,duty3,duty4;
+    float vx=vt*_cos(theta);
+    float vy=-vt*_sin(theta);
+
+    duty1=vx-vy-omegaprxpry;
+    duty2=vx+vy+omegaprxpry;
+    duty3=vx+vy-omegaprxpry;
+    duty4=vx-vy+omegaprxpry;
+
+    motor_cfg(MOTOR_C,duty1);
+    motor_cfg(MOTOR_A,duty2);
+    motor_cfg(MOTOR_D,duty3);
+    motor_cfg(MOTOR_B,duty4);
+    
+}
+
 void motion_cfgk(float vt, float theta,float omega)
 {
     theta=_normalizeAngle(theta/360*_2PI);

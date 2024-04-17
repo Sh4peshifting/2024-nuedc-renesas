@@ -46,13 +46,14 @@ void run_in()
     if(wtarget>3) set_position(_pos_mm(STEP_F2_LIFT));
     go_to_cross(1);
     run_mode=RunAlign;
-    vTaskDelay(1000);
+    vTaskDelay(1200);
     if (wtarget <= 3)
         set_position(_pos_mm(STEP_F1));
     else
         set_position(_pos_mm(STEP_F2));
     back_to_cross(1);
     turn_to(TurnRight);
+    if(wtarget>3) set_position(_pos_mm(STEP_F1));
     back_to_cross(wtarget <= 3 ? wtarget : wtarget - 3);
     turn_to(TurnRight);
     go_to_cross(1);
@@ -142,7 +143,7 @@ void run_change(void)
     if(worigin>3) set_position(_pos_mm(STEP_F2));
     go_to_cross(1);
     run_mode=RunAlign;
-    vTaskDelay(1000);
+    vTaskDelay(1200);
     if(worigin<=3)
         set_position(_pos_mm(STEP_F1_LIFT));
     else
@@ -150,8 +151,8 @@ void run_change(void)
     back_to_cross(1);
 
     int translation= normalization_num(wtarget) - normalization_num(worigin);
-    if(translation<0) slide_to_line(SlideLeft, -translation+1);
-    else slide_to_line(SlideRight,translation+1);
+    if(translation<0) slide_to_line(SlideRight, -translation+1);
+    else slide_to_line(SlideLeft,translation+1);
 
     if(wtarget<=3)
         set_position(_pos_mm(STEP_F1_LIFT));
@@ -160,7 +161,7 @@ void run_change(void)
     
     go_to_cross(1);
     run_mode=RunAlign;
-    vTaskDelay(1000);
+    vTaskDelay(1200);
 
     if(wtarget<=3)
         set_position(_pos_mm(STEP_F1));
@@ -170,6 +171,7 @@ void run_change(void)
     
     back_to_cross(1);
     turn_to(TurnRight);
+    if(wtarget>3) set_position(_pos_mm(STEP_F1));
     back_to_cross(wtarget <= 3 ? wtarget : wtarget - 3);
     turn_to(TurnRight);
     go_to_cross(1);

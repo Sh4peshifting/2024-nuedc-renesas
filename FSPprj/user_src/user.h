@@ -20,6 +20,7 @@
 #define RunIdle 3
 #define RunVt 4
 #define RunAlign 5
+#define RunVt2 6
 
 #define WORK_IN 1
 #define WORK_OUT 2
@@ -61,6 +62,7 @@ extern uint8_t wtarget,worigin;
 extern float speed_forward,target_angle;
 extern volatile uint8_t onworking,run_mode;
 extern uint8_t username[20],password[20];
+extern int light_status;
 
 void uprintf(uart_ctrl_t *p_ctrl,char *fmt, ...);
 void go_to_line1(float speed);
