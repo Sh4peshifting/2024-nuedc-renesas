@@ -31,8 +31,20 @@ def mobile_log_list(request):
 def mobile_shelf(request):
     return render(request, "website/mobile_shelf/mobile_shelf.html")
 
+@csrf_exempt
 def mobile_login(request):
-    return render(request, "website/mobile_login/mobile_login.html")
+    if request.method == "GET":
+        return render(request, "website/mobile_sign_in/mobile_sign_in.html")
+    username = request.POST.get("username")
+    password = request.POST.get("password")
+    path = request.GET.get("next") or "/mobile/"
+    print(username, password)
+    user_obj = auth.authenticate(username=username, password=password)
+    if not user_obj:
+        return redirect("/mobie_login/?&next=" + path)
+    else:
+        auth.login(request, user_obj)
+        return redirect(path)
 
 @csrf_exempt
 def login(request):

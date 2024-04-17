@@ -1,0 +1,200 @@
+<!doctype html>
+<html lang="zh-CN" data-bs-theme="auto">
+{% load static %}
+<head>
+    <script src="{% static 'assets/js/color-modes.js' %}"></script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="generator" content="Hugo 0.122.0">
+    <title>登录</title>
+    <link rel="icon" href="{% static 'images/logo.png' %}" type="image/x-icon">
+    <link rel="canonical" href="https://getbootstrap.com/docs/5.3/examples/sign-in/">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
+
+    <link href="{% static 'assets/dist/css/bootstrap.min.css' %}" rel="stylesheet">
+    <link href="{% static 'assets/dist/css/google.css2.css' %}" rel="stylesheet">
+    <script type="importmap">
+        {
+          "imports": {
+            "@material/web/": "https://esm.run/@material/web/"
+          }
+        }
+    </script>
+    <script type="module">
+        import '@material/web/all.js';
+        import {styles as typescaleStyles} from '@material/web/typography/md-typescale-styles.js';
+
+        document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
+    </script>
+
+    <style>
+        .bd-placeholder-img {
+            font-size: 1.125rem;
+            text-anchor: middle;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            user-select: none;
+        }
+
+        @media (min-width: 768px) {
+            .bd-placeholder-img-lg {
+                font-size: 3.5rem;
+            }
+        }
+
+        .b-example-divider {
+            width: 100%;
+            height: 3rem;
+            background-color: rgba(0, 0, 0, .1);
+            border: solid rgba(0, 0, 0, .15);
+            border-width: 1px 0;
+            box-shadow: inset 0 .5em 1.5em rgba(0, 0, 0, .1), inset 0 .125em .5em rgba(0, 0, 0, .15);
+        }
+
+        .b-example-vr {
+            flex-shrink: 0;
+            width: 1.5rem;
+            height: 100vh;
+        }
+
+        .bi {
+            vertical-align: -.125em;
+            fill: currentColor;
+        }
+
+        .nav-scroller {
+            position: relative;
+            z-index: 2;
+            height: 2.75rem;
+            overflow-y: hidden;
+        }
+
+        .nav-scroller .nav {
+            display: flex;
+            flex-wrap: nowrap;
+            padding-bottom: 1rem;
+            margin-top: -1px;
+            overflow-x: auto;
+            text-align: center;
+            white-space: nowrap;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .btn-bd-primary {
+            --bd-violet-bg: #712cf9;
+            --bd-violet-rgb: 112.520718, 44.062154, 249.437846;
+
+            --bs-btn-font-weight: 600;
+            --bs-btn-color: var(--bs-white);
+            --bs-btn-bg: var(--bd-violet-bg);
+            --bs-btn-border-color: var(--bd-violet-bg);
+            --bs-btn-hover-color: var(--bs-white);
+            --bs-btn-hover-bg: #6528e0;
+            --bs-btn-hover-border-color: #6528e0;
+            --bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
+            --bs-btn-active-color: var(--bs-btn-hover-color);
+            --bs-btn-active-bg: #5a23c8;
+            --bs-btn-active-border-color: #5a23c8;
+        }
+
+        .bd-mode-toggle {
+            z-index: 1500;
+        }
+
+        .bd-mode-toggle .dropdown-menu .active .bi {
+            display: block !important;
+        }
+    </style>
+
+
+    <!-- Custom styles for this template -->
+    <link href="{% static 'sign-in.css' %}" rel="stylesheet">
+</head>
+<body class="d-flex align-items-center py-4 bg-body-tertiary">
+<svg xmlns="http://www.w3.org/2000/svg" class="d-none">
+    <symbol id="check2" viewBox="0 0 16 16">
+        <path d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"/>
+    </symbol>
+    <symbol id="circle-half" viewBox="0 0 16 16">
+        <path d="M8 15A7 7 0 1 0 8 1v14zm0 1A8 8 0 1 1 8 0a8 8 0 0 1 0 16z"/>
+    </symbol>
+    <symbol id="moon-stars-fill" viewBox="0 0 16 16">
+        <path d="M6 .278a.768.768 0 0 1 .08.858 7.208 7.208 0 0 0-.878 3.46c0 4.021 3.278 7.277 7.318 7.277.527 0 1.04-.055 1.533-.16a.787.787 0 0 1 .81.316.733.733 0 0 1-.031.893A8.349 8.349 0 0 1 8.344 16C3.734 16 0 12.286 0 7.71 0 4.266 2.114 1.312 5.124.06A.752.752 0 0 1 6 .278z"/>
+        <path d="M10.794 3.148a.217.217 0 0 1 .412 0l.387 1.162c.173.518.579.924 1.097 1.097l1.162.387a.217.217 0 0 1 0 .412l-1.162.387a1.734 1.734 0 0 0-1.097 1.097l-.387 1.162a.217.217 0 0 1-.412 0l-.387-1.162A1.734 1.734 0 0 0 9.31 6.593l-1.162-.387a.217.217 0 0 1 0-.412l1.162-.387a1.734 1.734 0 0 0 1.097-1.097l.387-1.162zM13.863.099a.145.145 0 0 1 .274 0l.258.774c.115.346.386.617.732.732l.774.258a.145.145 0 0 1 0 .274l-.774.258a1.156 1.156 0 0 0-.732.732l-.258.774a.145.145 0 0 1-.274 0l-.258-.774a1.156 1.156 0 0 0-.732-.732l-.774-.258a.145.145 0 0 1 0-.274l.774-.258c.346-.115.617-.386.732-.732L13.863.1z"/>
+    </symbol>
+    <symbol id="sun-fill" viewBox="0 0 16 16">
+        <path d="M8 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM8 0a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 0zm0 13a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-1 0v-2A.5.5 0 0 1 8 13zm8-5a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2a.5.5 0 0 1 .5.5zM3 8a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1 0-1h2A.5.5 0 0 1 3 8zm10.657-5.657a.5.5 0 0 1 0 .707l-1.414 1.415a.5.5 0 1 1-.707-.708l1.414-1.414a.5.5 0 0 1 .707 0zm-9.193 9.193a.5.5 0 0 1 0 .707L3.05 13.657a.5.5 0 0 1-.707-.707l1.414-1.414a.5.5 0 0 1 .707 0zm9.193 2.121a.5.5 0 0 1-.707 0l-1.414-1.414a.5.5 0 0 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .707zM4.464 4.465a.5.5 0 0 1-.707 0L2.343 3.05a.5.5 0 1 1 .707-.707l1.414 1.414a.5.5 0 0 1 0 .708z"/>
+    </symbol>
+</svg>
+<main class="form-signin w-100 m-auto">
+
+    <svg t="1713009461933" class="icon mx-auto d-block mb-2" viewBox="0 0 1024 1024" version="1.1"
+         xmlns="http://www.w3.org/2000/svg" p-id="10374" width="72" height="72">
+        <path d="M461.544 624.33H182.136a12.64 12.64 0 0 0-12.636 12.64v170.61a12.636 12.636 0 0 0 12.636 12.636H461.542a12.636 12.636 0 0 0 12.64-12.636v-170.61a12.64 12.64 0 0 0-12.638-12.64z"
+              fill="#F28838" p-id="10375"></path>
+        <path d="M558.004 227.924H837.414a12.64 12.64 0 0 1 12.64 12.64v170.61a12.636 12.636 0 0 1-12.64 12.636H558.004a12.636 12.636 0 0 1-12.636-12.636v-170.61a12.64 12.64 0 0 1 12.636-12.64z"
+              fill="#4BAF78" p-id="10376"></path>
+        <path d="M850.052 572.414c0-12.344-10.008-22.356-22.356-22.356H496.54c-12.344 0-22.356 10.012-22.356 22.356v225.442c0 12.352 10.012 22.356 22.356 22.356h331.158c12.348 0 22.356-10.004 22.356-22.356V572.414h-0.002zM169.5 176.006c0-12.346 10.008-22.356 22.356-22.356h331.152c12.348 0 22.362 10.01 22.362 22.356v225.444c0 12.35-10.012 22.356-22.362 22.356H191.858c-12.348 0-22.356-10.006-22.356-22.356V176.006z"
+              fill="#FFB92E" p-id="10377" data-spm-anchor-id="a313x.search_index.0.i15.4f9d3a81YOA4Ki" class=""></path>
+        <path d="M214.022 807.578v-170.61a12.64 12.64 0 0 1 12.636-12.64H182.136a12.64 12.64 0 0 0-12.636 12.64v170.61a12.636 12.636 0 0 0 12.636 12.636H226.658a12.64 12.64 0 0 1-12.636-12.636z"
+              fill="#EF711D" p-id="10378"></path>
+        <path d="M589.89 411.172v-170.61a12.64 12.64 0 0 1 12.636-12.64H558.004a12.64 12.64 0 0 0-12.636 12.64v170.61a12.636 12.636 0 0 0 12.636 12.636H602.526a12.64 12.64 0 0 1-12.636-12.636z"
+              fill="#299956" p-id="10379"></path>
+        <path d="M518.704 797.856V572.414c0-12.344 10.012-22.356 22.356-22.356h-44.52c-12.344 0-22.356 10.012-22.356 22.356v225.442c0 12.352 10.012 22.356 22.356 22.356h44.522c-12.344 0-22.358-10.004-22.358-22.356zM214.022 401.45V176.006c0-12.346 10.008-22.356 22.356-22.356h-44.52c-12.348 0-22.356 10.01-22.356 22.356v225.444c0 12.35 10.008 22.356 22.356 22.356h44.522c-12.348 0-22.358-10.006-22.358-22.356z"
+              fill="#EF9A1D" p-id="10380"></path>
+        <path d="M697.204 767.644h-70.168a13.356 13.356 0 0 0-13.356 13.356v39.212h96.882V781a13.36 13.36 0 0 0-13.358-13.356zM613.678 550.058v93.52a13.36 13.36 0 0 0 21.64 10.478l26.798-21.186 26.806 21.188a13.364 13.364 0 0 0 14.104 1.542 13.362 13.362 0 0 0 7.538-12.02v-93.522h-96.886zM308.992 153.652v93.52a13.354 13.354 0 0 0 21.638 10.478l26.806-21.186 26.8 21.184a13.356 13.356 0 1 0 21.64-10.478V153.652h-96.884zM392.516 371.236h-70.168a13.356 13.356 0 0 0-13.356 13.356v39.214h96.882v-39.214a13.356 13.356 0 0 0-13.358-13.356zM162.33 484.236l-101.9 101.9v-101.9zM861.674 484.236l101.894 101.9v-101.9zM162.33 87.83l-101.9 101.9v-101.9zM861.674 87.83l101.894 101.9v-101.9zM162.33 880.644l-101.9 101.9v-101.9z"
+              fill="#7C7A75" p-id="10381"></path>
+        <path d="M107.182 484.236H60.43v101.9l46.752-46.75zM107.182 87.83H60.43v101.9L107.182 142.98zM107.182 880.644H60.43v101.9l46.752-46.75z"
+              fill="#6B6861" p-id="10382"></path>
+        <path d="M861.674 880.644l101.894 101.9v-101.9z" fill="#7C7A75" p-id="10383"></path>
+        <path d="M375.122 771.116H279.4a16.694 16.694 0 0 1-16.696-16.696 16.694 16.694 0 0 1 16.696-16.696h95.722a16.696 16.696 0 1 1 0 33.392z"
+              fill="#FCA468" p-id="10384" data-spm-anchor-id="a313x.search_index.0.i16.4f9d3a81YOA4Ki"
+              class="selected"></path>
+        <path d="M740.152 374.71h-95.722a16.696 16.696 0 1 1 0-33.392h95.722a16.698 16.698 0 0 1 0 33.392z"
+              fill="#61C98D" p-id="10385"></path>
+        <path d="M178.174 423.806H36.778v62.656h955.894v-62.656h-141.404zM178.174 820.212H36.778v62.658h955.894v-62.658h-141.404zM851.268 27.4H36.778v62.656h955.894V27.4z"
+              fill="#CCC3A8" p-id="10386"></path>
+        <path d="M47.19 423.806h-10.412v62.656H107.18v-62.656h-10.414zM47.19 820.212h-10.412v62.658H107.18v-62.658h-10.414zM96.766 27.4H36.778v62.656H107.18V27.4z"
+              fill="#C9B585" p-id="10387"></path>
+        <path d="M1024 181.056V27.902C1024 12.49 1011.51 0 996.1 0h-6.856c-15.408 0-27.9 12.49-27.9 27.9v968.202c0 15.408 12.49 27.9 27.9 27.9h6.856c15.408 0 27.9-12.49 27.9-27.9V238.192M0 27.9v968.202C0 1011.51 12.49 1024 27.9 1024h6.856c15.408 0 27.9-12.49 27.9-27.9V27.9C62.656 12.49 50.164 0 34.756 0H27.9C12.49 0 0 12.49 0 27.9z"
+              fill="#36A1CB" p-id="10388"></path>
+        <path d="M461.544 624.33H182.136a12.64 12.64 0 0 0-12.636 12.64v56.248h304.682v-56.248a12.64 12.64 0 0 0-12.638-12.64z"
+              fill="#EA6428" p-id="10389"></path>
+        <path d="M214.022 636.97a12.64 12.64 0 0 1 12.636-12.64H182.136a12.64 12.64 0 0 0-12.636 12.64v56.248h44.522v-56.248z"
+              fill="#DD4D14" p-id="10390"></path>
+        <path d="M558.004 227.924H837.414a12.64 12.64 0 0 1 12.64 12.64v56.248H545.37v-56.248a12.64 12.64 0 0 1 12.634-12.64z"
+              fill="#1E834E" p-id="10391"></path>
+        <path d="M589.89 240.562a12.64 12.64 0 0 1 12.636-12.64H558.004a12.64 12.64 0 0 0-12.636 12.64v56.248h44.522v-56.248z"
+              fill="#147540" p-id="10392"></path>
+        <path d="M357.43 371.236h-35.084a13.356 13.356 0 0 0-13.356 13.356v39.214h48.44v-52.57zM357.43 153.652h-48.44v93.52a13.354 13.354 0 0 0 21.638 10.478l26.802-21.184V153.652zM662.118 767.644h-35.086a13.356 13.356 0 0 0-13.356 13.356v39.212h48.442v-52.568zM662.118 550.058h-48.442v93.52a13.36 13.36 0 0 0 21.64 10.478l26.798-21.186 0.004 0.004v-82.816z"
+              fill="#605E5A" p-id="10393"></path>
+    </svg>
+    </div>
+    <style>
+  md-filled-text-field {
+    resize: horizontal;
+      width: 300px;
+  }
+</style>
+    <h1 class="h3 mb-3 fw-normal text-center">欢迎，请登录</h1>
+    <form method="post">
+        <div class="mb-3  text-center">
+            <md-filled-text-field name="username" label="账号" type="text">
+            </md-filled-text-field>
+        </div>
+        <div class="mb-3  text-center">
+            <md-filled-text-field name="password" label="密码" type="password">
+            </md-filled-text-field>
+        </div>
+        <div class="text-body-secondary text-end" type="submit">
+            <md-filled-button>登录</md-filled-button>
+        </div>
+        <p class="mt-5 mb-3 text-body-secondary text-center">&copy;2024 全国大学生电子设计大赛</p>
+    </form>
+</main>
+<script src="{% static 'assets/dist/js/bootstrap.bundle.min.js' %}"></script>
+
+</body>
+</html>
