@@ -287,7 +287,7 @@ def cargo_operation(cargo_id, in_out, self_id, user):
 @csrf_exempt
 def get_log(request):
     log = ""
-    logs = models.log.objects.all().order_by('-id')[:10]
+    logs = models.log.objects.all().order_by('-id')[:8]
     for item in logs:
         log += str(item.id) + " " + item.staff.username + " " + item.operation + " " + item.other + "\r\n"
     log = "\"" + log + "\""
