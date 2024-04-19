@@ -31,7 +31,7 @@ void esp_init(void)
     uprintf(&g_uart8_ctrl,"ATE0\r\n");
     wait_8266return(3000);
 
-    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"192.168.100.166\",8000\r\n");
+    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"wms.hizrd.top\",17200\r\n");
     wait_8266return(3000);
 
     uprintf(&g_uart8_ctrl,"AT+CIPMODE=1\r\n");
@@ -72,13 +72,7 @@ void reconnect_server(void)
     }
     uprintf(&g_uart8_ctrl,"ATE0\r\n");
     wait_8266return(3000);
-    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"192.168.100.166\",8000\r\n");
-    wait_8266return(3000);
-    uprintf(&g_uart8_ctrl,"AT+CIPMODE=1\r\n");
-    wait_8266return(3000);
-    uprintf(&g_uart8_ctrl,"AT+CIPSEND\r\n");
-    wait_8266return(3000);
-    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"192.168.100.166\",8000\r\n");
+    uprintf(&g_uart8_ctrl,"AT+CIPSTART=\"TCP\",\"wms.hizrd.top\",17200\r\n");
     wait_8266return(3000);
     uprintf(&g_uart8_ctrl,"AT+CIPMODE=1\r\n");
     wait_8266return(3000);
@@ -228,6 +222,31 @@ void storge_inout11(uint8_t *cargo_id,uint8_t self_id,uint8_t inout,uint8_t user
 
     xSemaphoreGive(on8266);
 }
+
+void storge_inout112(uint8_t *cargo_id,uint8_t self_id,uint8_t inout,uint8_t username)
+{
+    uint8_t nn=2;
+    xSemaphoreTake(on8266,portMAX_DELAY);
+    vTaskDelay(20);
+    xSemaphoreTake(uart8rxc,0);
+retx8266:
+    uprintf(&uart_esp_ctrl,"GET /interface/cargo/?cargo_id=%s&self_id=%d&in=%d&username=%d&password=000\r\n\r\n",
+    cargo_id,self_id,inout,username);
+
+    if(!wait_8266return(2000))
+    {
+    }
+    else{
+        if(nn){
+            nn--;
+            goto retx8266;
+        }
+
+    }
+
+    xSemaphoreGive(on8266);
+}
+
 
 void get_log()
 {

@@ -19,7 +19,7 @@ def sign_in(request):
 
 
 def logout(request):
-    ppp = auth.logout(request)
+    auth.logout(request)
     return redirect("/login/")
 
 
@@ -28,7 +28,7 @@ def main(request):
     return render(request, "website/main/main.html")
 
 
-@login_required(login_url='/mobie/login/')
+@login_required(login_url='/mobile/login/')
 def mobile_main(request):
     return render(request, "website/mobile_main/mobile_main.html")
 
@@ -38,12 +38,12 @@ def log_list(request):
     return render(request, "website/log_list/log_list.html")
 
 
-@login_required(login_url='/mobie/login/')
+@login_required(login_url='/mobile/login/')
 def mobile_log_list(request):
     return render(request, "website/mobile_log/mobile_log.html")
 
 
-@login_required(login_url='/mobie/login/')
+@login_required(login_url='/mobile/login/')
 def mobile_shelf(request):
     return render(request, "website/mobile_shelf/mobile_shelf.html")
 
@@ -137,7 +137,7 @@ def get_respository_info(request):
 
 @csrf_exempt
 def get_log_info(request):
-    goods = models.log.objects.all()
+    goods = models.log.objects.all().order_by('-id')[:20]
     data = {}
     data["log_list"] = []
     for item in goods:
@@ -241,6 +241,7 @@ def cargo_operation(cargo_id, in_out, self_id, user):
             return 1
         if (goods_self.isempty == True):  #self_id已出库
             return 1
+        cargo_id = goods_self.number
         goods_self.number = ""
         goods_self.isempty = True
         goods_self.save()

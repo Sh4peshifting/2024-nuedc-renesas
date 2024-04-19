@@ -56,7 +56,7 @@ void run_in()
     if(wtarget>3) set_position(_pos_mm(STEP_F1));
     back_to_cross(wtarget <= 3 ? wtarget : wtarget - 3);
     turn_to(TurnRight);
-    go_to_cross(1);
+    go_to_cross(2);
     run_mode=RunAlign;
     vTaskDelay(1400);
     run_mode = RunIdle;
@@ -66,7 +66,7 @@ void run_in()
 
 void run_out()
 {
-    back_to_cross(1);
+    back_to_cross(2);
     turn_to(TurnRight);
     back_to_cross(wtarget <= 3 ? wtarget : wtarget - 3);
     turn_to(TurnRight);
@@ -90,7 +90,7 @@ void run_out()
     back_to_cross(1);
     turn_to(TurnLeft);
 
-    go_to_cross(1);
+    go_to_cross(2);
     run_mode=RunAlign;
     vTaskDelay(1400);
     run_mode = RunIdle;
@@ -101,7 +101,7 @@ void run_out()
 void run_prein(void)
 {
     uint8_t card_id[5]={0};
-    back_to_cross(1);
+    back_to_cross(2);
     turn_to(TurnRight);
 
     go_to_cross(1);
@@ -114,7 +114,7 @@ void run_prein(void)
         onworking=WORK_IDLE;
         back_to_cross(1);
         turn_to(TurnLeft);
-        go_to_cross(1);
+        go_to_cross(2);
         run_mode = RunAlign;
         vTaskDelay(1400);
         run_mode = RunIdle;
@@ -124,7 +124,7 @@ void run_prein(void)
         char id[12];
 
         sprintf(id,"%02x%02x%02x%02x",card_id[0],card_id[1],card_id[2],card_id[3]);
-        storge_inout11(id, wtarget,11,worigin);
+        storge_inout112(id, wtarget,11,worigin);
         onworking = WORK_IDLE;
     }
 
@@ -136,7 +136,7 @@ uint8_t normalization_num(uint8_t number)
 }
 void run_change(void)
 {
-    back_to_cross(1);
+    back_to_cross(2);
     turn_to(TurnRight);
     back_to_cross(worigin <= 3 ? worigin : worigin - 3);
     turn_to(TurnRight);
@@ -174,7 +174,7 @@ void run_change(void)
     if(wtarget>3) set_position(_pos_mm(STEP_F1));
     back_to_cross(wtarget <= 3 ? wtarget : wtarget - 3);
     turn_to(TurnRight);
-    go_to_cross(1);
+    go_to_cross(2);
     run_mode=RunAlign;
     vTaskDelay(1400);
     run_mode = RunIdle;

@@ -19,6 +19,7 @@ void login_auth(void);
 void get_shelf(void);
 uint8_t wait_8266return(uint16_t timeout);
 void storge_inout11(uint8_t *cargo_id,uint8_t self_id,uint8_t inout,uint8_t username);
+void storge_inout112(uint8_t *cargo_id,uint8_t self_id,uint8_t inout,uint8_t username);
 
 
 #endif
