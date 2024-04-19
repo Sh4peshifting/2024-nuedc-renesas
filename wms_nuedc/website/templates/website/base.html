@@ -238,8 +238,6 @@
                                 {{ user.get_username }}
                             </a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="/userinfo/">个人信息</a></li>
-                                <li><a class="dropdown-item" href="/user/other/">其它设置</a></li>
                                 {% if user.is_staff %}
                                     <li><a class="dropdown-item" href="/admin/">admin</a></li>
                                 {% endif %}

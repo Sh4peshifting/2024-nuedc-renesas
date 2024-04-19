@@ -16,10 +16,11 @@ $(document).ready(function () {
                     <div class="card-text mb">
                     {{#if isEmpty}}
                     <div class="d-flex justify-content-center align-items-center pt-1"><span class="badge rounded-pill text-bg-primary">空闲</span></div>
+                    <div class="d-flex justify-content-center align-items-center pt-1">N/A</div>
                     {{else}}
                     <div class="d-flex justify-content-center align-items-center pt-1"><span class="badge rounded-pill text-bg-warning">有货</span></div>
-                    {{/if}}
                     <div class="d-flex justify-content-center align-items-center pt-1"><span>{{this.cargo_id}}</span></div>
+                    {{/if}}
                     </div>
                 </div>
             </div>
