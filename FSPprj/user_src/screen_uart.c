@@ -8,7 +8,7 @@ static void user_uart_write(uint8_t const *const p_src, uint32_t const bytes)
     xSemaphoreTake(uart9txc, portMAX_DELAY);
 }
 
-static void change_page(char *page)
+void change_page(char *page)
 {
     char tx_data[30] = {0};
     sprintf(tx_data, "page %s\xff\xff\xff", page);

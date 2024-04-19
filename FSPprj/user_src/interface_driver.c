@@ -1,7 +1,7 @@
 #include "interface_driver.h"
 #include "user.h"
 
-uint8_t wtarget,worigin; 
+uint8_t wtarget,worigin,islogin; 
 int light_status;
 
 uint8_t wait_8266return(uint16_t timeout)
@@ -97,6 +97,7 @@ void status_upload(void)
     static env_info_t env_info;
     DHT11_Data_TypeDef dht11_data;
     int l_worigin,l_wtarget,l_onworking,not_empty_shelf;
+    static uint8_t last_work=0;
 
     vTaskSuspendAll();
     Read_DHT11(&dht11_data);
@@ -142,6 +143,17 @@ void status_upload(void)
         onworking=(uint8_t)l_onworking;
     }
 
+    if(last_work!=onworking){
+        last_work=onworking;
+        if(onworking==WORK_IDLE){
+            if(islogin) change_page("main");
+            else change_page("sign_in");
+        }
+        else{
+            change_page("busy_page");
+        }
+    }
+
     if(99 != not_empty_shelf){
         env_info.not_empty_shelf = (uint8_t)not_empty_shelf;
     }
@@ -162,10 +174,12 @@ void login_auth()
         if(strstr((const char *)uart8pack.data,"success")){
             // µÇÂ¼³É¹¦
             screen_login_page_disp(1);
+            islogin=1;
         }
         else{
             // µÇÂ¼Ê§°Ü µ¯´°
             screen_login_page_disp(0);
+            islogin=0;
         }
 
     }

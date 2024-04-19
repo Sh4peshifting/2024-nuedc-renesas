@@ -154,7 +154,7 @@ def get_car_info(request):
 
 @csrf_exempt
 def index(request):
-    return JsonResponse({"a": "helo"}, safe=False)
+    return HttpResponse("hello, world.")
 
 
 @csrf_exempt
