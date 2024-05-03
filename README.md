@@ -1,39 +1,21 @@
 # 2024NUEDC_Renesas
 
 #### 介绍
-{**以下是 Gitee 平台说明，您可以替换此简介**
-Gitee 是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用 Gitee 实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
-
-#### 软件架构
-软件架构说明
-
-
-#### 安装教程
-
-1.  xxxx
-2.  xxxx
-3.  xxxx
+本项目是2024年全国大学生电子设计竞赛信息科技前沿专题赛（瑞萨杯）的初赛参赛设计。
+- 设计了一智能仓储管理系统，AGV运输车使用瑞萨RA6M5作为主控。
+- Openmv机器视觉技术实现运输车的自主寻线行驶，利用GY61陀螺仪和闭环PID控制算法提高了运输车的导航精度。
+- 通过ESP8266模块，实现了与远程服务器后端的无线通信，系统能够对仓库内的货物进行实时管理和数量统计。
+- 通过RFID射频标签，系统可以自动识别货物，简化操作流程。
+- 内置温湿度、火焰传感器实时监测仓库环境信息。
+- 前端开发使用HTML及Bootstrap构建页面结构，Handlebars模板引擎来渲染动态内容。使用CSS和JavaScript增强用户界面，提供包括按钮点击回调事件，页面暗黑模式等功能。
+- 使用Django框架建立后端服务，创建模型(Model)来映射数据库表，编写视图(View)来处理业务逻辑，设置URL路由(Routes)。
+- 使用SQLite设计数据库模型，包括授权用户、环境信息、日志、货物信息、货架状态等相关的表。
+- 前后端使用Ajax进行交互，设计使用jQuery的Ajax功能与Django后端进行数据交互，发送请求到后端API并处理响应。
+- Android APP 使用Kotlin语言编写，使用Jetpack Compose构建原生 Android 界面。
+- RA6M5使用瑞萨提供的FSP库编写业务逻辑，RASC生成外设初始化代码，运行FreeRTOS。
 
 #### 使用说明
 
-1.  xxxx
-2.  xxxx
-3.  xxxx
+1.  `FSPprj`文件夹为RA6M5主控相关代码
+2.  `wms_nuedc`文件夹为Web相关代码
 
-#### 参与贡献
-
-1.  Fork 本仓库
-2.  新建 Feat_xxx 分支
-3.  提交代码
-4.  新建 Pull Request
-
-
-#### 特技
-
-1.  使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2.  Gitee 官方博客 [blog.gitee.com](https://blog.gitee.com)
-3.  你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解 Gitee 上的优秀开源项目
-4.  [GVP](https://gitee.com/gvp) 全称是 Gitee 最有价值开源项目，是综合评定出的优秀开源项目
-5.  Gitee 官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6.  Gitee 封面人物是一档用来展示 Gitee 会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
